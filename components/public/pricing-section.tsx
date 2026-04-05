@@ -1,0 +1,182 @@
+"use client";
+
+import { useState } from "react";
+import { Check } from "lucide-react";
+
+type PricingDict = {
+  home?: {
+    pricing?: Record<string, string | undefined>;
+  };
+};
+
+export function PricingSection({ dict }: { dict: PricingDict }) {
+  const [isAnnual, setIsAnnual] = useState(false);
+
+  const plans = [
+    {
+      name: dict?.home?.pricing?.basicName || "Basic",
+      monthlyPrice: "1,500",
+      annualPrice: "15,000",
+      description:
+        dict?.home?.pricing?.basicDescription ||
+        "The ideal plan to launch your business without unnecessary complexity.",
+      cta: dict?.home?.pricing?.ctaStart || "Start Now for Free",
+      featured: false,
+      features: [
+        dict?.home?.pricing?.basicFeature1 || "Up to 500 orders / month",
+        dict?.home?.pricing?.basicFeature2 ||
+          "Unlimited stores and team members",
+        dict?.home?.pricing?.basicFeature3 ||
+          "Manage all your orders from one screen",
+        dict?.home?.pricing?.basicFeature4 || "Stock alerts to avoid sellouts",
+        dict?.home?.pricing?.basicFeature5 ||
+          "Accurate net profit calculations",
+      ],
+    },
+    {
+      name: dict?.home?.pricing?.proName || "Professional",
+      monthlyPrice: "2,000",
+      annualPrice: "20,000",
+      description:
+        dict?.home?.pricing?.proDescription ||
+        "The preferred choice for merchants who want to scale cleanly and avoid preventable losses.",
+      cta: dict?.home?.pricing?.ctaPro || "Unlock Full Power",
+      featured: true,
+      features: [
+        dict?.home?.pricing?.proFeature1 || "Up to 3,000 orders / month",
+        dict?.home?.pricing?.proFeature2 ||
+          "Detect hidden delivery losses automatically",
+        dict?.home?.pricing?.proFeature3 ||
+          "Choose the fastest and cheapest carrier automatically",
+        dict?.home?.pricing?.proFeature4 ||
+          "Simple workflows to reduce and manage returns",
+        dict?.home?.pricing?.proFeature5 || "Highest-priority support",
+      ],
+    },
+    {
+      name: dict?.home?.pricing?.ultraName || "Ultra",
+      monthlyPrice: "3,000",
+      annualPrice: "30,000",
+      description:
+        dict?.home?.pricing?.ultraDescription ||
+        "Built for large teams and high-volume operations with no practical limits.",
+      cta: dict?.home?.pricing?.ctaUltra || "Scale My Profits",
+      featured: false,
+      features: [
+        dict?.home?.pricing?.ultraFeature1 || "Unlimited orders",
+        dict?.home?.pricing?.ultraFeature2 ||
+          "Manage and track multiple warehouses",
+        dict?.home?.pricing?.ultraFeature3 ||
+          "Custom API integration for your internal systems",
+        dict?.home?.pricing?.ultraFeature4 ||
+          "Personal account manager on WhatsApp",
+      ],
+    },
+  ];
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-24">
+      <div className="mb-12 text-center">
+        <h2 className="mb-4 text-4xl font-extrabold tracking-tighter md:text-5xl">
+          {dict?.home?.pricing?.title || "Choose Your Plan"}
+        </h2>
+        <p className="mb-8 text-muted-foreground">
+          {dict?.home?.pricing?.subtitle ||
+            "Simple, transparent pricing that grows with your business."}
+        </p>
+
+        <div className="inline-flex items-center justify-center rounded-full border border-border/50 bg-card p-1 shadow-sm">
+          <button
+            type="button"
+            onClick={() => setIsAnnual(false)}
+            className={`rounded-full px-6 py-2.5 text-sm font-bold transition-all ${
+              !isAnnual
+                ? "bg-primary text-primary-foreground shadow-md"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {dict?.home?.pricing?.monthly || "Monthly"}
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsAnnual(true)}
+            className={`relative rounded-full px-6 py-2.5 text-sm font-bold transition-all ${
+              isAnnual
+                ? "bg-primary text-primary-foreground shadow-md"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {dict?.home?.pricing?.annually || "Annually"}
+            <span className="absolute -right-2 -top-3 z-10 rounded-full border border-primary/20 bg-accent px-2 py-0.5 text-[10px] font-black uppercase tracking-widest text-primary-foreground shadow-lg">
+              {dict?.home?.pricing?.saveBadge || "2 Months Free"}
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div className="grid items-center gap-8 md:grid-cols-3">
+        {plans.map((plan) => (
+          <div
+            key={plan.name}
+            className={
+              plan.featured
+                ? "relative z-10 flex flex-col rounded-[2.5rem] border-2 border-primary bg-card p-8 shadow-2xl shadow-primary/10 transition-all duration-500 md:scale-105"
+                : "flex flex-col rounded-3xl border border-border/20 bg-card p-8 transition-all duration-500"
+            }
+          >
+            {plan.featured ? (
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-br from-primary to-primary/80 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-primary-foreground">
+                {dict?.home?.pricing?.featuredBadge || "Most Popular"}
+              </div>
+            ) : null}
+
+            <div className="mb-4">
+              <h4 className="mb-2 text-xl font-black">{plan.name}</h4>
+              <p className="h-10 text-sm text-muted-foreground">
+                {plan.description}
+              </p>
+            </div>
+
+            <div className="mb-8">
+              <div className="flex items-baseline gap-1 transition-all duration-500">
+                <span className="text-4xl font-extrabold">
+                  {isAnnual ? plan.annualPrice : plan.monthlyPrice}
+                </span>
+                <span className="text-sm font-medium text-muted-foreground">
+                  {isAnnual
+                    ? dict?.home?.pricing?.annualSuffix || "DZD / year"
+                    : dict?.home?.pricing?.monthlySuffix || "DZD / month"}
+                </span>
+              </div>
+            </div>
+
+            <ul className="mb-10 flex-grow space-y-4">
+              {plan.features.map((feature) => (
+                <li
+                  key={feature}
+                  className="flex items-center gap-3 text-sm font-medium"
+                >
+                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                    <Check className="h-4 w-4 text-primary" />
+                  </div>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+
+            <button
+              type="button"
+              className={
+                plan.featured
+                  ? "w-full rounded-2xl bg-gradient-to-br from-primary to-primary/80 py-4 font-bold text-primary-foreground transition-all hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/20 active:scale-95"
+                  : "w-full rounded-2xl border border-border py-4 font-bold transition-all hover:bg-muted active:scale-95"
+              }
+            >
+              {plan.cta}
+            </button>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
