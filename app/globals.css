@@ -194,6 +194,7 @@
   }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
   }
 }
 
@@ -210,4 +211,27 @@
   direction: ltr;
   -webkit-font-smoothing: antialiased;
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+.fade-in-view {
+  opacity: 0;
+  transition: opacity 800ms ease;
+  transition-delay: var(--fade-delay, 0ms);
+  will-change: opacity;
+}
+
+.fade-in-view.is-visible {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .fade-in-view,
+  .fade-in-view.is-visible {
+    opacity: 1;
+    transition: none;
+  }
 }

@@ -12,18 +12,36 @@ export default async function PublicLayout({
   params: Promise<{ lang: Locale }>; // Use your strict Locale type here
 }>) {
   const { lang } = await params;
-  
+
   // Fetch the correct dictionary before the page even renders!
   const dict = await getDictionary(lang);
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "Arba7i",
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Web",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "DZD",
+    },
+    description:
+      "The simple operating system for Algerian Cash on Delivery e-commerce. Centralize orders, inventory, and logistics.",
+  };
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
       <PublicNavbar lang={lang} dict={dict} />
-      
+
       <main className="flex-1 pt-18 sm:pt-20">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
         {children}
       </main>
-      
+
       <PublicFooter lang={lang} dict={dict} />
     </div>
   );

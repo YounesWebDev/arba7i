@@ -1,8 +1,6 @@
-// --- drizzle.config.ts ---
 import { defineConfig } from "drizzle-kit";
 import * as dotenv from "dotenv";
 
-// 1. Tell Drizzle to explicitly load your Next.js environment variables
 dotenv.config({ path: ".env.local" });
 
 export default defineConfig({
@@ -10,7 +8,7 @@ export default defineConfig({
   out: "./supabase/migrations",
   dialect: "postgresql",
   dbCredentials: {
-    
-    url: process.env.DATABASE_URL!,
+    // We changed this from DATABASE_URL to DIRECT_URL
+    url: process.env.DIRECT_URL!,
   },
 });

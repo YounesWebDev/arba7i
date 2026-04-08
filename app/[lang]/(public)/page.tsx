@@ -1,6 +1,7 @@
 // --- app/[lang]/(public)/page.tsx ---
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import {
   ArrowRight,
   Boxes, ChartColumnIncreasing,
@@ -9,9 +10,40 @@ import {
   Store, TrendingUp, Truck, Users, Wallet,
   XCircle,
 } from "lucide-react";
+import { FadeInView } from "@/components/public/fade-in-view";
 import { PricingSection } from "@/components/public/pricing-section";
 import { getDictionary } from "@/lib/dictionary";
 import type { Locale } from "@/i18n-config";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: Locale }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const dict = await getDictionary(lang);
+  const title = `Arba7i | ${dict?.home?.hero?.title2 || "Better Profits"}`;
+  const description =
+    dict?.home?.hero?.description ||
+    "Manage your store, orders, delivery, stock, and real profit in one simple system.";
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      locale: lang,
+      siteName: "Arba7i",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Arba7i SaaS",
+      description,
+    },
+  };
+}
 
 export default async function HomePage({
   params,
@@ -120,7 +152,7 @@ export default async function HomePage({
 
   return (
     <div className="overflow-x-hidden bg-background pb-20 font-sans text-foreground selection:bg-primary/20 selection:text-primary">
-      <header className="relative overflow-hidden px-6 pb-20 pt-32 md:pb-32 md:pt-48">
+      <FadeInView as="header" className="relative overflow-hidden px-6 pb-20 pt-32 md:pb-32 md:pt-48">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-background to-background" />
         <div className="relative mx-auto max-w-7xl space-y-8 text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/10 bg-primary/5 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-primary">
@@ -155,9 +187,9 @@ export default async function HomePage({
             </Link>
           </div>
         </div>
-      </header>
+      </FadeInView>
 
-      <section className="-mt-10 px-6 md:-mt-20">
+      <FadeInView as="section" className="-mt-10 px-6 md:-mt-20">
         <div className="group relative mx-auto max-w-6xl">
           <div className="absolute -inset-4 rounded-[3.5rem] bg-gradient-to-tr from-primary/20 to-accent/20 opacity-30 blur-3xl transition-opacity group-hover:opacity-50" />
           <div className="relative overflow-hidden rounded-[2.5rem] border border-white/50 bg-card p-2 shadow-2xl">
@@ -173,9 +205,9 @@ export default async function HomePage({
             </div>
           </div>
         </div>
-      </section>
+      </FadeInView>
 
-      <section id="features" className="mx-auto max-w-7xl px-6 py-24">
+      <FadeInView as="section" id="features" className="mx-auto max-w-7xl px-6 py-24">
         <div className="mb-16 space-y-4 text-center">
           <h2 className="text-3xl font-extrabold tracking-tight md:text-5xl">
             {dict?.home?.features?.title || "Precision Features"}
@@ -186,24 +218,23 @@ export default async function HomePage({
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {precisionFeatures.map((feature) => (
-            <div
-              key={feature.title}
-              className="group rounded-2xl bg-muted/40 p-8 transition-all duration-300 hover:bg-card"
-            >
-              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 transition-transform group-hover:scale-110">
-                <feature.icon className="h-6 w-6 text-primary" />
+          {precisionFeatures.map((feature, index) => (
+            <FadeInView key={`precision-feature-${index}`} delay={index * 60}>
+              <div className="group rounded-2xl bg-muted/40 p-8 transition-all duration-300 hover:bg-card">
+                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 transition-transform group-hover:scale-110">
+                  <feature.icon className="h-6 w-6 text-primary" />
+                </div>
+                <h3 className="mb-3 text-xl font-bold">{feature.title}</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  {feature.body}
+                </p>
               </div>
-              <h3 className="mb-3 text-xl font-bold">{feature.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                {feature.body}
-              </p>
-            </div>
+            </FadeInView>
           ))}
         </div>
-      </section>
+      </FadeInView>
 
-      <section className="bg-muted/40 py-24">
+      <FadeInView as="section" className="bg-muted/40 py-24">
         <div className="mx-auto max-w-7xl px-6">
           <div className="grid items-center gap-12 lg:gap-20 xl:grid-cols-2">
             <div>
@@ -230,7 +261,7 @@ export default async function HomePage({
                     dict?.home?.workflow?.step3Body || "Let AI suggest shipping routes and inventory reorders to maximize your net profit margins.",
                   ],
                 ].map(([title, body], index) => (
-                  <div key={title} className="flex items-start gap-4 sm:gap-6">
+                  <div key={`workflow-step-${index}`} className="flex items-start gap-4 sm:gap-6">
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/80 text-sm font-bold text-primary-foreground sm:h-11 sm:w-11">
                       {index + 1}
                     </div>
@@ -269,9 +300,9 @@ export default async function HomePage({
             </div>
           </div>
         </div>
-      </section>
+      </FadeInView>
 
-      <section className="overflow-hidden px-6 py-24">
+      <FadeInView as="section" className="overflow-hidden px-6 py-24">
         <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[3rem] bg-foreground p-8 text-background md:p-20">
           <div className="absolute right-0 top-0 h-full w-1/2 bg-[radial-gradient(circle_at_center,_rgba(107,56,212,0.15)_0%,_transparent_70%)]" />
           <div className="relative z-10 grid items-center gap-12 md:grid-cols-2">
@@ -313,9 +344,9 @@ export default async function HomePage({
             </div>
           </div>
         </div>
-      </section>
+      </FadeInView>
 
-      <section className="mx-auto max-w-7xl px-6 py-24">
+      <FadeInView as="section" className="mx-auto max-w-7xl px-6 py-24">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
           <div className="group overflow-hidden rounded-[2.5rem] border border-border/20 bg-card p-6 sm:p-8 md:p-10 lg:col-span-7">
             <div className="flex h-full flex-col">
@@ -326,9 +357,9 @@ export default async function HomePage({
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-4 py-4 sm:gap-6">
-                {["Yalidine", "ZR Express", "Noest"].map((carrier) => (
+                {["Yalidine", "ZR Express", "Noest"].map((carrier, index) => (
                   <div
-                    key={carrier}
+                    key={`carrier-${index}`}
                     className="flex min-w-[120px] flex-1 justify-center rounded-2xl border border-transparent bg-muted/50 px-6 py-4 transition-all hover:border-primary/20 sm:flex-none sm:px-8"
                   >
                     <span className="text-xl font-black italic text-muted-foreground">
@@ -388,9 +419,9 @@ export default async function HomePage({
             </div>
           </div>
         </div>
-      </section>
+      </FadeInView>
 
-      <section className="bg-muted/40 px-6 py-24">
+      <FadeInView as="section" className="bg-muted/40 px-6 py-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-14 max-w-2xl">
             <span className="mb-4 block text-xs font-bold uppercase tracking-widest text-primary">
@@ -406,25 +437,24 @@ export default async function HomePage({
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
-            {audienceSegments.map((segment) => (
-              <div
-                key={segment.title}
-                className="group rounded-2xl bg-muted/40 p-8 transition-all duration-300 hover:bg-card"
-              >
-                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 transition-transform group-hover:scale-110">
-                  <segment.icon className="h-6 w-6 text-primary" />
+            {audienceSegments.map((segment, index) => (
+              <FadeInView key={`audience-segment-${index}`} delay={index * 60}>
+                <div className="group rounded-2xl bg-muted/40 p-8 transition-all duration-300 hover:bg-card">
+                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 transition-transform group-hover:scale-110">
+                    <segment.icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="mb-3 text-xl font-bold">{segment.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {segment.body}
+                  </p>
                 </div>
-                <h3 className="mb-3 text-xl font-bold">{segment.title}</h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {segment.body}
-                </p>
-              </div>
+              </FadeInView>
             ))}
           </div>
         </div>
-      </section>
+      </FadeInView>
 
-      <section className="mx-auto max-w-7xl px-6 py-24">
+      <FadeInView as="section" className="mx-auto max-w-7xl px-6 py-24">
         <div className="mb-14 max-w-2xl">
           <span className="mb-4 block text-xs font-bold uppercase tracking-widest text-primary">
             {dict?.home?.beforeAfter?.eyebrow || "Before / After"}
@@ -444,16 +474,15 @@ export default async function HomePage({
               {dict?.home?.beforeAfter?.beforeLabel || "Before Arba7i"}
             </div>
             <div className="space-y-4">
-              {beforeItems.map((item) => (
-                <div
-                  key={item}
-                  className="flex gap-4 rounded-2xl border border-border/20 bg-primary/7 p-6"
-                >
-                  <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-400" />
-                  <p className="text-sm leading-relaxed text-foreground/80">
-                    {item}
-                  </p>
-                </div>
+              {beforeItems.map((item, index) => (
+                <FadeInView key={`before-item-${index}`} delay={index * 60}>
+                  <div className="flex gap-4 rounded-2xl border border-border/20 bg-primary/7 p-6">
+                    <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-400" />
+                    <p className="text-sm leading-relaxed text-foreground/80">
+                      {item}
+                    </p>
+                  </div>
+                </FadeInView>
               ))}
             </div>
           </div>
@@ -463,25 +492,26 @@ export default async function HomePage({
               {dict?.home?.beforeAfter?.afterLabel || "After Arba7i"}
             </div>
             <div className="space-y-4">
-              {afterItems.map((item) => (
-                <div
-                  key={item}
-                  className="flex gap-4 rounded-2xl border border-primary/10 bg-card p-5"
-                >
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-                  <p className="text-sm leading-relaxed text-foreground/80">
-                    {item}
-                  </p>
-                </div>
+              {afterItems.map((item, index) => (
+                <FadeInView key={`after-item-${index}`} delay={index * 60}>
+                  <div className="flex gap-4 rounded-2xl border border-primary/10 bg-card p-5">
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                    <p className="text-sm leading-relaxed text-foreground/80">
+                      {item}
+                    </p>
+                  </div>
+                </FadeInView>
               ))}
             </div>
           </div>
         </div>
-      </section>
+      </FadeInView>
 
-      <PricingSection dict={dict} />
+      <FadeInView>
+        <PricingSection dict={dict} />
+      </FadeInView>
 
-      <section className="relative overflow-hidden px-6 pt-24">
+      <FadeInView as="section" className="relative overflow-hidden px-6 pt-24">
         <div className="relative mx-auto max-w-7xl">
           <div className="relative overflow-hidden rounded-[4rem] bg-gradient-to-r from-primary via-accent to-primary p-12 text-center text-primary-foreground md:p-24">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
@@ -509,7 +539,7 @@ export default async function HomePage({
             </div>
           </div>
         </div>
-      </section>
+      </FadeInView>
     </div>
   );
 }

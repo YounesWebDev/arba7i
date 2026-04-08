@@ -1,4 +1,5 @@
 // --- db/schema.ts ---
+import { relations } from "drizzle-orm";
 import { pgTable, uuid, varchar, timestamp, boolean, unique, text, primaryKey, integer, decimal, jsonb } from "drizzle-orm/pg-core";
 
 // ==========================================
@@ -323,3 +324,118 @@ export const auditLogs = pgTable("audit_logs", {
   details: text("details"), // JSON or string showing what changed (e.g., 'Changed price from 50 to 45')
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 });
+
+// ==========================================
+// DRIZZLE RELATIONS (For fetching nested data)
+// ==========================================
+
+export const usersRelations = relations(users, ({ many }) => ({
+  storeLinks: many(sellerStoreLinks),
+  staffRoles: many(staff),
+  notifications: many(notifications),
+}));
+
+export const storesRelations = relations(stores, ({ many }) => ({
+  sellerLinks: many(sellerStoreLinks),
+  staff: many(staff),
+  categories: many(categories),
+  products: many(products),
+  banners: many(storeBanners),
+  customers: many(customers),
+  orders: many(orders),
+  expenses: many(expenses),
+  tickets: many(supportTickets),
+}));
+
+export const sellerStoreLinksRelations = relations(sellerStoreLinks, ({ one }) => ({
+  user: one(users, { fields: [sellerStoreLinks.userId], references: [users.id] }),
+  store: one(stores, { fields: [sellerStoreLinks.storeId], references: [stores.id] }),
+}));
+
+export const rolesRelations = relations(roles, ({ many }) => ({
+  permissions: many(rolePermissions),
+  staff: many(staff),
+}));
+
+export const permissionsRelations = relations(permissions, ({ many }) => ({
+  roles: many(rolePermissions),
+}));
+
+export const rolePermissionsRelations = relations(rolePermissions, ({ one }) => ({
+  role: one(roles, { fields: [rolePermissions.roleId], references: [roles.id] }),
+  permission: one(permissions, { fields: [rolePermissions.permissionId], references: [permissions.id] }),
+}));
+
+export const staffRelations = relations(staff, ({ one }) => ({
+  store: one(stores, { fields: [staff.storeId], references: [stores.id] }),
+  user: one(users, { fields: [staff.userId], references: [users.id] }),
+  role: one(roles, { fields: [staff.roleId], references: [roles.id] }),
+}));
+
+export const categoriesRelations = relations(categories, ({ one, many }) => ({
+  store: one(stores, { fields: [categories.storeId], references: [stores.id] }),
+  products: many(products),
+}));
+
+export const productsRelations = relations(products, ({ one, many }) => ({
+  store: one(stores, { fields: [products.storeId], references: [stores.id] }),
+  category: one(categories, { fields: [products.categoryId], references: [categories.id] }),
+  images: many(productImages),
+  options: many(productOptions),
+  variants: many(productVariants),
+  orderItems: many(orderItems),
+}));
+
+export const productImagesRelations = relations(productImages, ({ one }) => ({
+  product: one(products, { fields: [productImages.productId], references: [products.id] }),
+}));
+
+export const productOptionsRelations = relations(productOptions, ({ one }) => ({
+  product: one(products, { fields: [productOptions.productId], references: [products.id] }),
+}));
+
+export const productVariantsRelations = relations(productVariants, ({ one, many }) => ({
+  product: one(products, { fields: [productVariants.productId], references: [products.id] }),
+  orderItems: many(orderItems),
+}));
+
+export const customersRelations = relations(customers, ({ one, many }) => ({
+  store: one(stores, { fields: [customers.storeId], references: [stores.id] }),
+  orders: many(orders),
+  riskEvents: many(riskEvents),
+}));
+
+export const ordersRelations = relations(orders, ({ one, many }) => ({
+  store: one(stores, { fields: [orders.storeId], references: [stores.id] }),
+  customer: one(customers, { fields: [orders.customerId], references: [customers.id] }),
+  items: many(orderItems),
+  shipments: many(shipments),
+  riskEvents: many(riskEvents),
+}));
+
+export const orderItemsRelations = relations(orderItems, ({ one }) => ({
+  order: one(orders, { fields: [orderItems.orderId], references: [orders.id] }),
+  product: one(products, { fields: [orderItems.productId], references: [products.id] }),
+  variant: one(productVariants, { fields: [orderItems.variantId], references: [productVariants.id] }),
+}));
+
+export const shipmentsRelations = relations(shipments, ({ one }) => ({
+  order: one(orders, { fields: [shipments.orderId], references: [orders.id] }),
+}));
+
+export const riskEventsRelations = relations(riskEvents, ({ one }) => ({
+  store: one(stores, { fields: [riskEvents.storeId], references: [stores.id] }),
+  customer: one(customers, { fields: [riskEvents.customerId], references: [customers.id] }),
+  order: one(orders, { fields: [riskEvents.orderId], references: [orders.id] }),
+}));
+
+export const supportTicketsRelations = relations(supportTickets, ({ one, many }) => ({
+  store: one(stores, { fields: [supportTickets.storeId], references: [stores.id] }),
+  creator: one(users, { fields: [supportTickets.createdByUserId], references: [users.id] }),
+  messages: many(supportMessages),
+}));
+
+export const supportMessagesRelations = relations(supportMessages, ({ one }) => ({
+  ticket: one(supportTickets, { fields: [supportMessages.ticketId], references: [supportTickets.id] }),
+  sender: one(users, { fields: [supportMessages.senderUserId], references: [users.id] }),
+}));

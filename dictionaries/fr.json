@@ -114,9 +114,17 @@
       "monthlySuffix": "DZD / mois",
       "annualSuffix": "DZD / an",
       "featuredBadge": "Le plus populaire",
+      "welcomeName": "Offre De Bienvenue",
+      "welcomeDescription": "Une offre gratuite de 15 jours pour decouvrir la plateforme et organiser votre flux de travail avant de passer a une formule payante.",
+      "ctaWelcome": "Commencer maintenant gratuitement",
+      "welcomeFeature1": "Acces gratuit pendant 15 jours",
+      "welcomeFeature2": "1 boutique et 1 membre d'equipe",
+      "welcomeFeature3": "Suivi des commandes depuis un seul tableau",
+      "welcomeFeature4": "Visibilite de stock basique",
+      "welcomeFeature5": "Support par email",
       "basicName": "Basic",
       "basicDescription": "La formule ideale pour lancer votre commerce sereinement et sans complication.",
-      "ctaStart": "Commencer gratuitement",
+      "ctaStart": "Choisir Basic",
       "basicFeature1": "Jusqu'a 500 commandes / mois",
       "basicFeature2": "Boutiques et equipe en nombre illimite",
       "basicFeature3": "Tous vos commandes sur un seul ecran",
@@ -148,65 +156,65 @@
   "featuresPage": {
     "hero": {
       "eyebrow": "Fonctionnalites",
-      "title1": "Un controle complet",
-      "title2": "de votre e-commerce",
-      "description": "Une couche operationnelle claire pour la boutique, les commandes, la livraison, le stock et la rentabilite.",
+      "title1": "Tout ce qu'il faut",
+      "title2": "pour gerer votre boutique",
+      "description": "Gerez les commandes, la livraison, le stock et le profit depuis un seul endroit simple.",
       "cta1": "Commencer gratuitement",
       "cta2": "Parler a notre equipe"
     },
     "overview": {
-      "title": "Tout ce dont vos operations ont besoin",
-      "subtitle": "Concu pour reduire la friction dans le travail quotidien qui fait vraiment avancer le chiffre."
+      "title": "Tout ce dont votre activite a besoin",
+      "subtitle": "Des outils simples pour le travail quotidien qui fait avancer votre boutique."
     },
     "cards": {
-      "storefrontTitle": "Constructeur de vitrine",
-      "storefrontBody": "Creez une vitrine propre et claire sans lutte technique inutile.",
-      "shippingTitle": "Operations de livraison",
-      "shippingBody": "Connectez les transporteurs et organisez les envois avec plus de controle.",
-      "financeTitle": "Visibilite sur le profit",
-      "financeBody": "Comprenez l'effet des couts, retours et frais de livraison sur le resultat reel.",
-      "inventoryTitle": "Controle du stock",
-      "inventoryBody": "Suivez les quantites par produit et entrepot avant que les problemes ne deviennent des pertes.",
-      "teamTitle": "Permissions d'equipe",
-      "teamBody": "Repartissez les responsabilites clairement et protegez les actions sensibles.",
-      "insightsTitle": "Indicateurs utiles",
-      "insightsBody": "Utilisez les bons chiffres pour agir plus vite et avec plus d'assurance."
+      "storefrontTitle": "Mise en place de la boutique",
+      "storefrontBody": "Installez votre boutique simplement et gardez une gestion facile.",
+      "shippingTitle": "Livraison automatique",
+      "shippingBody": "Envoyez vos commandes aux societes de livraison plus vite et suivez chaque colis facilement.",
+      "financeTitle": "Vrai benefice",
+      "financeBody": "Voyez ce que vous gagnez vraiment apres les frais de livraison, les retours et les autres depenses.",
+      "inventoryTitle": "Gestion du stock",
+      "inventoryBody": "Suivez le stock et recevez des alertes avant la rupture.",
+      "teamTitle": "Acces securise pour l'equipe",
+      "teamBody": "Donnez a chaque membre seulement l'acces dont il a besoin.",
+      "insightsTitle": "Rapports clairs",
+      "insightsBody": "Consultez des chiffres simples pour prendre de meilleures decisions."
     },
     "highlights": {
-      "title": "Pourquoi les equipes avancent plus vite avec Arba7i",
-      "item1": "Un seul espace pour la boutique, les commandes, la livraison et la finance.",
-      "item2": "Des workflows adaptes aux realites du paiement a la livraison et du fulfillment regional.",
-      "item3": "Une vision plus nette de la marge derriere chaque commande."
+      "title": "Pourquoi les marchands choisissent Arba7i",
+      "item1": "Un seul endroit pour la boutique, les commandes, la livraison et le benefice.",
+      "item2": "Cree pour le COD et la realite des livraisons locales.",
+      "item3": "Moins de confusion, moins d'erreurs et un meilleur suivi chaque jour."
     },
     "metrics": {
-      "title": "Pense pour un impact concret",
-      "subtitle": "Des operations plus propres, une meilleure lecture des marges et moins d'erreurs evitables.",
+      "title": "Concu pour faciliter le quotidien",
+      "subtitle": "Moins de travail manuel, moins d'erreurs et des chiffres plus clairs.",
       "value1": "24/7",
-      "label1": "Visibilite operationnelle",
+      "label1": "Voir tout clairement",
       "value2": "-40%",
-      "label2": "Pression de suivi manuel",
+      "label2": "Suivi manuel",
       "value3": "+1",
-      "label3": "Centre de controle unifie"
+      "label3": "Un tableau de bord"
     },
     "admin": {
       "eyebrow": "Administration",
-      "title": "Un pilotage base sur les donnees",
-      "description": "Voyez l'effet financier des operations au moment ou elles se produisent et alignez votre equipe.",
-      "item1Title": "Suivi du profit en temps reel",
-      "item1Body": "Suivez revenus, frais de livraison et cout des retours depuis un seul tableau de bord.",
-      "item2Title": "Journal des depenses",
-      "item2Body": "Reliez marketing, stock et charges au bon flux operationnel.",
-      "item3Title": "Acces controles",
-      "item3Body": "Donnez a chaque membre l'acces utile sans tout exposer.",
-      "panelTitle": "Sante financiere",
+      "title": "Suivez votre activite facilement",
+      "description": "Suivez ce qui se passe dans votre commerce et gardez votre equipe sur la meme page.",
+      "item1Title": "Vrai benefice",
+      "item1Body": "Voyez les ventes, les frais de livraison et les retours depuis un seul tableau de bord.",
+      "item2Title": "Suivi des depenses",
+      "item2Body": "Gardez le marketing, le stock et les couts quotidiens bien ranges.",
+      "item3Title": "Controlez ce que votre equipe voit",
+      "item3Body": "Mettez des permissions claires pour que chacun voie seulement ce qu'il faut.",
+      "panelTitle": "Vrai benefice",
       "panelDelta": "+18.5% ce mois-ci",
       "panelItem1": "Ventes totales",
-      "panelItem2": "Couts operationnels",
-      "panelFooterLabel": "Profit net"
+      "panelItem2": "Couts de l'activite",
+      "panelFooterLabel": "Benefice net"
     },
     "finalCta": {
-      "title": "Passez a l'echelle avec plus de controle",
-      "description": "Reunissez votre boutique, votre livraison, votre equipe et vos chiffres dans un seul systeme clair.",
+      "title": "Gerez votre boutique avec plus de controle",
+      "description": "Rassemblez commandes, livraison, equipe et chiffres dans un systeme clair.",
       "cta1": "Creer un compte gratuit",
       "cta2": "Parler aux ventes"
     }
@@ -214,19 +222,21 @@
   "pricingPage": {
     "hero": {
       "eyebrow": "Tarifs",
-      "title1": "Des tarifs simples qui",
-      "title2": "evoluent avec votre commerce",
-      "description": "Choisissez la formule adaptee a votre stade actuel sans payer pour une complexite prematuree."
+      "title1": "Des tarifs simples pour",
+      "title2": "chaque etape",
+      "description": "Choisissez l'offre qui convient a votre activite aujourd'hui et changez plus tard si besoin."
     },
     "comparison": {
-      "title": "Comparez les formules clairement",
-      "subtitle": "Une vue directe de ce qui change quand vos operations grandissent.",
+      "title": "Comparer les offres facilement",
+      "subtitle": "Voyez clairement ce que chaque offre vous donne.",
       "featureCol": "Fonction",
       "row1": "Commandes mensuelles",
+      "welcome1": "50",
       "basic1": "500",
       "pro1": "3 000",
       "ultra1": "Illimite",
       "row2": "Boutiques et equipe",
+      "welcome2": "1 / 1",
       "basic2": "Illimite",
       "pro2": "Illimite",
       "ultra2": "Illimite",
@@ -236,23 +246,24 @@
       "row4": "Multi-entrepots",
       "ultra4": "Inclus",
       "row5": "Support",
+      "welcome5": "Email",
       "basic5": "Standard",
       "pro5": "Prioritaire",
       "ultra5": "Dedie"
     },
     "faq": {
-      "title": "Questions frequentes sur les tarifs",
-      "subtitle": "Des reponses courtes aux questions que les marchands posent avant de commencer.",
+      "title": "Questions sur les tarifs",
+      "subtitle": "Des reponses simples avant de commencer.",
       "q1": "Puis-je changer de formule plus tard ?",
-      "a1": "Oui. Vous pouvez passer a une formule superieure sans perdre vos donnees.",
-      "q2": "Y a-t-il un engagement longue duree ?",
-      "a2": "Non. Commencez avec la formule adaptee aujourd'hui puis ajustez ensuite.",
-      "q3": "Quelle formule convient aux multi-entrepots ?",
-      "a3": "Ultra est la bonne option si votre activite demande une coordination entre plusieurs entrepots."
+      "a1": "Oui. Vous pouvez passer a une autre offre quand votre activite grandit.",
+      "q2": "Dois-je signer un long contrat ?",
+      "a2": "Non. Commencez avec l'offre qui vous convient maintenant puis changez plus tard si besoin.",
+      "q3": "Quelle offre choisir pour plusieurs entrepots ?",
+      "a3": "Ultra est le meilleur choix si vous gerez plusieurs entrepots et avez besoin de plus d'accompagnement."
     },
     "finalCta": {
-      "title": "Commencez avec la bonne formule",
-      "description": "Vous n'avez pas besoin d'une complexite enterprise pour obtenir de la clarte operationnelle des le premier jour.",
+      "title": "Commencez avec l'offre qui vous convient",
+      "description": "Vous n'avez pas besoin d'outils compliques pour mieux gerer votre activite COD.",
       "cta1": "Creer un compte gratuit",
       "cta2": "Parler aux ventes"
     }
@@ -260,47 +271,47 @@
   "aboutPage": {
     "hero": {
       "eyebrow": "A propos",
-      "title1": "Repenser le commerce",
-      "title2": "avec clarte et controle",
-      "description": "Arba7i existe pour offrir aux marchands une maniere plus claire et plus sure de gerer le quotidien."
+      "title1": "Un systeme simple",
+      "title2": "pour les vendeurs COD",
+      "description": "Arba7i aide les marchands a gerer le travail quotidien sans stress ni outils compliques."
     },
     "mission": {
       "title": "Pourquoi Arba7i existe",
-      "body": "Les equipes e-commerce ne devraient pas dependre d'outils disperses et d'un suivi manuel permanent pour garder le controle.",
+      "body": "Beaucoup de vendeurs perdent du temps et de l'argent parce que les commandes, la livraison, le stock et le benefice sont separes dans trop d'outils.",
       "stat1Value": "24/7",
-      "stat1Label": "Visibilite operationnelle",
+      "stat1Label": "Voir tout clairement",
       "stat2Value": "1",
-      "stat2Label": "Espace unifie"
+      "stat2Label": "Un seul espace"
     },
     "values": {
-      "title": "Les principes derriere le produit",
-      "subtitle": "La direction du produit repose sur la clarte, la discipline et l'utilite reelle.",
-      "item1Title": "Transparence",
-      "item1Body": "Une logique produit claire, une tarification claire et une meilleure lecture des donnees.",
-      "item2Title": "Innovation utile",
-      "item2Body": "Nous resolvons la vraie friction operationnelle au lieu d'ajouter du bruit.",
-      "item3Title": "Marchand d'abord",
-      "item3Body": "Chaque decision part de la realite quotidienne des vendeurs et de leurs equipes.",
+      "title": "Les idees derriere le produit",
+      "subtitle": "Nous gardons le produit simple, utile et honnete.",
+      "item1Title": "Clarte",
+      "item1Body": "Vous devez comprendre vos commandes, vos couts et votre benefice sans confusion.",
+      "item2Title": "Outils utiles",
+      "item2Body": "Nous construisons ce dont les marchands ont vraiment besoin chaque jour.",
+      "item3Title": "Le marchand d'abord",
+      "item3Body": "La plateforme est pensee pour les vrais vendeurs, les equipes et les entrepots.",
       "item4Title": "Qualite",
-      "item4Body": "L'interface doit rester calme, intentionnelle et fiable sous pression."
+      "item4Body": "La plateforme doit rester simple et fiable meme pendant les grosses journees."
     },
     "philosophy": {
       "eyebrow": "Philosophie produit",
-      "title": "L'architecte fluide",
-      "body1": "Nous construisons des systemes structures qui restent flexibles dans la facon dont les equipes travaillent vraiment.",
-      "body2": "Quand les operations grossissent, l'interface doit vous aider a garder la clarte plutot qu'ajouter du flou."
+      "title": "Systeme simple",
+      "body1": "Nous voulons que la plateforme soit facile a comprendre des le premier jour.",
+      "body2": "Quand votre activite grandit, le systeme doit rester clair et facile a utiliser."
     },
     "team": {
-      "title": "Construit par des personnes proches des operations",
-      "description": "Le produit est pense autour des frictions quotidiennes des marchands, des entrepots et des equipes de commandes.",
-      "role1": "Direction produit",
-      "role2": "Design operationnel",
+      "title": "Construit pour le vrai travail quotidien",
+      "description": "Arba7i est pense autour des vrais problemes des vendeurs COD, du stock et du suivi livraison.",
+      "role1": "Produit",
+      "role2": "Operations",
       "role3": "Experience marchand",
       "role4": "Qualite plateforme"
     },
     "finalCta": {
-      "title": "Developpez-vous avec un systeme plus clair",
-      "description": "Si votre commerce grandit, vos outils doivent vous donner plus de clarte, pas plus de friction.",
+      "title": "Utilisez des outils qui gardent les choses claires",
+      "description": "Quand votre activite grandit, votre systeme doit vous aider a rester organise.",
       "cta1": "Commencer",
       "cta2": "Contacter les ventes"
     }
@@ -308,24 +319,24 @@
   "contactPage": {
     "hero": {
       "eyebrow": "Contact",
-      "title1": "Nous sommes la pour aider votre",
-      "title2": "entreprise a grandir",
-      "description": "Que vous ayez une question sur le produit ou besoin d'aide directe, l'equipe est disponible."
+      "title1": "Besoin d'aide pour",
+      "title2": "votre activite ?",
+      "description": "Si vous avez une question sur la plateforme, les tarifs ou la mise en place, parlez-nous."
     },
     "channels": {
       "salesTitle": "Ventes",
-      "salesBody": "Parlez-nous de la formule adaptee et de la facon dont la plateforme s'integre a votre activite.",
+      "salesBody": "Demandez-nous quelle offre convient a votre activite et comment bien demarrer.",
       "supportTitle": "Support",
-      "supportBody": "Obtenez de l'aide sur la mise en place, les workflows ou toute difficulte operationnelle.",
+      "supportBody": "Recevez de l'aide pour la mise en place, les commandes, la livraison, le stock ou tout blocage.",
       "partnerTitle": "Partenariats",
-      "partnerBody": "Contactez-nous pour les partenariats strategiques, integrations ou collaborations regionales."
+      "partnerBody": "Contactez-nous si vous voulez travailler avec nous sur des integrations ou des partenariats."
     },
     "form": {
       "title": "Envoyez-nous un message",
       "nameLabel": "Nom complet",
       "namePlaceholder": "Votre nom",
       "emailLabel": "Email professionnel",
-      "emailPlaceholder": "you@company.com",
+      "emailPlaceholder": "webdevyns@gmail.com",
       "subjectLabel": "Sujet",
       "subjectPlaceholder": "Comment pouvons-nous aider ?",
       "messageLabel": "Message",
@@ -334,64 +345,64 @@
     },
     "help": {
       "title": "Besoin d'une reponse rapide ?",
-      "description": "Pour les questions courantes sur la mise en place, la facturation et les workflows, les pages produit repondent souvent plus vite.",
-      "cta": "Decouvrir la plateforme"
+      "description": "Si votre question est courante, le centre d'aide vous repondra souvent plus vite.",
+      "cta": "Voir le centre d'aide"
     },
     "commitment": {
       "title": "Notre engagement",
-      "body": "Nous visons une reponse aux demandes commerciales sous un jour ouvrable."
+      "body": "Nous essayons de repondre aux demandes commerciales sous un jour ouvrable."
     }
   },
   "helpPage": {
     "hero": {
       "eyebrow": "Centre d'aide",
       "title": "Comment pouvons-nous vous aider ?",
-      "description": "Retrouvez des guides de mise en place, des reponses operationnelles et des chemins de support direct pour Arba7i.",
+      "description": "Trouvez des reponses claires sur la mise en place, les tarifs, les societes de livraison et l'acces au compte.",
       "searchPlaceholder": "Rechercher des articles, guides et reponses...",
       "popularLabel": "Populaire :",
-      "popular1": "Configuration du compte",
-      "popular2": "Cycle de facturation",
-      "popular3": "Connexion transporteur"
+      "popular1": "Mise en place du compte",
+      "popular2": "Facturation",
+      "popular3": "Societes de livraison"
     },
     "categories": {
       "item1Title": "Demarrage",
-      "item1Body": "Configurez votre espace, invitez votre equipe et connectez l'essentiel sans friction.",
+      "item1Body": "Nous vous aidons a ouvrir votre compte, ajouter votre boutique et bien demarrer sur Arba7i.",
       "item1Link1": "Creer votre espace",
       "item1Link2": "Inviter des membres",
       "item2Title": "Facturation",
-      "item2Body": "Formules, factures, moyens de paiement et modifications de facturation.",
+      "item2Body": "Obtenez de l'aide pour les offres, les factures, les paiements et le changement d'abonnement.",
       "item2Meta": "12 articles",
-      "item3Title": "Livraison",
-      "item3Body": "Configuration transporteurs, flux d'expedition et suivi des envois.",
+      "item3Title": "Societes de livraison",
+      "item3Body": "Obtenez de l'aide pour connecter les societes de livraison et comprendre le suivi des colis.",
       "item3Meta": "8 articles",
       "item4Title": "Compte",
-      "item4Body": "Securite du compte, gestion des acces et protection des profils.",
+      "item4Body": "Reglez les problemes de connexion et controlez ce que votre equipe peut voir et faire.",
       "item4Meta": "15 articles",
       "item5Title": "Integrations",
-      "item5Body": "Connexions plateforme, configuration du suivi et references techniques.",
+      "item5Body": "Posez vos questions sur le suivi et les outils que vous voulez connecter.",
       "item5Meta": "10 articles"
     },
     "faq": {
       "title": "Questions frequentes",
-      "subtitle": "Des reponses directes aux questions que les marchands posent le plus souvent au demarrage ou en phase de croissance.",
+      "subtitle": "Des reponses simples aux questions les plus courantes.",
       "q1": "Comment configurer ma boutique pour la premiere fois ?",
-      "a1": "Creez votre espace, ajoutez votre boutique et connectez vos partenaires de livraison avant de traiter vos premieres commandes.",
+      "a1": "Creez votre espace, ajoutez votre boutique et connectez vos societes de livraison avant les premieres commandes.",
       "q2": "Puis-je changer de formule plus tard ?",
-      "a2": "Oui. Vous pouvez passer a une offre superieure quand votre activite grandit ou ajuster votre cycle de facturation depuis votre compte.",
+      "a2": "Oui. Vous pouvez changer d'offre quand votre activite grandit ou modifier votre facturation depuis les reglages.",
       "q3": "Ou gerer les acces de l'equipe ?",
-      "a3": "Les membres, les permissions et les roles d'acces se gerent depuis la zone d'administration de votre espace.",
+      "a3": "Vous pouvez ajouter les membres et controler ce que votre equipe voit depuis l'administration.",
       "q4": "Comment contacter le support ?",
-      "a4": "Utilisez le chat, l'email de support ou la page de contact selon l'urgence et le type de demande."
+      "a4": "Utilisez la page de contact ou envoyez-nous un email a webdevyns@gmail.com."
     },
     "support": {
-      "title": "Besoin d'aide supplementaire ? Parlez a notre equipe.",
-      "description": "Si la reponse n'est pas dans le centre d'aide, contactez-nous directement et nous vous orienterons vers la bonne suite.",
+      "title": "Vous avez encore besoin d'aide ?",
+      "description": "Si vous ne trouvez pas la reponse ici, envoyez-nous un message et nous vous guiderons pas a pas.",
       "cta1": "Contacter le support",
       "cta2": "Envoyer un email"
     },
     "finalCta": {
-      "title": "Pret a avancer plus vite avec un meilleur support ?",
-      "description": "Demarrez avec un systeme plus clair et gardez une aide directe a portee de main quand votre activite en a besoin.",
+      "title": "Commencez avec une aide proche de vous",
+      "description": "Commencez avec un systeme simple et gardez le support pres de vous pendant la croissance de votre activite.",
       "cta1": "Commencer gratuitement",
       "cta2": "Voir les tarifs"
     }
@@ -400,49 +411,49 @@
     "hero": {
       "eyebrow": "Confidentialite",
       "title": "Politique de confidentialite",
-      "description": "Decouvrez comment Arba7i collecte, utilise, protege et gere les donnees sur la plateforme.",
+      "description": "Cette page explique quelles donnees nous prenons, pourquoi nous les prenons et comment nous les protegeons.",
       "updated": "Derniere mise a jour : 5 avril 2026"
     },
     "toc": {
       "title": "Contenu",
-      "note": "Vous cherchez plutot les conditions du service ?",
+      "note": "Vous cherchez plutot les regles du service ?",
       "link": "Lire les termes et conditions"
     },
     "sections": {
-      "section1Title": "Collecte des donnees",
-      "section1Body1": "Nous collectons les informations que vous fournissez directement lors de la creation du compte, de vos prises de contact ou de l'utilisation des fonctions principales.",
-      "section1Body2": "Cela peut inclure les coordonnees de l'entreprise, l'activite operationnelle et les informations techniques necessaires au bon fonctionnement du service.",
-      "section1Point1": "Identite de l'entreprise et coordonnees",
+      "section1Title": "Les donnees que nous prenons",
+      "section1Body1": "Nous prenons les informations que vous nous donnez quand vous creez un compte, nous contactez ou utilisez la plateforme.",
+      "section1Body2": "Cela peut inclure les details de votre entreprise, l'activite des commandes et les donnees techniques utiles pour faire fonctionner le service.",
+      "section1Point1": "Nom de l'entreprise et coordonnees",
       "section1Point2": "Activite des boutiques, commandes et expeditions",
       "section1Point3": "Appareil, navigateur et journaux de securite",
-      "section2Title": "Utilisation des donnees",
-      "section2Body1": "Nous utilisons ces informations pour fournir la plateforme, securiser les comptes, ameliorer les flux operationnels et assister les marchands.",
-      "section2Body2": "Nous n'utilisons pas les donnees operationnelles des marchands pour creer des profils publicitaires ni pour vendre des donnees comportementales.",
-      "section3Title": "Partage des donnees",
-      "section3Quote": "Nous ne vendons pas vos donnees personnelles ni operationnelles.",
-      "section3Body1": "Nous partageons uniquement les donnees avec des prestataires, des autorites lorsque la loi l'exige, ou des partenaires de confiance necessaires au fonctionnement du service.",
+      "section2Title": "Comment nous utilisons les donnees",
+      "section2Body1": "Nous utilisons les donnees pour faire fonctionner la plateforme, proteger les comptes, ameliorer le service et aider les marchands.",
+      "section2Body2": "Nous ne vendons pas vos donnees et nous n'utilisons pas votre activite pour creer des profils publicitaires.",
+      "section3Title": "Quand les donnees sont partagees",
+      "section3Quote": "Nous ne vendons pas vos donnees personnelles ni vos donnees d'activite.",
+      "section3Body1": "Nous partageons seulement les donnees avec les prestataires, les autorites si la loi l'impose, ou les partenaires necessaires au service.",
       "section4Title": "Securite",
-      "section4Body1": "Nous mettons en place des mesures techniques et organisationnelles pour proteger les comptes, les enregistrements operationnels et les acces administratifs.",
+      "section4Body1": "Nous utilisons des protections techniques et internes pour garder vos comptes et vos donnees en securite.",
       "section4Card1Title": "Transport chiffre",
-      "section4Card1Body": "Les donnees sensibles sont protegees en transit et stockees selon des pratiques d'infrastructure securisees.",
+      "section4Card1Body": "Les donnees sensibles sont protegees pendant leur passage entre votre appareil et nos systemes.",
       "section4Card2Title": "Surveillance des acces",
-      "section4Card2Body": "Nous surveillons les systemes critiques et limitons les acces privilegies aux workflows autorises."
+      "section4Card2Body": "Nous surveillons les systemes importants et limitons les acces eleves."
     },
     "rights": {
       "title": "Vos droits",
-      "description": "Selon la loi applicable, vous pouvez demander l'acces, la correction, la suppression ou l'export de vos donnees personnelles.",
+      "description": "Selon la loi, vous pouvez demander a voir, corriger, supprimer ou exporter vos donnees personnelles.",
       "item1Title": "Droit d'acces",
-      "item1Body": "Demander une copie des donnees personnelles liees a votre compte.",
+      "item1Body": "Demandez une copie des donnees personnelles liees a votre compte.",
       "item2Title": "Droit de correction",
-      "item2Body": "Mettre a jour les informations inexactes ou incompletes concernant votre entreprise.",
+      "item2Body": "Demandez la correction des informations incorrectes ou incompletes.",
       "item3Title": "Droit de suppression",
-      "item3Body": "Demander la suppression de votre compte et des donnees personnelles associees lorsque cela s'applique.",
+      "item3Body": "Demandez la suppression de votre compte et des donnees liees quand c'est permis.",
       "item4Title": "Portabilite des donnees",
-      "item4Body": "Demander un export de vos donnees dans un format structure et exploitable."
+      "item4Body": "Demandez vos donnees dans un format que vous pouvez utiliser."
     },
     "contact": {
-      "title": "Demandes liees a la confidentialite",
-      "description": "Si vous avez des questions sur cette politique ou sur le traitement des donnees, contactez directement notre equipe.",
+      "title": "Questions de confidentialite",
+      "description": "Si vous avez une question sur la confidentialite ou vos donnees, contactez notre equipe.",
       "cta": "Visiter le centre d'aide"
     }
   },
@@ -450,42 +461,42 @@
     "hero": {
       "eyebrow": "Conditions",
       "title": "Termes et conditions",
-      "description": "Veuillez lire attentivement ces termes avant d'utiliser la plateforme Arba7i pour vos operations.",
+      "description": "Voici les regles de base pour utiliser Arba7i.",
       "updated": "Derniere mise a jour : 5 avril 2026"
     },
     "toc": {
       "title": "Navigation",
-      "cardTitle": "Besoin d'une precision ?",
-      "cardBody": "Notre equipe peut vous aider a comprendre comment ces termes s'appliquent a votre usage de la plateforme.",
+      "cardTitle": "Besoin d'aide ?",
+      "cardBody": "Notre equipe peut expliquer ces regles avec des mots simples.",
       "cardCta": "Contacter le support"
     },
     "sections": {
       "section1Title": "Definitions",
-      "section1Body1": "Ces termes regissent l'acces et l'utilisation de la plateforme Arba7i, y compris les interfaces web et les outils operationnels associes.",
-      "section1Body2": "Les references a la plateforme, a l'utilisateur et aux services doivent etre interpretees dans le contexte de l'environnement operationnel d'Arba7i.",
+      "section1Body1": "Ces termes expliquent comment vous pouvez utiliser Arba7i et ses outils.",
+      "section1Body2": "Quand nous disons plateforme, utilisateur ou services, nous parlons du systeme Arba7i et des personnes qui l'utilisent.",
       "section2Title": "Comptes utilisateurs",
-      "section2Body1": "Vous etes responsable de l'exactitude des informations du compte et de la protection des identifiants d'acces a votre espace.",
-      "section2Body2": "Le partage non autorise des identifiants ou les abus d'acces peuvent entrainer une suspension ou une resiliation du service.",
-      "section2Note": "Nous pouvons demander des informations de verification d'entreprise lorsque cela est necessaire pour proteger la plateforme et respecter les obligations legales.",
+      "section2Body1": "Vous etes responsable des bonnes informations de votre compte et de la securite de vos identifiants.",
+      "section2Body2": "Si l'acces au compte est partage de la mauvaise facon ou mal utilise, nous pouvons suspendre le compte.",
+      "section2Note": "Nous pouvons demander une verification de l'entreprise pour des raisons de securite ou de loi.",
       "section3Title": "Frais et paiement",
-      "section3Body1": "Les offres payantes sont facturees selon le cycle choisi. Des taxes, conditions du prestataire de paiement et evolutions tarifaires peuvent s'appliquer selon votre region.",
-      "section3Point1": "Les frais sont factures a l'avance selon la formule choisie.",
-      "section3Point2": "Les tarifs peuvent evoluer avec un preavis raisonnable.",
-      "section3Point3": "Le renouvellement continue jusqu'a annulation selon la politique de facturation applicable.",
+      "section3Body1": "Les offres payantes sont facturees selon le cycle choisi. Les taxes ou les regles du prestataire de paiement peuvent aussi s'appliquer.",
+      "section3Point1": "Les frais sont payes a l'avance selon votre offre.",
+      "section3Point2": "Les prix peuvent changer avec preavis.",
+      "section3Point3": "L'abonnement continue jusqu'a son annulation.",
       "section4Title": "Propriete intellectuelle",
-      "section4Body1": "Le service Arba7i, son systeme de design, son logiciel et ses elements de marque restent la propriete d'Arba7i et de ses concédants.",
-      "section4Body2": "Vos donnees d'entreprise restent a vous. Notre logiciel, nos interfaces et nos supports restent a nous.",
-      "section4Quote": "Vos donnees restent a vous. La plateforme reste a nous. La valeur vient de leur fonctionnement commun.",
+      "section4Body1": "Arba7i garde la propriete de la plateforme, du logiciel, du design et de la marque.",
+      "section4Body2": "Les donnees de votre entreprise restent a vous. Notre logiciel et notre plateforme restent a nous.",
+      "section4Quote": "Vos donnees restent a vous. La plateforme reste a nous.",
       "section5Title": "Resiliation",
-      "section5Body1": "Nous pouvons suspendre ou resilier l'acces si ces termes sont violes ou si l'acces continu cree un risque legal ou operationnel.",
-      "section5Body2": "Vous pouvez cesser d'utiliser le service ou resilier votre compte via le processus de gestion de compte disponible.",
+      "section5Body1": "Nous pouvons suspendre ou arreter l'acces si ces termes ne sont pas respectes ou s'il y a un risque legal ou operationnel.",
+      "section5Body2": "Vous pouvez arreter le service et fermer votre compte depuis les reglages prevus.",
       "section6Title": "Avertissements",
-      "section6Body1": "Le service est fourni sur une base de meilleur effort continu. La disponibilite peut etre affectee par la maintenance, des dependances tierces ou des evenements de force majeure.",
-      "section6Body2": "Les marchands restent responsables de leurs decisions d'affaires, de leur conformite legale et des resultats operationnels issus de leur propre usage."
+      "section6Body1": "Nous faisons le maximum pour garder le service disponible, mais la maintenance, les services externes ou la force majeure peuvent avoir un effet.",
+      "section6Body2": "Vous restez responsable de vos decisions, de votre conformite legale et de votre usage de la plateforme."
     },
     "finalCta": {
       "title": "Des questions sur ces termes ?",
-      "description": "Contactez-nous si vous avez besoin d'aide pour comprendre les responsabilites, la facturation ou les politiques de compte.",
+      "description": "Contactez-nous si vous voulez mieux comprendre la facturation, les regles du compte ou les responsabilites.",
       "cta1": "Contacter le support",
       "cta2": "Lire la politique de confidentialite"
     }

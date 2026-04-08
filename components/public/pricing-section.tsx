@@ -14,6 +14,23 @@ export function PricingSection({ dict }: { dict: PricingDict }) {
 
   const plans = [
     {
+      name: dict?.home?.pricing?.welcomeName || "Welcome Offer",
+      monthlyPrice: "0",
+      annualPrice: "0",
+      description:
+        dict?.home?.pricing?.welcomeDescription ||
+        "A zero-cost starting point to explore the platform and begin organizing your workflow.",
+      cta: dict?.home?.pricing?.ctaWelcome || "Start for Free",
+      featured: false,
+      features: [
+        dict?.home?.pricing?.welcomeFeature1 || "Up to 50 orders / month",
+        dict?.home?.pricing?.welcomeFeature2 || "1 store and 1 team member",
+        dict?.home?.pricing?.welcomeFeature3 || "Order tracking from one dashboard",
+        dict?.home?.pricing?.welcomeFeature4 || "Basic stock visibility",
+        dict?.home?.pricing?.welcomeFeature5 || "Email support",
+      ],
+    },
+    {
       name: dict?.home?.pricing?.basicName || "Basic",
       monthlyPrice: "1,500",
       annualPrice: "15,000",
@@ -114,10 +131,10 @@ export function PricingSection({ dict }: { dict: PricingDict }) {
         </div>
       </div>
 
-      <div className="grid items-center gap-8 md:grid-cols-3">
-        {plans.map((plan) => (
+      <div className="grid items-stretch gap-8 md:grid-cols-2 xl:grid-cols-4">
+        {plans.map((plan, index) => (
           <div
-            key={plan.name}
+            key={`plan-${index}`}
             className={
               plan.featured
                 ? "relative z-10 flex flex-col rounded-[2.5rem] border-2 border-primary bg-card p-8 shadow-2xl shadow-primary/10 transition-all duration-500 md:scale-105"
@@ -143,17 +160,19 @@ export function PricingSection({ dict }: { dict: PricingDict }) {
                   {isAnnual ? plan.annualPrice : plan.monthlyPrice}
                 </span>
                 <span className="text-sm font-medium text-muted-foreground">
-                  {isAnnual
-                    ? dict?.home?.pricing?.annualSuffix || "DZD / year"
-                    : dict?.home?.pricing?.monthlySuffix || "DZD / month"}
+                  {plan.monthlyPrice === "0" && plan.annualPrice === "0"
+                    ? "DZD"
+                    : isAnnual
+                      ? dict?.home?.pricing?.annualSuffix || "DZD / year"
+                      : dict?.home?.pricing?.monthlySuffix || "DZD / month"}
                 </span>
               </div>
             </div>
 
             <ul className="mb-10 flex-grow space-y-4">
-              {plan.features.map((feature) => (
+              {plan.features.map((feature, featureIndex) => (
                 <li
-                  key={feature}
+                  key={`plan-${index}-feature-${featureIndex}`}
                   className="flex items-center gap-3 text-sm font-medium"
                 >
                   <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10">

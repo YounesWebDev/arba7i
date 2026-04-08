@@ -114,9 +114,17 @@
       "monthlySuffix": "DZD / month",
       "annualSuffix": "DZD / year",
       "featuredBadge": "Most Popular",
+      "welcomeName": "Welcome Offer",
+      "welcomeDescription": "A 15-day free offer to explore the platform and organize your workflow before upgrading.",
+      "ctaWelcome": "Start Now for Free",
+      "welcomeFeature1": "15 days free access",
+      "welcomeFeature2": "1 store and 1 team member",
+      "welcomeFeature3": "Order tracking from one dashboard",
+      "welcomeFeature4": "Basic stock visibility",
+      "welcomeFeature5": "Email support",
       "basicName": "Basic",
       "basicDescription": "Your ideal plan to start selling with confidence and without complexity.",
-      "ctaStart": "Start Now for Free",
+      "ctaStart": "Choose Basic",
       "basicFeature1": "Up to 500 orders / month",
       "basicFeature2": "Unlimited stores and team members",
       "basicFeature3": "Manage all your orders from one screen",
@@ -148,65 +156,65 @@
   "featuresPage": {
     "hero": {
       "eyebrow": "Features",
-      "title1": "All-in-One",
-      "title2": "E-commerce Control",
-      "description": "A practical operating layer for storefronts, orders, shipping, stock, and profit visibility.",
+      "title1": "Everything you need",
+      "title2": "to run your store",
+      "description": "Manage orders, delivery, stock, and profit from one simple place.",
       "cta1": "Start Free",
       "cta2": "Talk to Our Team"
     },
     "overview": {
-      "title": "Everything your operation needs",
-      "subtitle": "Built to reduce friction across the daily work that actually moves revenue."
+      "title": "Everything your business needs",
+      "subtitle": "Simple tools for the daily work that keeps your store moving."
     },
     "cards": {
-      "storefrontTitle": "Storefront Builder",
-      "storefrontBody": "Shape a clean storefront experience without fighting your tools.",
-      "shippingTitle": "Shipping Operations",
-      "shippingBody": "Connect carriers, route orders faster, and keep delivery under control.",
-      "financeTitle": "Profit Visibility",
-      "financeBody": "See how costs, returns, and delivery fees affect your net result.",
-      "inventoryTitle": "Inventory Control",
-      "inventoryBody": "Track stock across products and warehouses before issues become losses.",
-      "teamTitle": "Team Permissions",
-      "teamBody": "Assign responsibilities clearly and keep sensitive actions restricted.",
-      "insightsTitle": "Actionable Insights",
-      "insightsBody": "Use the right numbers to make faster and more confident decisions."
+      "storefrontTitle": "Store setup",
+      "storefrontBody": "Set up your store in a simple way and keep things easy to manage.",
+      "shippingTitle": "Auto-Shipping",
+      "shippingBody": "Send orders to delivery companies faster and follow each shipment easily.",
+      "financeTitle": "Real Profit",
+      "financeBody": "See what you really earn after delivery costs, returns, and other expenses.",
+      "inventoryTitle": "Stock control",
+      "inventoryBody": "Follow your stock and get alerts before products run out.",
+      "teamTitle": "Safe Team Access",
+      "teamBody": "Give each team member only the access they need to do their work.",
+      "insightsTitle": "Clear Reports",
+      "insightsBody": "See simple numbers and reports that help you make better decisions."
     },
     "highlights": {
-      "title": "Why teams move faster with Arba7i",
-      "item1": "A single workspace for storefront, orders, shipping, and finance.",
-      "item2": "Operational workflows built for COD and regional fulfillment realities.",
-      "item3": "Sharper visibility into the margin behind every order you send."
+      "title": "Why merchants choose Arba7i",
+      "item1": "One place for your store, orders, delivery, and profit.",
+      "item2": "Made for COD sellers and the way local delivery works.",
+      "item3": "Less confusion, fewer mistakes, and better follow-up every day."
     },
     "metrics": {
-      "title": "Built for measurable improvement",
-      "subtitle": "Cleaner operations, better margin visibility, and fewer avoidable errors.",
+      "title": "Built to make daily work easier",
+      "subtitle": "Less manual work, fewer mistakes, and clearer numbers.",
       "value1": "24/7",
-      "label1": "Operational visibility",
+      "label1": "See everything clearly",
       "value2": "-40%",
-      "label2": "Manual follow-up pressure",
+      "label2": "Manual follow-up",
       "value3": "+1",
-      "label3": "Unified control center"
+      "label3": "One dashboard"
     },
     "admin": {
       "eyebrow": "Administration",
-      "title": "Data-driven control for daily decisions",
-      "description": "See the financial effect of operations as they happen and keep your team aligned.",
-      "item1Title": "Real-time Profit Tracking",
-      "item1Body": "Follow revenue, delivery fees, and return costs from one dashboard.",
-      "item2Title": "Expense Logging",
-      "item2Body": "Keep marketing, stock, and overhead costs attached to the right operation.",
-      "item3Title": "Controlled Access",
-      "item3Body": "Give each team member the access they need without exposing everything.",
-      "panelTitle": "Financial Health",
+      "title": "Track your business easily",
+      "description": "Follow what is happening in your business and keep your team on the same page.",
+      "item1Title": "Real Profit",
+      "item1Body": "See sales, delivery costs, and returns from one dashboard.",
+      "item2Title": "Expense tracking",
+      "item2Body": "Keep marketing, stock, and daily costs organized in the right place.",
+      "item3Title": "Control what your team sees",
+      "item3Body": "Set clear permissions so each person sees only what they need.",
+      "panelTitle": "Real Profit",
       "panelDelta": "+18.5% This Month",
       "panelItem1": "Total Sales",
-      "panelItem2": "Operating Costs",
+      "panelItem2": "Business Costs",
       "panelFooterLabel": "Net Profit"
     },
     "finalCta": {
-      "title": "Start scaling with better control",
-      "description": "Bring your store, shipping, team, and numbers into one clear operating system.",
+      "title": "Run your store with more control",
+      "description": "Bring your orders, delivery, team, and numbers into one clear system.",
       "cta1": "Create Free Account",
       "cta2": "Talk to Sales"
     }
@@ -214,19 +222,21 @@
   "pricingPage": {
     "hero": {
       "eyebrow": "Pricing",
-      "title1": "Simple pricing that",
-      "title2": "grows with your store",
-      "description": "Choose the package that fits your current stage without paying for complexity you do not need yet."
+      "title1": "Simple pricing for",
+      "title2": "every stage",
+      "description": "Pick the plan that fits your business today and upgrade when you need more."
     },
     "comparison": {
-      "title": "Compare plans clearly",
-      "subtitle": "A direct view of what changes as your business gets more complex.",
+      "title": "Compare plans easily",
+      "subtitle": "See what each plan gives you in simple words.",
       "featureCol": "Feature",
       "row1": "Monthly orders",
+      "welcome1": "50",
       "basic1": "500",
       "pro1": "3,000",
       "ultra1": "Unlimited",
       "row2": "Stores and team",
+      "welcome2": "1 / 1",
       "basic2": "Unlimited",
       "pro2": "Unlimited",
       "ultra2": "Unlimited",
@@ -236,23 +246,24 @@
       "row4": "Multi-warehouse",
       "ultra4": "Included",
       "row5": "Priority support",
+      "welcome5": "Email",
       "basic5": "Standard",
       "pro5": "Priority",
       "ultra5": "Dedicated"
     },
     "faq": {
-      "title": "Common pricing questions",
-      "subtitle": "Short answers to the questions merchants usually ask before starting.",
+      "title": "Pricing questions",
+      "subtitle": "Simple answers before you start.",
       "q1": "Can I change plans later?",
-      "a1": "Yes. You can move up as your operations grow without losing your existing data.",
-      "q2": "Is there a long-term contract?",
-      "a2": "No. Start with the plan that fits your current stage and adjust when needed.",
-      "q3": "Which plan is best for multiple warehouses?",
-      "a3": "Ultra is the right fit when your business needs multi-warehouse coordination and tailored support."
+      "a1": "Yes. You can move to another plan when your business grows.",
+      "q2": "Do I need a long contract?",
+      "a2": "No. Start with what fits you now and change later if needed.",
+      "q3": "Which plan is best for many warehouses?",
+      "a3": "Ultra is best if you manage many warehouses and need more support."
     },
     "finalCta": {
-      "title": "Start with the right plan today",
-      "description": "You do not need enterprise complexity to get operational clarity from day one.",
+      "title": "Start with the plan that fits you",
+      "description": "You do not need complicated tools to start managing your COD business better.",
       "cta1": "Create Free Account",
       "cta2": "Talk to Sales"
     }
@@ -260,47 +271,47 @@
   "aboutPage": {
     "hero": {
       "eyebrow": "About",
-      "title1": "Reimagining commerce",
-      "title2": "with clarity and control",
-      "description": "Arba7i exists to give merchants a cleaner and more confident way to run daily operations."
+      "title1": "A simple system",
+      "title2": "for COD sellers",
+      "description": "Arba7i helps merchants manage daily work without stress or messy tools."
     },
     "mission": {
       "title": "Why Arba7i exists",
-      "body": "Commerce teams should not need scattered tools and constant manual follow-up to stay in control.",
+      "body": "Many sellers lose time and money because their orders, delivery, stock, and profit are split across too many tools.",
       "stat1Value": "24/7",
-      "stat1Label": "Operational visibility",
+      "stat1Label": "See everything clearly",
       "stat2Value": "1",
-      "stat2Label": "Unified workspace"
+      "stat2Label": "One workspace"
     },
     "values": {
-      "title": "The principles behind the product",
-      "subtitle": "The product direction is grounded in clarity, discipline, and usefulness.",
-      "item1Title": "Transparency",
-      "item1Body": "Clear product logic, clear pricing, and clear data visibility for merchants.",
-      "item2Title": "Useful Innovation",
-      "item2Body": "We focus on solving real operational friction instead of adding noise.",
-      "item3Title": "Merchant-First",
-      "item3Body": "Every decision starts with the daily realities of sellers and their teams.",
+      "title": "The ideas behind the product",
+      "subtitle": "We keep the product simple, useful, and honest.",
+      "item1Title": "Clarity",
+      "item1Body": "You should understand your orders, costs, and profit without confusion.",
+      "item2Title": "Useful tools",
+      "item2Body": "We build what merchants really need in daily work.",
+      "item3Title": "Merchant first",
+      "item3Body": "We design the platform around real sellers, teams, and warehouses.",
       "item4Title": "Quality",
-      "item4Body": "The interface should feel calm, intentional, and dependable under pressure."
+      "item4Body": "The platform should stay easy and reliable even when work gets busy."
     },
     "philosophy": {
       "eyebrow": "Product Philosophy",
-      "title": "The fluid architect",
-      "body1": "We build structured systems that still feel flexible in the way real teams work.",
-      "body2": "As operations grow, the interface should help you stay calm instead of making the business harder to see."
+      "title": "Simple system",
+      "body1": "We want the platform to feel easy from the first day, not heavy or confusing.",
+      "body2": "As your business grows, the system should stay clear and easy to use as you grow."
     },
     "team": {
-      "title": "Built by people who care about operations",
-      "description": "The product is shaped around the daily friction of merchants, warehouse teams, and order operations.",
-      "role1": "Product direction",
-      "role2": "Operational design",
+      "title": "Built for real daily work",
+      "description": "Arba7i is shaped around the real problems of COD sellers, stock teams, and delivery follow-up.",
+      "role1": "Product",
+      "role2": "Operations",
       "role3": "Merchant experience",
       "role4": "Platform quality"
     },
     "finalCta": {
-      "title": "Build with a clearer operating system",
-      "description": "If your business is scaling, your tools should give you more clarity, not more friction.",
+      "title": "Use tools that keep things clear",
+      "description": "As your business grows, your system should help you stay organized, not slow you down.",
       "cta1": "Get Started",
       "cta2": "Contact Sales"
     }
@@ -308,24 +319,24 @@
   "contactPage": {
     "hero": {
       "eyebrow": "Contact",
-      "title1": "We are here to help your",
-      "title2": "business scale",
-      "description": "Whether you have a product question or need direct help, the team is available."
+      "title1": "Need help with",
+      "title2": "your business?",
+      "description": "If you have a question about the platform, pricing, or setup, talk to us."
     },
     "channels": {
       "salesTitle": "Sales",
-      "salesBody": "Talk to us about the right plan and how the platform fits your operation.",
+      "salesBody": "Ask us which plan fits your business and what you need to get started.",
       "supportTitle": "Support",
-      "supportBody": "Get help with setup, workflows, or any issue affecting daily work.",
+      "supportBody": "Get help with setup, orders, delivery, stock, or anything blocking your work.",
       "partnerTitle": "Partnerships",
-      "partnerBody": "Reach out for strategic partnerships, integrations, or regional collaboration."
+      "partnerBody": "Contact us if you want to work together on integrations or business partnerships."
     },
     "form": {
       "title": "Send us a message",
       "nameLabel": "Full Name",
       "namePlaceholder": "Your name",
       "emailLabel": "Business Email",
-      "emailPlaceholder": "you@company.com",
+      "emailPlaceholder": "webdevyns@gmail.com",
       "subjectLabel": "Subject",
       "subjectPlaceholder": "How can we help?",
       "messageLabel": "Message",
@@ -333,65 +344,65 @@
       "submit": "Send Message"
     },
     "help": {
-      "title": "Looking for quick answers?",
-      "description": "For common questions about setup, billing, and workflows, our help center usually gets you there faster.",
-      "cta": "Explore the platform"
+      "title": "Need a quick answer?",
+      "description": "If your question is common, the help center may give you the answer faster.",
+      "cta": "Visit the help center"
     },
     "commitment": {
       "title": "Our commitment",
-      "body": "We aim to respond to business inquiries within one working day."
+      "body": "We try to answer business questions within one working day."
     }
   },
   "helpPage": {
     "hero": {
       "eyebrow": "Help Center",
-      "title": "How can we help you?",
-      "description": "Find setup guidance, operational answers, and direct support paths for the Arba7i platform.",
+      "title": "How can we help?",
+      "description": "Find clear answers about setup, pricing, delivery companies, and account access.",
       "searchPlaceholder": "Search for articles, guides, and answers...",
       "popularLabel": "Popular:",
       "popular1": "Account setup",
-      "popular2": "Billing cycle",
-      "popular3": "Carrier connection"
+      "popular2": "Billing",
+      "popular3": "Delivery companies"
     },
     "categories": {
-      "item1Title": "Getting Started",
-      "item1Body": "Set up your workspace, invite teammates, and connect the essentials without friction.",
+      "item1Title": "Getting started",
+      "item1Body": "We help you open your account, add your store, and start using Arba7i the right way.",
       "item1Link1": "Create your workspace",
       "item1Link2": "Invite team members",
       "item2Title": "Billing",
-      "item2Body": "Plans, invoices, payment methods, and account billing changes.",
+      "item2Body": "Get help with plans, invoices, payments, and changing your subscription.",
       "item2Meta": "12 articles",
-      "item3Title": "Shipping",
-      "item3Body": "Carrier setup, handoff flow, and shipment tracking guidance.",
+      "item3Title": "Delivery companies",
+      "item3Body": "Get help connecting delivery companies and understanding shipment flow.",
       "item3Meta": "8 articles",
       "item4Title": "Account",
-      "item4Body": "Security settings, access management, and account protection.",
+      "item4Body": "Fix login issues and control what your team can see and do.",
       "item4Meta": "15 articles",
       "item5Title": "Integrations",
-      "item5Body": "Platform connections, tracking setup, and technical references.",
+      "item5Body": "Ask us about tracking setup and the tools you want to connect.",
       "item5Meta": "10 articles"
     },
     "faq": {
       "title": "Frequently asked questions",
-      "subtitle": "Direct answers to the questions merchants usually ask when getting started or scaling operations.",
+      "subtitle": "Simple answers to common questions.",
       "q1": "How do I set up my store for the first time?",
-      "a1": "Create your workspace, add your store details, and connect delivery partners before processing your first orders.",
+      "a1": "Create your workspace, add your store, and connect your delivery companies before you start taking orders.",
       "q2": "Can I change my plan later?",
-      "a2": "Yes. You can upgrade when your operation grows or adjust your billing cycle from your account settings.",
+      "a2": "Yes. You can upgrade when your business grows or change your billing from your account settings.",
       "q3": "Where can I manage team access?",
-      "a3": "Team members, permissions, and access roles are managed from the administration area inside your workspace.",
+      "a3": "You can add team members and control what your team sees from the admin area.",
       "q4": "How do I contact support?",
-      "a4": "Use live chat, email support, or the contact page depending on the urgency and type of request."
+      "a4": "Use the contact page or send us an email at webdevyns@gmail.com."
     },
     "support": {
-      "title": "Still need help? Talk to our team.",
-      "description": "If the answer is not in the help center, reach out directly and we will point you to the right next step.",
+      "title": "Still need help?",
+      "description": "If your issue is not answered here, send us a message and we will guide you step by step.",
       "cta1": "Contact support",
       "cta2": "Email support"
     },
     "finalCta": {
-      "title": "Ready to move faster with better support?",
-      "description": "Start with a clearer operating system and keep direct help close when your business needs it.",
+      "title": "Start with support close to you",
+      "description": "Start with a simple system and keep support close while your business grows.",
       "cta1": "Start free",
       "cta2": "View pricing"
     }
@@ -400,49 +411,49 @@
     "hero": {
       "eyebrow": "Privacy",
       "title": "Privacy Policy",
-      "description": "Learn how Arba7i collects, uses, protects, and manages data across the platform.",
+      "description": "This page explains what data we collect, why we collect it, and how we protect it.",
       "updated": "Last updated: April 5, 2026"
     },
     "toc": {
       "title": "Contents",
-      "note": "Looking for the legal service terms instead?",
+      "note": "Looking for service rules instead?",
       "link": "Read Terms and Conditions"
     },
     "sections": {
-      "section1Title": "Data collection",
-      "section1Body1": "We collect the information you provide directly when creating an account, contacting us, or using core platform workflows.",
-      "section1Body2": "This can include business contact details, operational activity, and technical usage information needed to run the service reliably.",
-      "section1Point1": "Business identity and contact details",
-      "section1Point2": "Store, order, and shipment activity",
+      "section1Title": "What data we collect",
+      "section1Body1": "We collect the information you give us when you create an account, contact us, or use the platform.",
+      "section1Body2": "This may include your business details, order activity, and technical data needed to run the service.",
+      "section1Point1": "Business name and contact details",
+      "section1Point2": "Store, orders, and shipment activity",
       "section1Point3": "Device, browser, and security logs",
       "section2Title": "How we use data",
-      "section2Body1": "We use collected information to provide the platform, secure accounts, improve operational workflows, and support merchants effectively.",
-      "section2Body2": "We do not use merchant operational data to build advertising profiles or sell behavioral data to third parties.",
-      "section3Title": "Data sharing",
-      "section3Quote": "We do not sell your personal or operational data.",
-      "section3Body1": "We only share data with service providers, legal authorities where required, or trusted partners needed to operate the service under appropriate safeguards.",
+      "section2Body1": "We use data to run the platform, keep accounts safe, improve the service, and help merchants.",
+      "section2Body2": "We do not sell your data or use your business activity to build ad profiles.",
+      "section3Title": "When data is shared",
+      "section3Quote": "We do not sell your personal data or business data.",
+      "section3Body1": "We only share data with service providers, legal authorities when required, or trusted partners needed to run the service.",
       "section4Title": "Security",
-      "section4Body1": "We use technical and organizational safeguards designed to protect account data, operational records, and access to administrative systems.",
+      "section4Body1": "We use technical and internal protections to keep your account and business data safe.",
       "section4Card1Title": "Encrypted transport",
-      "section4Card1Body": "Sensitive data is protected in transit and stored using secure infrastructure practices.",
+      "section4Card1Body": "Sensitive data is protected when it moves between your device and our systems.",
       "section4Card2Title": "Access monitoring",
-      "section4Card2Body": "We monitor critical systems and restrict privileged access to authorized workflows."
+      "section4Card2Body": "We watch important systems and limit high-level access."
     },
     "rights": {
       "title": "Your rights",
-      "description": "Depending on applicable law, you may request access, correction, deletion, or export of your personal data.",
+      "description": "Depending on the law, you may ask to see, fix, delete, or export your personal data.",
       "item1Title": "Right to access",
       "item1Body": "Request a copy of the personal data associated with your account.",
       "item2Title": "Right to correction",
-      "item2Body": "Update inaccurate or incomplete information held about your business.",
+      "item2Body": "Ask us to fix wrong or incomplete information.",
       "item3Title": "Right to deletion",
-      "item3Body": "Request deletion of your account and associated personal data where applicable.",
+      "item3Body": "Ask us to delete your account and related personal data when allowed.",
       "item4Title": "Data portability",
-      "item4Body": "Ask for an export of your data in a structured and usable format."
+      "item4Body": "Ask for your data in a format you can use."
     },
     "contact": {
-      "title": "Privacy inquiries",
-      "description": "If you have questions about this policy or how data is handled, contact our team directly.",
+      "title": "Privacy questions",
+      "description": "If you have any questions about privacy or your data, contact our team.",
       "cta": "Visit help center"
     }
   },
@@ -450,42 +461,42 @@
     "hero": {
       "eyebrow": "Terms",
       "title": "Terms and Conditions",
-      "description": "Please read these terms carefully before using the Arba7i platform to manage business operations.",
+      "description": "These are the basic rules for using Arba7i.",
       "updated": "Last updated: April 5, 2026"
     },
     "toc": {
       "title": "Navigation",
-      "cardTitle": "Need clarification?",
-      "cardBody": "Our team can help explain how these terms apply to your use of the platform.",
+      "cardTitle": "Need help?",
+      "cardBody": "Our team can explain these rules in simple words.",
       "cardCta": "Contact support"
     },
     "sections": {
       "section1Title": "Definitions",
-      "section1Body1": "These terms govern access to and use of the Arba7i platform, including associated web interfaces and operational tools.",
-      "section1Body2": "References to the platform, user, and services should be interpreted in the context of Arba7i's merchant operations environment.",
+      "section1Body1": "These terms explain how you can use Arba7i and its tools.",
+      "section1Body2": "When we say platform, user, or services, we mean the Arba7i system and the people using it.",
       "section2Title": "User accounts",
-      "section2Body1": "You are responsible for maintaining accurate account information and protecting access credentials for your workspace.",
-      "section2Body2": "Unauthorized sharing of credentials or access abuse may result in suspension or termination of service.",
-      "section2Note": "We may request business verification information when needed to protect the platform and comply with legal obligations.",
+      "section2Body1": "You are responsible for keeping your account information correct and your login details safe.",
+      "section2Body2": "If account access is shared in the wrong way or abused, we may suspend the account.",
+      "section2Note": "We may ask for business verification when needed for security or legal reasons.",
       "section3Title": "Fees and payment",
-      "section3Body1": "Paid plans are billed according to the selected cycle. Taxes, payment provider conditions, and pricing changes may apply based on your region and plan.",
-      "section3Point1": "Fees are billed in advance according to your selected plan.",
-      "section3Point2": "Plan pricing may change with reasonable prior notice.",
-      "section3Point3": "Renewal continues until cancellation under the applicable billing policy.",
+      "section3Body1": "Paid plans are charged by the billing cycle you choose. Taxes or payment-provider rules may also apply.",
+      "section3Point1": "Fees are charged in advance based on your plan.",
+      "section3Point2": "Prices may change with notice.",
+      "section3Point3": "Your subscription renews until you cancel it.",
       "section4Title": "Intellectual property",
-      "section4Body1": "The Arba7i service, design system, software, and brand assets remain the property of Arba7i and its licensors.",
-      "section4Body2": "Your business data remains yours. Our software, interfaces, and supporting materials remain ours.",
-      "section4Quote": "Your data stays yours. The platform stays ours. The value comes from how they work together.",
+      "section4Body1": "Arba7i owns the platform, the software, the design, and the brand assets.",
+      "section4Body2": "Your business data stays yours. Our software and platform stay ours.",
+      "section4Quote": "Your data stays yours. The platform stays ours.",
       "section5Title": "Termination",
-      "section5Body1": "We may suspend or terminate access if these terms are breached or if continued access creates legal or operational risk.",
-      "section5Body2": "You may stop using the service or cancel your account through the available account management process.",
+      "section5Body1": "We may stop or suspend access if these terms are broken or if there is legal or operational risk.",
+      "section5Body2": "You can stop using the service and close your account through the available account settings.",
       "section6Title": "Disclaimers",
-      "section6Body1": "The service is provided on an ongoing best-effort basis. Availability may be affected by maintenance, third-party dependencies, or force majeure events.",
-      "section6Body2": "Merchants remain responsible for business decisions, legal compliance, and operational outcomes derived from their own use of the platform."
+      "section6Body1": "We work to keep the service available, but maintenance, outside services, or force majeure can affect availability.",
+      "section6Body2": "You are still responsible for your business decisions, legal compliance, and how you use the platform."
     },
     "finalCta": {
       "title": "Have questions about these terms?",
-      "description": "Reach out if you need help understanding responsibilities, billing terms, or account policies.",
+      "description": "Contact us if you want help understanding billing, account rules, or responsibilities.",
       "cta1": "Contact support",
       "cta2": "Read privacy policy"
     }

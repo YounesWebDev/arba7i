@@ -42,13 +42,13 @@ export function PublicNavbar({ lang, dict }: { lang: string; dict: NavbarDict })
           </Link>
 
           <div className="hidden items-center gap-6 md:flex">
-            {navItems.map((item) => {
+            {navItems.map((item, index) => {
               const href = `/${lang}${item.href}`;
               const isActive = pathname === href;
 
               return (
                 <Link
-                  key={item.title}
+                  key={`desktop-nav-${index}`}
                   href={href}
                   className={`group flex items-center gap-2 rounded-full px-3 py-2 text-sm font-semibold tracking-tight transition-all duration-300 ${
                     isActive
@@ -109,13 +109,13 @@ export function PublicNavbar({ lang, dict }: { lang: string; dict: NavbarDict })
       >
         <div className="space-y-6 px-4 py-5 sm:px-6">
           <div className="grid gap-2">
-            {navItems.map((item) => {
+            {navItems.map((item, index) => {
               const href = `/${lang}${item.href}`;
               const isActive = pathname === href;
 
               return (
                 <Link
-                  key={item.title}
+                  key={`mobile-nav-${index}`}
                   href={href}
                   onClick={() => setIsMenuOpen(false)}
                   className={`group flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-semibold transition-all ${

@@ -1,7 +1,39 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import { FadeInView } from "@/components/public/fade-in-view";
 import { ArrowRight, Lightbulb, ShieldCheck, Sparkles, Users } from "lucide-react";
 import { getDictionary } from "@/lib/dictionary";
 import type { Locale } from "@/i18n-config";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: Locale }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const dict = await getDictionary(lang);
+  const title = `Arba7i | ${dict?.aboutPage?.hero?.title2 || "About"}`;
+  const description =
+    dict?.aboutPage?.hero?.description ||
+    "Learn what Arba7i is, why it exists, and how it helps merchants run daily operations with more clarity.";
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      locale: lang,
+      siteName: "Arba7i",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "About Arba7i",
+      description,
+    },
+  };
+}
 
 export default async function AboutPage({
   params,
@@ -43,10 +75,12 @@ export default async function AboutPage({
   ];
 
   return (
-    <div className="bg-background text-foreground">
-      <section className="px-6 pb-24 pt-32 md:pt-44">
+    <div className="overflow-x-hidden bg-background pb-20 font-sans text-foreground selection:bg-primary/20 selection:text-primary">
+      <FadeInView as="section" className="relative overflow-hidden px-6 pb-24 pt-32 md:pt-44">
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-background to-background" />
         <div className="mx-auto max-w-5xl text-center">
-          <span className="mb-6 inline-flex rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+          <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/10 bg-primary/5 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-primary">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-gradient-to-br from-primary to-primary/80" />
             {dict?.aboutPage?.hero?.eyebrow || "About"}
           </span>
           <h1 className="text-5xl font-extrabold tracking-tighter md:text-7xl">
@@ -61,9 +95,9 @@ export default async function AboutPage({
               "Arba7i exists to give merchants a cleaner and more confident way to run daily operations."}
           </p>
         </div>
-      </section>
+      </FadeInView>
 
-      <section className="bg-muted/40 px-6 py-24">
+      <FadeInView as="section" className="bg-muted/40 px-6 py-24">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2 lg:items-center">
           <div>
             <h2 className="text-4xl font-extrabold tracking-tight md:text-5xl">
@@ -84,19 +118,21 @@ export default async function AboutPage({
                 value: dict?.aboutPage?.mission?.stat2Value || "1",
                 label: dict?.aboutPage?.mission?.stat2Label || "Unified workspace",
               },
-            ].map((item) => (
-              <div key={item.label} className="rounded-[2rem] bg-card p-8 shadow-sm">
-                <div className="text-4xl font-black text-primary">{item.value}</div>
-                <div className="mt-3 text-sm uppercase tracking-[0.18em] text-muted-foreground">
-                  {item.label}
+            ].map((item, index) => (
+              <FadeInView key={`mission-stat-${index}`} delay={index * 60}>
+                <div className="group rounded-2xl bg-card p-8 transition-all duration-300 hover:bg-background">
+                  <div className="text-4xl font-black text-primary">{item.value}</div>
+                  <div className="mt-3 text-sm uppercase tracking-[0.18em] text-muted-foreground">
+                    {item.label}
+                  </div>
                 </div>
-              </div>
+              </FadeInView>
             ))}
           </div>
         </div>
-      </section>
+      </FadeInView>
 
-      <section className="mx-auto max-w-7xl px-6 py-24">
+      <FadeInView as="section" className="mx-auto max-w-7xl px-6 py-24">
         <div className="mb-14 max-w-2xl">
           <h2 className="text-4xl font-extrabold tracking-tight md:text-5xl">
             {dict?.aboutPage?.values?.title || "The principles behind the product"}
@@ -107,24 +143,23 @@ export default async function AboutPage({
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-2">
-          {values.map((value) => (
-            <div
-              key={value.title}
-              className="group rounded-2xl bg-muted/40 p-8 transition-all duration-300 hover:bg-card"
-            >
-              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 transition-transform group-hover:scale-110">
-                <value.icon className="h-6 w-6 text-primary" />
+          {values.map((value, index) => (
+            <FadeInView key={`value-${index}`} delay={index * 60}>
+              <div className="group rounded-2xl bg-muted/40 p-8 transition-all duration-300 hover:bg-card">
+                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 transition-transform group-hover:scale-110">
+                  <value.icon className="h-6 w-6 text-primary" />
+                </div>
+                <h3 className="text-2xl font-bold">{value.title}</h3>
+                <p className="mt-3 leading-relaxed text-muted-foreground">{value.body}</p>
               </div>
-              <h3 className="text-2xl font-bold">{value.title}</h3>
-              <p className="mt-3 leading-relaxed text-muted-foreground">{value.body}</p>
-            </div>
+            </FadeInView>
           ))}
         </div>
-      </section>
+      </FadeInView>
 
-      <section className="bg-card px-6 py-24">
+      <FadeInView as="section" className="bg-muted/40 px-6 py-24">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2 lg:items-center">
-          <div className="rounded-[2.5rem] border border-border/20 bg-muted/40 p-10">
+          <div className="rounded-[2.5rem] border border-border/20 bg-card p-10 shadow-sm">
             <span className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
               {dict?.aboutPage?.philosophy?.eyebrow || "Product Philosophy"}
             </span>
@@ -149,47 +184,54 @@ export default async function AboutPage({
                 "The product is shaped around the daily friction of merchants, warehouse teams, and order operations."}
             </p>
             <div className="mt-10 grid gap-4 sm:grid-cols-2">
-              {[
+              {[ 
                 dict?.aboutPage?.team?.role1 || "Product direction",
                 dict?.aboutPage?.team?.role2 || "Operational design",
                 dict?.aboutPage?.team?.role3 || "Merchant experience",
                 dict?.aboutPage?.team?.role4 || "Platform quality",
-              ].map((role) => (
-                <div key={role} className="rounded-2xl border border-white/10 bg-white/10 p-4 font-medium">
-                  {role}
-                </div>
+              ].map((role, index) => (
+                <FadeInView key={`role-${index}`} delay={index * 60}>
+                  <div className="rounded-2xl border border-white/10 bg-white/10 p-4 font-medium">
+                    {role}
+                  </div>
+                </FadeInView>
               ))}
             </div>
           </div>
         </div>
-      </section>
+      </FadeInView>
 
-      <section className="px-6 py-24">
-        <div className="mx-auto max-w-6xl rounded-[3rem] bg-primary/10 p-12 text-center md:p-20">
-          <h2 className="text-4xl font-extrabold tracking-tighter text-primary md:text-5xl">
-            {dict?.aboutPage?.finalCta?.title || "Build with a clearer operating system"}
-          </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-            {dict?.aboutPage?.finalCta?.description ||
-              "If your business is scaling, your tools should give you more clarity, not more friction."}
-          </p>
-          <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
-            <Link
-              href={`/${lang}/register`}
-              className="rounded-2xl bg-gradient-to-br from-primary to-primary/80 px-8 py-4 font-bold text-primary-foreground"
-            >
-              {dict?.aboutPage?.finalCta?.cta1 || "Get Started"}
-            </Link>
-            <Link
-              href={`/${lang}/contact`}
-              className="inline-flex items-center justify-center gap-2 rounded-2xl border border-primary/20 bg-background px-8 py-4 font-bold text-primary"
-            >
-              {dict?.aboutPage?.finalCta?.cta2 || "Contact Sales"}
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+      <FadeInView as="section" className="relative overflow-hidden px-6 pt-24">
+        <div className="relative mx-auto max-w-7xl">
+          <div className="relative overflow-hidden rounded-[4rem] bg-gradient-to-r from-primary via-accent to-primary p-12 text-center text-primary-foreground shadow-2xl shadow-primary/20 md:p-24">
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
+            <div className="relative z-10 space-y-8">
+              <h2 className="text-4xl font-black tracking-tighter md:text-7xl">
+                {dict?.aboutPage?.finalCta?.title || "Build with a clearer operating system"}
+              </h2>
+              <p className="mx-auto max-w-2xl text-xl leading-relaxed opacity-90">
+                {dict?.aboutPage?.finalCta?.description ||
+                  "If your business is scaling, your tools should give you more clarity, not more friction."}
+              </p>
+              <div className="flex flex-col items-center justify-center gap-6 pt-6 sm:flex-row">
+                <Link
+                  href={`/${lang}/register`}
+                  className="rounded-2xl border border-transparent bg-background px-10 py-5 text-lg font-black text-primary shadow-2xl transition-all hover:scale-105 active:scale-95"
+                >
+                  {dict?.aboutPage?.finalCta?.cta1 || "Get Started"}
+                </Link>
+                <Link
+                  href={`/${lang}/contact`}
+                  className="inline-flex items-center justify-center gap-2 font-bold text-primary-foreground underline decoration-white/30 underline-offset-8 decoration-2 transition-all hover:decoration-white"
+                >
+                  {dict?.aboutPage?.finalCta?.cta2 || "Contact Sales"}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      </FadeInView>
     </div>
   );
 }

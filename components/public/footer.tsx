@@ -1,7 +1,7 @@
 // --- components/public/footer.tsx ---
 import Link from "next/link";
 import { 
-  AtSign, Globe, Sparkles, CreditCard, Building, 
+  Sparkles, CreditCard, Building, 
   Mail, ShieldCheck, FileText, HelpCircle 
 } from "lucide-react";
 import { LanguageSwitcher } from "@/components/public/language-switcher";
@@ -58,12 +58,12 @@ export function PublicFooter({ lang, dict }: { lang: string; dict: FooterDict })
           <LanguageSwitcher lang={lang} className="w-fit" />
         </div>
 
-        {footerSections.map((section) => (
-          <div key={section.title} className="space-y-4">
+        {footerSections.map((section, index) => (
+          <div key={`footer-section-${index}`} className="space-y-4">
             <h5 className="font-bold text-foreground">{section.title}</h5>
             <ul className="space-y-3 text-muted-foreground">
-              {section.links.map((link) => (
-                <li key={link.title}>
+              {section.links.map((link, linkIndex) => (
+                <li key={`footer-link-${index}-${linkIndex}`}>
                   <Link 
                     href={`/${lang}${link.href}`} 
                     className="flex items-center gap-2 transition-all hover:text-primary group"
