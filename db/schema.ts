@@ -9,11 +9,14 @@ import { pgTable, uuid, varchar, timestamp, boolean, unique, text, primaryKey, i
 // Users represent authenticated people in the system before they are attached to any specific store context.
 export const users = pgTable("users", {
   id: uuid("id").primaryKey().notNull(), // Exact UUID matched from Supabase Auth system
-  email: varchar("email").notNull().unique(), // e.g., 'seller@example.com'
-  fullName: varchar("full_name"), // e.g., 'Ahmed Benali'
-  phoneNumber: varchar("phone_number"), // e.g., '+213555123456'
-  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(), // Auto-set on creation
-  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow(), // Auto-set/updated
+  email: varchar("email").notNull().unique(), 
+  username: varchar("username").unique(), // NEW: For logging in and profile URLs
+  firstName: varchar("first_name"), // NEW
+  lastName: varchar("last_name"), // NEW
+  phoneNumber: varchar("phone_number").unique(), // Make unique so they can log in with it!
+  profilePic: text("profile_pic"), // NEW: URL to their avatar image
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow(),
 });
 
 // Stores are the tenant boundary, so almost every business record can be scoped to one seller account.

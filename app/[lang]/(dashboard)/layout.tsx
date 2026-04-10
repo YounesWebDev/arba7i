@@ -13,7 +13,7 @@ export default function DashboardLayout({
             <AppSidebar />
             <SidebarInset className="flex flex-col">
             <Topbar />
-            <main className="p-6 bg-slate-50 flex-1">
+            <main className="flex-1 bg-background px-4 py-6 sm:px-6">
                 {children}
             </main>
             </SidebarInset>

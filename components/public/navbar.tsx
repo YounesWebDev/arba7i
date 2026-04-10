@@ -10,6 +10,7 @@ import {
   Menu,
   Sparkles,
   UserRound,
+  Wallet,
   X,
 } from "lucide-react";
 import { LanguageSwitcher } from "@/components/public/language-switcher";
@@ -35,10 +36,13 @@ export function PublicNavbar({ lang, dict }: { lang: string; dict: NavbarDict })
         <div className="flex items-center gap-4 md:gap-8">
           <Link
             href={`/${lang}`}
-            className="text-xl font-bold tracking-tighter text-foreground sm:text-2xl"
+            className="flex flex-col items-center justify-center text-xl font-bold tracking-tighter sm:text-2xl"
             onClick={() => setIsMenuOpen(false)}
           >
-            Arba7i
+            <Wallet className="h-4 w-4 text-primary" />
+            <span className="bg-gradient-to-br from-primary to-accent bg-clip-text text-sm font-bold text-transparent">
+              Arba7i
+            </span>
           </Link>
 
           <div className="hidden items-center gap-6 md:flex">

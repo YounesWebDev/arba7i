@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
+import { DirectionProvider } from "@/components/ui/direction";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 const inter = Inter({
@@ -25,11 +26,18 @@ export default async function RootLayout({
   const dir = lang === "ar" ? "rtl" : "ltr";
 
   return (
-    <html lang={lang} dir={dir} className={`${inter.variable} h-full antialiased`}>
+    <html
+      lang={lang}
+      dir={dir}
+      data-scroll-behavior="smooth"
+      className={`${inter.variable} h-full antialiased`}
+    >
       <body suppressHydrationWarning className="min-h-full flex flex-col">
-        <TooltipProvider>
-          {children}
-        </TooltipProvider>
+        <DirectionProvider dir={dir}>
+          <TooltipProvider>
+            {children}
+          </TooltipProvider>
+        </DirectionProvider>
       </body>
     </html>
   );

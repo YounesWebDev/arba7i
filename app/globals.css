@@ -224,6 +224,19 @@
   opacity: 1;
 }
 
+@keyframes auth-gradient-pan {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.animate-auth-gradient-pan {
+  animation: auth-gradient-pan 2.4s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -233,5 +246,9 @@
   .fade-in-view.is-visible {
     opacity: 1;
     transition: none;
+  }
+
+  .animate-auth-gradient-pan {
+    animation: none;
   }
 }

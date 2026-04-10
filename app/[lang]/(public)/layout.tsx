@@ -9,12 +9,12 @@ export default async function PublicLayout({
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ lang: Locale }>; // Use your strict Locale type here
+  params: Promise<{ lang: string }>;
 }>) {
   const { lang } = await params;
 
   // Fetch the correct dictionary before the page even renders!
-  const dict = await getDictionary(lang);
+  const dict = await getDictionary(lang as Locale);
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",

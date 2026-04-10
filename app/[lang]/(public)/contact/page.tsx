@@ -7,10 +7,10 @@ import type { Locale } from "@/i18n-config";
 export default async function ContactPage({
   params,
 }: {
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const dict = await getDictionary(lang);
+  const dict = await getDictionary(lang as Locale);
 
   const channels = [
     {

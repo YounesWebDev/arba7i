@@ -8,10 +8,10 @@ import type { Locale } from "@/i18n-config";
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   const { lang } = await params;
-  const dict = await getDictionary(lang);
+  const dict = await getDictionary(lang as Locale);
   const title = `Arba7i | ${dict?.pricingPage?.hero?.title1 || "Pricing"}`;
   const description =
     dict?.pricingPage?.hero?.description ||
@@ -38,10 +38,10 @@ export async function generateMetadata({
 export default async function PricingPage({
   params,
 }: {
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const dict = await getDictionary(lang);
+  const dict = await getDictionary(lang as Locale);
 
   const comparisons = [
     {
