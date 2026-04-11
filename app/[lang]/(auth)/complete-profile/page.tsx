@@ -38,13 +38,14 @@ export default async function CompleteProfilePage({
 
   const dict = await getDictionary(lang as Locale);
   const copy = dict.authPages?.completeProfile;
+  const isArabic = lang === "ar";
 
   return (
     <>
       {error && (
               <Alert variant="destructive">
                 <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Error</AlertTitle>
+                <AlertTitle>{isArabic ? "خطأ" : "Error"}</AlertTitle>
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}

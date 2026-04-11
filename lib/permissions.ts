@@ -11,14 +11,20 @@ export type Permission =
   | "view_financials"        // Can they see total profit, revenue, and payouts?
   | "process_orders"         // Can they move an order to 'shipped' or 'delivered'?
   | "confirm_orders"         // Can they call customers to say "Your order is ready"?
-  | "manage_inventory";      // Can they update how many items are left in stock?
+  | "manage_inventory"       // Can they update how many items are left in stock?
+  | "access_admin";          // Can they enter the platform admin console?
 
 // ============================================================================
 // 2. THE ROLES (Who works in the store)
 // ============================================================================
 // These MUST match the exact spelling of the roles we put in your Drizzle 
 // database schema earlier ("owner", "manager", etc.).
-export type Role = "owner" | "manager" | "confirmation_agent" | "warehouse_staff";
+export type Role =
+  | "owner"
+  | "admin"
+  | "manager"
+  | "confirmation_agent"
+  | "warehouse_staff";
 
 // ============================================================================
 // 3. THE MATRIX (Connecting Roles to Permissions)
@@ -38,6 +44,20 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     "process_orders",
     "confirm_orders",
     "manage_inventory",
+    "access_admin",
+  ],
+
+  // The 'admin' operates the platform with the same application access scope.
+  admin: [
+    "view_dashboard",
+    "manage_store_settings",
+    "manage_team",
+    "manage_products",
+    "view_financials",
+    "process_orders",
+    "confirm_orders",
+    "manage_inventory",
+    "access_admin",
   ],
   
   // The 'manager' runs daily operations. They can manage products and orders, 

@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 type ResetPasswordCopy = {
   title?: string;
   description?: string;
+  alertErrorTitle?: string;
   passwordLabel?: string;
   passwordPlaceholder?: string;
   confirmPasswordLabel?: string;
@@ -37,13 +38,14 @@ export default function ResetPasswordClientForm({
   const passwordsMatch = confirmPassword.length > 0 ? password === confirmPassword : null;
   const dir = useDirection();
   const isRtl = dir === "rtl";
+  const isArabic = lang === "ar";
 
   return (
     <div dir={dir}>
       {error && (
               <Alert variant="destructive">
                 <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Error</AlertTitle>
+                <AlertTitle>{copy?.alertErrorTitle || (isArabic ? "خطأ" : "Error")}</AlertTitle>
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}

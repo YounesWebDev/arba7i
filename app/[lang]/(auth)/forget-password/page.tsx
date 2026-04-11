@@ -18,6 +18,7 @@ export default async function ForgotPasswordPage({
   const { message, error } = await searchParams;
   const dict = await getDictionary(lang as Locale);
   const copy = dict.authPages?.forgetPassword;
+  const isArabic = lang === "ar";
 
   return (
     <>
@@ -27,7 +28,7 @@ export default async function ForgotPasswordPage({
                 className={error ? "" : "border-primary/20 bg-primary/5 text-primary"}
               >
                 <AlertCircle className="h-4 w-4" />
-                <AlertTitle>{error ? "Error" : "Info"}</AlertTitle>
+                <AlertTitle>{error ? (isArabic ? "خطأ" : "Error") : (isArabic ? "معلومة" : "Info")}</AlertTitle>
                 <AlertDescription>{error || message}</AlertDescription>
               </Alert>
             )}

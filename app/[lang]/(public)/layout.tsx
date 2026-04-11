@@ -1,8 +1,11 @@
 // --- app/[lang]/(public)/layout.tsx ---
+import Script from "next/script";
 import { PublicNavbar } from "@/components/public/navbar";
 import { PublicFooter } from "@/components/public/footer";
 import { getDictionary } from "@/lib/dictionary"; // Your new loader!
 import type { Locale } from "@/i18n-config";
+
+export const dynamic = "force-static";
 
 export default async function PublicLayout({
   children,
@@ -35,8 +38,10 @@ export default async function PublicLayout({
       <PublicNavbar lang={lang} dict={dict} />
 
       <main className="flex-1 pt-18 sm:pt-20">
-        <script
+        <Script
+          id="arba7i-structured-data"
           type="application/ld+json"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
         {children}

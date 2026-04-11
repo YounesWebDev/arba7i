@@ -21,10 +21,13 @@ export default async function ResetPasswordPage({
   } = await supabase.auth.getUser();
 
   if (!user) {
+    const resetError =
+      lang === "ar"
+        ? "لازم تطلب استرجاع كلمة المرور أولاً."
+        : "Please request a password reset first.";
+
     redirect(
-      `/${lang}/forget-password?error=${encodeURIComponent(
-        "Please request a password reset first."
-      )}`
+      `/${lang}/forget-password?error=${encodeURIComponent(resetError)}`
     );
   }
 

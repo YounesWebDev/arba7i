@@ -5,6 +5,43 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 
+const AUTH_MESSAGES = {
+  en: {
+    credentialsRequired: "Credentials are required.",
+    invalidLoginCredentials: "Invalid login credentials.",
+    allFieldsRequired: "All fields are required.",
+    passwordsDoNotMatch: "Passwords do not match.",
+    accountCreated: "Account created! Please log in.",
+    googleAuthFailed: "Could not authenticate with Google.",
+    fillAllFields: "Please fill in all fields.",
+    usernameMinLength: "Username must be at least 5 characters long.",
+    usernameInvalid: "Username can only contain letters, numbers, and underscores.",
+    usernameOrPhoneTaken: "This username or phone number is already taken.",
+    emailRequired: "Email is required.",
+    checkResetEmail: "Check your email for the secure reset link!",
+    passwordUpdated: "Password updated successfully. Please log in.",
+  },
+  ar: {
+    credentialsRequired: "لازم تدخل بيانات الدخول.",
+    invalidLoginCredentials: "بيانات الدخول غير صحيحة.",
+    allFieldsRequired: "كل الخانات لازمة.",
+    passwordsDoNotMatch: "كلمتا المرور ماهُمش متطابقتين.",
+    accountCreated: "تم إنشاء الحساب. سجل الدخول باش تكمل.",
+    googleAuthFailed: "ما قدرناش نسجلوك عبر Google.",
+    fillAllFields: "عمر كل الخانات.",
+    usernameMinLength: "اسم المستخدم لازم يكون فيه 5 أحرف على الأقل.",
+    usernameInvalid: "اسم المستخدم يقبل غير الحروف والأرقام و _.",
+    usernameOrPhoneTaken: "اسم المستخدم أو رقم الهاتف راه مستعمل من قبل.",
+    emailRequired: "الإيميل مطلوب.",
+    checkResetEmail: "شوف الإيميل تاعك، بعثنالك رابط آمن للاسترجاع.",
+    passwordUpdated: "تم تحديث كلمة المرور. سجل الدخول من جديد.",
+  },
+} as const;
+
+function getAuthMessage(lang: string, key: keyof typeof AUTH_MESSAGES.en) {
+  return (lang === "ar" ? AUTH_MESSAGES.ar : AUTH_MESSAGES.en)[key];
+}
+
 // Helper function to keep multi-language routing smooth
 async function getLocaleFromHeaders() {
   const referer = (await headers()).get("referer");
@@ -35,7 +72,7 @@ export async function login(formData: FormData) {
   const lang = (formData.get("lang") as string) || (await getLocaleFromHeaders());
 
   if (!identifier || !password) {
-    redirect(`/${lang}/login?error=${encodeURIComponent("Credentials are required.")}`);
+    redirect(`/${lang}/login?error=${encodeURIComponent(getAuthMessage(lang, "credentialsRequired"))}`);
   }
 
   let emailToLogin = identifier;
@@ -58,7 +95,7 @@ export async function login(formData: FormData) {
     }
 
     if (lookupError || !lookupData || !lookupData.email) {
-      redirect(`/${lang}/login?error=${encodeURIComponent("Invalid login credentials.")}`);
+      redirect(`/${lang}/login?error=${encodeURIComponent(getAuthMessage(lang, "invalidLoginCredentials"))}`);
     }
     
     emailToLogin = lookupData.email;
@@ -112,20 +149,20 @@ export async function signup(formData: FormData) {
   const lang = (formData.get("lang") as string) || (await getLocaleFromHeaders());
 
   if (!firstName || !lastName || !username || !phoneNumber || !email || !password || !confirmPassword) {
-    redirect(`/${lang}/register?error=${encodeURIComponent("All fields are required.")}`);
+    redirect(`/${lang}/register?error=${encodeURIComponent(getAuthMessage(lang, "allFieldsRequired"))}`);
   }
 
   if (password !== confirmPassword) {
-    redirect(`/${lang}/register?error=${encodeURIComponent("Passwords do not match.")}`);
+    redirect(`/${lang}/register?error=${encodeURIComponent(getAuthMessage(lang, "passwordsDoNotMatch"))}`);
   }
 
   const usernameRegex = /^[a-zA-Z0-9_]+$/;
   if (username.length < 5) {
-    redirect(`/${lang}/register?error=${encodeURIComponent("Username must be at least 5 characters long.")}`);
+    redirect(`/${lang}/register?error=${encodeURIComponent(getAuthMessage(lang, "usernameMinLength"))}`);
   }
 
   if (!usernameRegex.test(username)) {
-    redirect(`/${lang}/register?error=${encodeURIComponent("Username can only contain letters, numbers, and underscores.")}`);
+    redirect(`/${lang}/register?error=${encodeURIComponent(getAuthMessage(lang, "usernameInvalid"))}`);
   }
 
   const { data: authData, error: authError } = await supabase.auth.signUp({
@@ -161,7 +198,7 @@ export async function signup(formData: FormData) {
   }
 
   await supabase.auth.signOut();
-  redirect(`/${lang}/login?message=${encodeURIComponent("Account created! Please log in.")}`);
+  redirect(`/${lang}/login?message=${encodeURIComponent(getAuthMessage(lang, "accountCreated"))}`);
 }
 
 // 3. Google Login
@@ -177,7 +214,7 @@ export async function signInWithGoogle(formData: FormData) {
   });
 
   if (error) {
-    redirect(`/${lang}/login?error=${encodeURIComponent("Could not authenticate with Google")}`);
+    redirect(`/${lang}/login?error=${encodeURIComponent(getAuthMessage(lang, "googleAuthFailed"))}`);
   }
   if (data.url) redirect(data.url);
 }
@@ -194,16 +231,16 @@ export async function completeProfile(formData: FormData) {
   const lang = formData.get("lang") as string || "en";
 
   if (!username || !phoneNumber) {
-    redirect(`/${lang}/complete-profile?error=${encodeURIComponent("Please fill in all fields")}`);
+    redirect(`/${lang}/complete-profile?error=${encodeURIComponent(getAuthMessage(lang, "fillAllFields"))}`);
   }
 
   const usernameRegex = /^[a-zA-Z0-9_]+$/;
   if (username.trim().length < 5) {
-    redirect(`/${lang}/complete-profile?error=${encodeURIComponent("Username must be at least 5 characters long")}`);
+    redirect(`/${lang}/complete-profile?error=${encodeURIComponent(getAuthMessage(lang, "usernameMinLength"))}`);
   }
 
   if (!usernameRegex.test(username)) {
-    redirect(`/${lang}/complete-profile?error=${encodeURIComponent("Username can only contain letters, numbers, and underscores")}`);
+    redirect(`/${lang}/complete-profile?error=${encodeURIComponent(getAuthMessage(lang, "usernameInvalid"))}`);
   }
 
   const { error } = await supabase
@@ -216,7 +253,7 @@ export async function completeProfile(formData: FormData) {
 
   if (error) {
     if (error.code === '23505') {
-      redirect(`/${lang}/complete-profile?error=${encodeURIComponent("This username or phone number is already taken")}`);
+      redirect(`/${lang}/complete-profile?error=${encodeURIComponent(getAuthMessage(lang, "usernameOrPhoneTaken"))}`);
     }
     redirect(`/${lang}/complete-profile?error=${encodeURIComponent(error.message)}`);
   }
@@ -258,7 +295,7 @@ export async function sendPasswordResetEmail(formData: FormData) {
   const lang = (formData.get("lang") as string) || "en";
 
   if (!email) {
-    redirect(`/${lang}/forgot-password?error=${encodeURIComponent("Email is required.")}`);
+    redirect(`/${lang}/forgot-password?error=${encodeURIComponent(getAuthMessage(lang, "emailRequired"))}`);
   }
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -269,7 +306,7 @@ export async function sendPasswordResetEmail(formData: FormData) {
     redirect(`/${lang}/forgot-password?error=${encodeURIComponent(error.message)}`);
   }
 
-  redirect(`/${lang}/forgot-password?message=${encodeURIComponent("Check your email for the secure reset link!")}`);
+  redirect(`/${lang}/forgot-password?message=${encodeURIComponent(getAuthMessage(lang, "checkResetEmail"))}`);
 }
 
 // 7. Update Password (After clicking the email link)
@@ -280,11 +317,11 @@ export async function updatePassword(formData: FormData) {
   const lang = (formData.get("lang") as string) || "en";
 
   if (!password || !confirmPassword) {
-    redirect(`/${lang}/reset-password?error=${encodeURIComponent("All fields are required.")}`);
+    redirect(`/${lang}/reset-password?error=${encodeURIComponent(getAuthMessage(lang, "allFieldsRequired"))}`);
   }
 
   if (password !== confirmPassword) {
-    redirect(`/${lang}/reset-password?error=${encodeURIComponent("Passwords do not match.")}`);
+    redirect(`/${lang}/reset-password?error=${encodeURIComponent(getAuthMessage(lang, "passwordsDoNotMatch"))}`);
   }
 
   const { data, error } = await supabase.auth.updateUser({ password });
@@ -303,5 +340,5 @@ export async function updatePassword(formData: FormData) {
   }
 
   await supabase.auth.signOut();
-  redirect(`/${lang}/login?message=${encodeURIComponent("Password updated successfully. Please log in.")}`);
+  redirect(`/${lang}/login?message=${encodeURIComponent(getAuthMessage(lang, "passwordUpdated"))}`);
 }

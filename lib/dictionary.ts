@@ -1,6 +1,7 @@
 // --- lib/dictionary.ts ---
 
 // This package ensures this code NEVER runs on the user's browser, keeping your app fast and secure.
+import { cache } from 'react'
 import 'server-only'
 
 // We import the Locale type we created so TypeScript knows exactly which languages are allowed.
@@ -16,4 +17,4 @@ const dictionaries = {
 
 // This is the main function we will use in our pages. 
 // Give it a locale (like 'ar'), and it returns the correct dictionary!
-export const getDictionary = async (locale: Locale) => dictionaries[locale]()
+export const getDictionary = cache(async (locale: Locale) => dictionaries[locale]())

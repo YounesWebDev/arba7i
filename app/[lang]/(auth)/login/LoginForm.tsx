@@ -22,6 +22,8 @@ type LoginCopy = {
   badge?: string;
   title?: string;
   description?: string;
+  alertErrorTitle?: string;
+  alertInfoTitle?: string;
   identifierLabel?: string;
   identifierPlaceholder?: string;
   passwordLabel?: string;
@@ -47,6 +49,7 @@ export function LoginForm({
   const [showPassword, setShowPassword] = useState(false);
   const dir = useDirection();
   const isRtl = dir === "rtl";
+  const isArabic = lang === "ar";
 
   return (
     <div dir={dir}>
@@ -56,7 +59,11 @@ export function LoginForm({
                 className={error ? "" : "border-primary/20 bg-primary/5 text-primary"}
               >
                 <AlertCircle className="h-4 w-4" />
-                <AlertTitle>{error ? "Error" : "Info"}</AlertTitle>
+                <AlertTitle>
+                  {error
+                    ? copy?.alertErrorTitle || (isArabic ? "خطأ" : "Error")
+                    : copy?.alertInfoTitle || (isArabic ? "معلومة" : "Info")}
+                </AlertTitle>
                 <AlertDescription>{error || message}</AlertDescription>
               </Alert>
             )}

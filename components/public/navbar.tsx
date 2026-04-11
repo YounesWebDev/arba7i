@@ -13,6 +13,7 @@ import {
   Wallet,
   X,
 } from "lucide-react";
+import { ModeToggle } from "@/components/mode-toggle";
 import { LanguageSwitcher } from "@/components/public/language-switcher";
 
 type NavbarDict = {
@@ -78,6 +79,7 @@ export function PublicNavbar({ lang, dict }: { lang: string; dict: NavbarDict })
 
         <div className="flex items-center gap-4">
           <LanguageSwitcher lang={lang} />
+          <ModeToggle />
 
           <button
             type="button"

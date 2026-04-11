@@ -6,6 +6,7 @@ export async function updateSession(request: NextRequest) {
   const pathSegments = pathname.split('/');
   const currentLocale = pathSegments[1] || 'ar';
   const pathnameWithoutLocale = pathname.replace(`/${currentLocale}`, '') || '/';
+  const isLocalizedRoute = /^\/(ar|en|fr)(\/|$)/.test(pathname);
 
   let supabaseResponse = NextResponse.next({
     request,
@@ -38,9 +39,9 @@ export async function updateSession(request: NextRequest) {
     } = await supabase.auth.getUser();
 
     // 1. If user is NOT logged in and tries to access /dashboard
-    if (!user && pathnameWithoutLocale.startsWith('/dashboard')) {
+    if (!user && (pathnameWithoutLocale.startsWith('/dashboard') || pathname.startsWith('/admin'))) {
       const url = request.nextUrl.clone();
-      url.pathname = `/${currentLocale}/login`;
+      url.pathname = isLocalizedRoute ? `/${currentLocale}/login` : '/ar/login';
       return NextResponse.redirect(url);
     }
 
@@ -59,9 +60,9 @@ export async function updateSession(request: NextRequest) {
     
   } catch {
     // If the auth provider is temporarily unreachable, do not take public routes down.
-    if (pathnameWithoutLocale.startsWith('/dashboard')) {
+    if (pathnameWithoutLocale.startsWith('/dashboard') || pathname.startsWith('/admin')) {
       const url = request.nextUrl.clone();
-      url.pathname = `/${currentLocale}/login`;
+      url.pathname = isLocalizedRoute ? `/${currentLocale}/login` : '/ar/login';
       return NextResponse.redirect(url);
     }
   }

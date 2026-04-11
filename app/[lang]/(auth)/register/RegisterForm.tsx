@@ -25,6 +25,7 @@ type RegisterCopy = {
   badge?: string;
   title?: string;
   description?: string;
+  alertErrorTitle?: string;
   back?: string;
   next?: string;
   identityTitle?: string;
@@ -92,7 +93,7 @@ export function RegisterForm({
       {error && (
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
-          <AlertTitle>{isArabic ? "خطأ" : "Error"}</AlertTitle>
+          <AlertTitle>{copy?.alertErrorTitle || (isArabic ? "خطأ" : "Error")}</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}

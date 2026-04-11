@@ -357,6 +357,8 @@ export function DataTable({
     [data]
   )
 
+  // TanStack Table is intentionally used here; React Compiler skips memoization for this hook.
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns,

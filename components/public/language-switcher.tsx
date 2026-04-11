@@ -1,8 +1,10 @@
 // --- components/public/language-switcher.tsx ---
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { startTransition, useEffect, useMemo } from "react";
 import type { Locale } from "@/i18n-config";
+import { cn } from "@/lib/utils";
 
 const locales: Array<{ code: Locale; label: string }> = [
   { code: "ar", label: "AR" },
@@ -24,17 +26,43 @@ export function LanguageSwitcher({
 }: LanguageSwitcherProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const search = searchParams.toString();
+
+  const getLocalizedPath = useMemo(
+    () => (targetLang: string) => {
+      const segments = (pathname ?? "/").split("/").filter(Boolean);
+      const hasLocalePrefix = locales.some(({ code }) => code === segments[0]);
+      const nextSegments = hasLocalePrefix
+        ? [targetLang, ...segments.slice(1)]
+        : [targetLang, ...segments];
+
+      return `/${nextSegments.join("/")}${search ? `?${search}` : ""}`;
+    },
+    [pathname, search]
+  );
 
   // Find the active tab based on the URL, not useState
   const activeIndex = locales.findIndex(({ code }) => code === lang);
   const safeIndex = activeIndex === -1 ? 0 : activeIndex; // Fallback to AR
 
+  useEffect(() => {
+    locales
+      .filter(({ code }) => code !== lang)
+      .forEach(({ code }) => {
+        router.prefetch(getLocalizedPath(code));
+      });
+  }, [getLocalizedPath, lang, router]);
+
   // The function that changes the website language
   const handleLanguageSwitch = (newLang: string) => {
-    if (!pathname) return;
-    const segments = pathname.split("/");
-    segments[1] = newLang;
-    router.push(segments.join("/"));
+    if (!pathname || newLang === lang) return;
+
+    const nextPath = getLocalizedPath(newLang);
+
+    startTransition(() => {
+      router.replace(nextPath);
+    });
   };
 
   // The thumb should follow visual option order, which is already AR, EN, FR.
@@ -42,16 +70,16 @@ export function LanguageSwitcher({
 
   return (
     <div
-      className={`relative isolate rounded-full border border-border/40 bg-muted/85 p-1 shadow-inner backdrop-blur-sm ${
+      className={`relative isolate rounded-full border border-border/60 bg-background/80 p-1 shadow-sm backdrop-blur-sm ${
         mobileVisible ? "grid grid-cols-3" : "hidden sm:grid sm:grid-cols-3"
       } ${className}`.trim()}
-      role="radiogroup"
+      role="group"
       aria-label="Language"
       dir="ltr"
     >
       <span
         aria-hidden="true"
-        className="absolute inset-y-1 left-1 w-[calc((100%-0.5rem)/3)] rounded-full bg-background shadow-md ring-1 ring-border/30 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] transform-gpu will-change-transform"
+        className="absolute inset-y-1 left-1 w-[calc((100%-0.5rem)/3)] rounded-full bg-primary shadow-sm ring-1 ring-primary/20 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] transform-gpu will-change-transform"
         style={{ transform: `translateX(${slideValue}%)` }}
       />
 
@@ -59,22 +87,19 @@ export function LanguageSwitcher({
         const isActive = lang === code;
 
         return (
-          <label
+          <button
+            type="button"
             key={code}
-            className={`relative z-10 cursor-pointer rounded-full px-3 py-1.5 text-center text-xs transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-95 ${
+            onClick={() => handleLanguageSwitch(code)}
+            className={cn(
+              "relative z-10 rounded-full px-3 py-1.5 text-center text-xs transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-95",
               isActive
-                ? "scale-[1.02] font-bold text-primary"
+                ? "scale-[1.02] font-bold text-primary-foreground"
                 : "font-semibold text-muted-foreground hover:text-foreground"
-            }`}
+            )}
+            aria-pressed={isActive}
+            aria-label={`Switch language to ${label}`}
           >
-            <input
-              type="radio"
-              name="language"
-              value={code}
-              checked={isActive}
-              onChange={() => handleLanguageSwitch(code)}
-              className="sr-only"
-            />
             <span
               className={`inline-block transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                 isActive ? "translate-y-0 opacity-100" : "translate-y-px opacity-80"
@@ -82,7 +107,7 @@ export function LanguageSwitcher({
             >
               {label}
             </span>
-          </label>
+          </button>
         );
       })}
     </div>

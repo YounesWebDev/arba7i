@@ -3,7 +3,6 @@
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { KeyRound, LogIn, ShieldCheck, UserCircle, Wallet } from "lucide-react";
-import TextType from "@/components/TextType";
 import { useDirection } from "@/components/ui/direction";
 
 type AuthCopy = {
@@ -105,23 +104,12 @@ export function AuthLayoutShell({
                 </div>
 
                 {config.badge ? (
-                  <div className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-bold uppercase tracking-[0.18em] text-primary">
+                  <div className="flex items-center justify-center rounded-full bg-primary/10 px-1 py-1 text-sm font-bold uppercase tracking-[0.18em] text-primary">
                     {config.badge}
                   </div>
                 ) : null}
 
-                <TextType
-                  as="h1"
-                  text={[config.title]}
-                  typingSpeed={75}
-                  deletingSpeed={50}
-                  pauseDuration={1500}
-                  showCursor
-                  cursorCharacter="▎"
-                  loop={false}
-                  className="mt-4 text-3xl font-extrabold tracking-tight lg:hidden"
-                />
-                <h1 className="mt-4 hidden text-3xl font-extrabold tracking-tight lg:block">
+                <h1 className="mt-4 text-3xl font-extrabold tracking-tight">
                   {config.title}
                 </h1>
               </div>

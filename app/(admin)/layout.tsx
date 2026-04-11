@@ -1,10 +1,62 @@
 // --- app/(admin)/layout.tsx ---
 
-export default function AdminLayout({
+import { redirect } from "next/navigation";
+import { writeAuditLog } from "@/lib/audit";
+import { hasPermission, type Role } from "@/lib/permissions";
+import { createClient } from "@/utils/supabase/server";
+
+function normalizeRole(role: string | null | undefined): Role {
+  if (
+    role === "owner" ||
+    role === "admin" ||
+    role === "manager" ||
+    role === "confirmation_agent" ||
+    role === "warehouse_staff"
+  ) {
+    return role;
+  }
+
+  return "owner";
+}
+
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/ar/login");
+  }
+
+  const { data: userData } = await supabase
+    .from("users")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+
+  const role = normalizeRole(userData?.role);
+
+  if (!hasPermission(role, "access_admin")) {
+    await writeAuditLog({
+      userId: user.id,
+      action: "role_check_denied",
+      details: `Role "${role}" was denied permission "access_admin".`,
+    });
+
+    redirect("/ar/unauthorized");
+  }
+
+  await writeAuditLog({
+    userId: user.id,
+    action: "role_check_allowed",
+    details: `Role "${role}" was granted permission "access_admin".`,
+  });
+
   return (
     // We use a dark slate theme here so it is instantly visually distinct 
     // from the white/light-gray Seller Dashboard.
