@@ -6,6 +6,7 @@ const defaultLocale = "ar";
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const pathnameWithoutLocale = pathname.replace(/^\/(ar|en|fr)(?=\/|$)/, "") || "/";
   
   // 1. THE FIX: Skip language routing for Supabase Auth Callbacks
   if (pathname.startsWith('/auth/callback')) {
@@ -26,7 +27,19 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(request.nextUrl);
   }
 
-  // 4. If the URL is fully valid, pass it to Supabase for Auth & Cookie handling
+  const needsAuthSession =
+    pathnameWithoutLocale.startsWith("/dashboard") ||
+    pathnameWithoutLocale.startsWith("/admin") ||
+    pathnameWithoutLocale.startsWith("/login") ||
+    pathnameWithoutLocale.startsWith("/register") ||
+    pathnameWithoutLocale.startsWith("/forgot-password") ||
+    pathnameWithoutLocale.startsWith("/complete-profile");
+
+  if (!needsAuthSession) {
+    return NextResponse.next();
+  }
+
+  // 4. Only auth-sensitive routes need Supabase session handling
   return await updateSession(request);
 }
 

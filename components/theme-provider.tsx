@@ -14,6 +14,7 @@ type ThemeContextValue = {
 const ThemeContext = React.createContext<ThemeContextValue | null>(null)
 
 const STORAGE_KEY = "theme"
+const COOKIE_NAME = "theme"
 
 function getSystemTheme(): ResolvedTheme {
   if (typeof window === "undefined") return "light"
@@ -28,6 +29,11 @@ function applyTheme(theme: ThemeName) {
   root.style.colorScheme = resolvedTheme
 
   return resolvedTheme
+}
+
+function persistTheme(theme: ThemeName) {
+  window.localStorage.setItem(STORAGE_KEY, theme)
+  document.cookie = `${COOKIE_NAME}=${theme}; path=/; max-age=31536000; samesite=lax`
 }
 
 function getInitialThemeState(): { theme: ThemeName; resolvedTheme: ResolvedTheme } {
@@ -50,6 +56,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   React.useLayoutEffect(() => {
     const initialState = getInitialThemeState()
+    persistTheme(initialState.theme)
     setThemeState(initialState.theme)
     setResolvedTheme(applyTheme(initialState.theme))
   }, [])
@@ -69,7 +76,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [theme])
 
   const setTheme = React.useCallback((nextTheme: ThemeName) => {
-    window.localStorage.setItem(STORAGE_KEY, nextTheme)
+    persistTheme(nextTheme)
     setThemeState(nextTheme)
     setResolvedTheme(applyTheme(nextTheme))
   }, [])

@@ -12,7 +12,7 @@ export function FadeInView<T extends ElementType = "div">({
   as,
   children,
   className,
-  delay = 0,
+  delay = 800,
   ...rest
 }: FadeInViewProps<T>) {
   const Tag = (as ?? "div") as ElementType

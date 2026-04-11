@@ -12,6 +12,8 @@ import {
   UserCog,
   Wallet,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { getDictionary } from "@/lib/dictionary";
 import type { Locale } from "@/i18n-config";
 
@@ -152,19 +154,26 @@ export default async function FeaturesPage({
               "A practical operating layer for stores, orders, shipping, stock, and profit."}
           </p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link
-              href={`/${lang}/register`}
-              className="w-full rounded-lg bg-gradient-to-br from-primary to-accent px-8 py-4 text-base font-bold text-primary-foreground shadow-xl shadow-primary/12 transition-all duration-300 hover:scale-105 active:scale-95 sm:w-auto"
+            <Button
+              asChild
+              size="lg"
+              className="h-auto w-full rounded-lg bg-gradient-to-br from-primary to-accent px-8 py-4 text-base font-bold text-primary-foreground shadow-xl shadow-primary/12 transition-all duration-300 hover:scale-105 active:scale-95 sm:w-auto"
             >
-              {dict?.featuresPage?.hero?.cta1 || "Start Free"}
-            </Link>
-            <Link
-              href={`/${lang}/contact`}
-              className="flex w-full items-center justify-center gap-2 rounded-lg border border-border/30 px-8 py-4 text-base font-semibold transition-all hover:bg-muted sm:w-auto"
+              <Link href={`/${lang}/register`}>
+                {dict?.featuresPage?.hero?.cta1 || "Start Free"}
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="flex h-auto w-full items-center justify-center gap-2 rounded-lg border-border/30 px-8 py-4 text-base font-semibold sm:w-auto"
             >
-              {dict?.featuresPage?.hero?.cta2 || "Talk to Our Team"}
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+              <Link href={`/${lang}/contact`}>
+                {dict?.featuresPage?.hero?.cta2 || "Talk to Our Team"}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
           </div>
         </div>
       </FadeInView>
@@ -183,7 +192,8 @@ export default async function FeaturesPage({
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {features.map((feature, index) => (
               <FadeInView key={`feature-${index}`} delay={index * 60}>
-                <div className="group rounded-2xl bg-muted/40 p-8 transition-all duration-300 hover:bg-card">
+                <Card className="group rounded-2xl border-0 bg-muted/40 transition-all duration-300 hover:bg-card">
+                  <CardContent className="p-8">
                   <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 transition-transform group-hover:scale-110">
                     <feature.icon className="h-6 w-6 text-primary" />
                   </div>
@@ -191,7 +201,8 @@ export default async function FeaturesPage({
                   <p className="text-sm leading-relaxed text-muted-foreground">
                     {feature.body}
                   </p>
-                </div>
+                  </CardContent>
+                </Card>
               </FadeInView>
             ))}
           </div>
@@ -200,23 +211,28 @@ export default async function FeaturesPage({
 
       <FadeInView as="section" className="mx-auto max-w-7xl px-6 py-24">
         <div className="grid gap-8 lg:grid-cols-2">
-          <div className="rounded-[2.5rem] border border-border/20 bg-card p-8 shadow-sm md:p-10">
+          <Card className="rounded-[2.5rem] border-border/20 bg-card shadow-sm">
+            <CardContent className="p-8 md:p-10">
             <h2 className="mb-6 text-3xl font-extrabold tracking-tight md:text-4xl">
               {dict?.featuresPage?.highlights?.title || "Why teams move faster with Arba7i"}
             </h2>
             <div className="space-y-4">
               {highlights.map((item, index) => (
                 <FadeInView key={`highlight-${index}`} delay={index * 60}>
-                  <div className="flex gap-4 rounded-2xl border border-border/20 bg-muted/40 p-5">
+                  <Card className="rounded-2xl border-border/20 bg-muted/40 shadow-none">
+                    <CardContent className="flex gap-4 p-5">
                     <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                     <p className="text-sm leading-relaxed text-foreground/80">{item}</p>
-                  </div>
+                    </CardContent>
+                  </Card>
                 </FadeInView>
               ))}
             </div>
-          </div>
+            </CardContent>
+          </Card>
 
-          <div className="rounded-[2.5rem] bg-gradient-to-br from-primary to-accent p-8 text-primary-foreground shadow-2xl shadow-primary/20 md:p-10">
+          <Card className="rounded-[2.5rem] border-0 bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-2xl shadow-primary/20">
+            <CardContent className="p-8 md:p-10">
             <h2 className="mb-6 text-3xl font-extrabold tracking-tight md:text-4xl">
               {dict?.featuresPage?.metrics?.title || "Built for measurable improvement"}
             </h2>
@@ -240,14 +256,17 @@ export default async function FeaturesPage({
                 },
               ].map((item, index) => (
                 <FadeInView key={`metric-${index}`} delay={index * 60}>
-                  <div className="rounded-2xl border border-white/10 bg-white/10 p-5">
+                  <Card className="rounded-2xl border-white/10 bg-white/10 text-primary-foreground shadow-none">
+                    <CardContent className="p-5">
                     <div className="text-3xl font-black">{item.value}</div>
                     <div className="mt-2 text-sm text-primary-foreground/75">{item.label}</div>
-                  </div>
+                    </CardContent>
+                  </Card>
                 </FadeInView>
               ))}
             </div>
-          </div>
+            </CardContent>
+          </Card>
         </div>
       </FadeInView>
 
@@ -339,18 +358,21 @@ export default async function FeaturesPage({
               "Bring your store, shipping, team, and numbers into one clear operating system."}
           </p>
           <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
-            <Link
-              href={`/${lang}/register`}
-              className="rounded-2xl bg-background px-8 py-4 text-base font-bold text-primary"
+            <Button asChild size="lg" className="h-auto rounded-2xl bg-background px-8 py-4 text-base font-bold text-primary">
+              <Link href={`/${lang}/register`}>
+                {dict?.featuresPage?.finalCta?.cta1 || "Create Free Account"}
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="h-auto rounded-2xl border-white/20 bg-transparent px-8 py-4 text-base font-bold text-primary-foreground"
             >
-              {dict?.featuresPage?.finalCta?.cta1 || "Create Free Account"}
-            </Link>
-            <Link
-              href={`/${lang}/contact`}
-              className="rounded-2xl border border-white/20 px-8 py-4 text-base font-bold text-primary-foreground"
-            >
-              {dict?.featuresPage?.finalCta?.cta2 || "Talk to Sales"}
-            </Link>
+              <Link href={`/${lang}/contact`}>
+                {dict?.featuresPage?.finalCta?.cta2 || "Talk to Sales"}
+              </Link>
+            </Button>
           </div>
         </div>
       </FadeInView>

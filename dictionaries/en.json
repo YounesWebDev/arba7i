@@ -607,7 +607,7 @@
     "riskyTitle": "Attention Required",
     "fromDeliveredOrders": "From delivered orders",
     "waitingToProcess": "Waiting to be processed",
-    "inCatalog": "In your catalog",
+    "inCatalog": "In your store",
     "flagsTriggered": "Flags triggered",
     "salesTrend": "Sales Trend",
     "chartDesc": "Revenue over the last 7 days.",
@@ -646,6 +646,17 @@
     "stockBadge": "Stable",
     "riskBadgeActive": "Action needed",
     "riskBadgeClear": "Clear",
-    "chartRevenueLabel": "Revenue (DZD)"
+    "chartRevenueLabel": "Revenue (DZD)",
+    "totalOrdersTitle": "Total Orders",
+    "deliveredTitle": "Delivered",
+    "returnedTitle": "Returned",
+    "expensesTitle": "Expenses",
+    "netProfitTitle": "Net Profit",
+    "allOrdersDesc": "All orders in your store",
+    "deliveredRateSuffix": "delivery rate",
+    "returnedRateSuffix": "return rate",
+    "deliveredRevenueDesc": "From delivered orders",
+    "trackedExpensesDesc": "Total tracked expenses",
+    "netProfitDesc": "Revenue minus expenses"
   }
 }

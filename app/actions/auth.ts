@@ -51,6 +51,24 @@ async function getLocaleFromHeaders() {
   return match?.[1] ?? "en";
 }
 
+async function getRequestOrigin() {
+  const headerStore = await headers();
+  const origin = headerStore.get("origin");
+
+  if (origin) return origin;
+
+  const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
+  const protocol =
+    headerStore.get("x-forwarded-proto") ??
+    (host?.includes("localhost") || host?.startsWith("127.0.0.1") ? "http" : "http");
+
+  if (host) {
+    return `${protocol}://${host}`;
+  }
+
+  return process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+}
+
 async function getUserProfileState(userId: string, supabase: Awaited<ReturnType<typeof createClient>>) {
   const { data: profile } = await supabase
     .from("users")
@@ -205,11 +223,12 @@ export async function signup(formData: FormData) {
 export async function signInWithGoogle(formData: FormData) {
   const lang = (formData.get("lang") as string) || (await getLocaleFromHeaders());
   const supabase = await createClient();
+  const origin = await getRequestOrigin();
   
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback?next=/${lang}/dashboard`,
+      redirectTo: `${origin}/auth/callback?next=/${lang}/dashboard`,
     },
   });
 
@@ -293,13 +312,14 @@ export async function sendPasswordResetEmail(formData: FormData) {
   const supabase = await createClient();
   const email = formData.get("email") as string;
   const lang = (formData.get("lang") as string) || "en";
+  const origin = await getRequestOrigin();
 
   if (!email) {
     redirect(`/${lang}/forgot-password?error=${encodeURIComponent(getAuthMessage(lang, "emailRequired"))}`);
   }
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback?next=/${lang}/reset-password`,
+    redirectTo: `${origin}/auth/callback?next=/${lang}/reset-password`,
   });
 
   if (error) {

@@ -15,6 +15,32 @@ const dictionaries = {
     ar: () => import('../dictionaries/ar.json').then((module) => module.default),
 }
 
+function mergeDashboardPage<T extends Record<string, unknown>>(
+  base: T,
+  override: Partial<T>
+) {
+  return {
+    ...base,
+    ...override,
+    dashboardPage: {
+      ...(base.dashboardPage as Record<string, unknown> | undefined),
+      ...(override.dashboardPage as Record<string, unknown> | undefined),
+    },
+  }
+}
+
 // This is the main function we will use in our pages. 
 // Give it a locale (like 'ar'), and it returns the correct dictionary!
-export const getDictionary = cache(async (locale: Locale) => dictionaries[locale]())
+export const getDictionary = cache(async (locale: Locale) => {
+  const dictionary = await dictionaries[locale]()
+
+  if (locale !== "ar") {
+    return dictionary
+  }
+
+  const dashboardArabicOverride = await import("../dictionaries/ar-dashboard-page.json").then(
+    (module) => module.default
+  )
+
+  return mergeDashboardPage(dictionary, dashboardArabicOverride)
+})

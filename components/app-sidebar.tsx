@@ -58,20 +58,80 @@ function getSidebarCopy(lang: string): {
       insights: "التحليلات",
       comingSoon: "قريبًا",
       footerTitle: "Arba7i",
-      footerDescription: "سيّر الطلبيات والشحن والمخزون والربح من بلاصة وحدة.",
+      footerDescription: "أدر الطلبات والشحن والمخزون والربح من مكان واحد.",
       primaryItems: [
-        { title: "نظرة عامة", href: "/dashboard", icon: LayoutDashboard, permission: "view_dashboard", available: true },
-        { title: "الطلبات", href: "/dashboard/orders", icon: ShoppingCart, permission: "process_orders", available: false },
-        { title: "توربو", href: "/dashboard/turbo", icon: Boxes, permission: "process_orders", available: false },
-        { title: "المنتجات", href: "/dashboard/products", icon: Package, permission: "manage_products", available: false },
-        { title: "الشحنات", href: "/dashboard/shipments", icon: Truck, permission: "process_orders", available: false },
+        {
+          title: "نظرة عامة",
+          href: "/dashboard",
+          icon: LayoutDashboard,
+          permission: "view_dashboard",
+          available: true,
+        },
+        {
+          title: "الطلبات",
+          href: "/dashboard/orders",
+          icon: ShoppingCart,
+          permission: "process_orders",
+          available: false,
+        },
+        {
+          title: "توربو",
+          href: "/dashboard/turbo",
+          icon: Boxes,
+          permission: "process_orders",
+          available: false,
+        },
+        {
+          title: "المنتجات",
+          href: "/dashboard/products",
+          icon: Package,
+          permission: "manage_products",
+          available: false,
+        },
+        {
+          title: "الشحنات",
+          href: "/dashboard/shipments",
+          icon: Truck,
+          permission: "process_orders",
+          available: false,
+        },
       ],
       secondaryItems: [
-        { title: "الرادار", href: "/dashboard/radar", icon: Radar, permission: "view_financials", available: false },
-        { title: "العملاء", href: "/dashboard/customers", icon: Users, permission: "manage_team", available: false },
-        { title: "المصاريف", href: "/dashboard/expenses", icon: CreditCard, permission: "view_financials", available: false },
-        { title: "التحليلات", href: "/dashboard/analytics", icon: BarChart3, permission: "view_financials", available: false },
-        { title: "الإعدادات", href: "/dashboard/settings", icon: Settings, permission: "manage_store_settings", available: false },
+        {
+          title: "الرادار",
+          href: "/dashboard/radar",
+          icon: Radar,
+          permission: "view_financials",
+          available: false,
+        },
+        {
+          title: "العملاء",
+          href: "/dashboard/customers",
+          icon: Users,
+          permission: "manage_team",
+          available: false,
+        },
+        {
+          title: "المصاريف",
+          href: "/dashboard/expenses",
+          icon: CreditCard,
+          permission: "view_financials",
+          available: false,
+        },
+        {
+          title: "التحليلات",
+          href: "/dashboard/analytics",
+          icon: BarChart3,
+          permission: "view_financials",
+          available: false,
+        },
+        {
+          title: "الإعدادات",
+          href: "/dashboard/settings",
+          icon: Settings,
+          permission: "manage_store_settings",
+          available: false,
+        },
       ],
     }
   }
@@ -85,18 +145,78 @@ function getSidebarCopy(lang: string): {
     footerTitle: "Arba7i",
     footerDescription: "Manage orders, shipping, stock, and profit from one place.",
     primaryItems: [
-      { title: "Overview", href: "/dashboard", icon: LayoutDashboard, permission: "view_dashboard", available: true },
-      { title: "Orders", href: "/dashboard/orders", icon: ShoppingCart, permission: "process_orders", available: false },
-      { title: "Turbo", href: "/dashboard/turbo", icon: Boxes, permission: "process_orders", available: false },
-      { title: "Products", href: "/dashboard/products", icon: Package, permission: "manage_products", available: false },
-      { title: "Shipments", href: "/dashboard/shipments", icon: Truck, permission: "process_orders", available: false },
+      {
+        title: "Overview",
+        href: "/dashboard",
+        icon: LayoutDashboard,
+        permission: "view_dashboard",
+        available: true,
+      },
+      {
+        title: "Orders",
+        href: "/dashboard/orders",
+        icon: ShoppingCart,
+        permission: "process_orders",
+        available: false,
+      },
+      {
+        title: "Turbo",
+        href: "/dashboard/turbo",
+        icon: Boxes,
+        permission: "process_orders",
+        available: false,
+      },
+      {
+        title: "Products",
+        href: "/dashboard/products",
+        icon: Package,
+        permission: "manage_products",
+        available: false,
+      },
+      {
+        title: "Shipments",
+        href: "/dashboard/shipments",
+        icon: Truck,
+        permission: "process_orders",
+        available: false,
+      },
     ],
     secondaryItems: [
-      { title: "Radar", href: "/dashboard/radar", icon: Radar, permission: "view_financials", available: false },
-      { title: "Customers", href: "/dashboard/customers", icon: Users, permission: "manage_team", available: false },
-      { title: "Expenses", href: "/dashboard/expenses", icon: CreditCard, permission: "view_financials", available: false },
-      { title: "Analytics", href: "/dashboard/analytics", icon: BarChart3, permission: "view_financials", available: false },
-      { title: "Settings", href: "/dashboard/settings", icon: Settings, permission: "manage_store_settings", available: false },
+      {
+        title: "Radar",
+        href: "/dashboard/radar",
+        icon: Radar,
+        permission: "view_financials",
+        available: false,
+      },
+      {
+        title: "Customers",
+        href: "/dashboard/customers",
+        icon: Users,
+        permission: "manage_team",
+        available: false,
+      },
+      {
+        title: "Expenses",
+        href: "/dashboard/expenses",
+        icon: CreditCard,
+        permission: "view_financials",
+        available: false,
+      },
+      {
+        title: "Analytics",
+        href: "/dashboard/analytics",
+        icon: BarChart3,
+        permission: "view_financials",
+        available: false,
+      },
+      {
+        title: "Settings",
+        href: "/dashboard/settings",
+        icon: Settings,
+        permission: "manage_store_settings",
+        available: false,
+      },
     ],
   }
 }
@@ -112,8 +232,12 @@ export function AppSidebar({
   const pathname = usePathname()
   const dir = useDirection()
   const copy = getSidebarCopy(lang)
-  const primaryItems = copy.primaryItems.filter((item) => hasPermission(role, item.permission))
-  const secondaryItems = copy.secondaryItems.filter((item) => hasPermission(role, item.permission))
+  const primaryItems = copy.primaryItems.filter((item) =>
+    hasPermission(role, item.permission)
+  )
+  const secondaryItems = copy.secondaryItems.filter((item) =>
+    hasPermission(role, item.permission)
+  )
 
   const renderItem = (item: SidebarItem) => {
     const href = `/${lang}${item.href}`
@@ -122,18 +246,19 @@ export function AppSidebar({
     return (
       <SidebarMenuItem key={item.href}>
         {item.available ? (
-          <SidebarMenuButton asChild isActive={isActive} tooltip={item.title} className="gap-3">
+          <SidebarMenuButton
+            asChild
+            isActive={isActive}
+            tooltip={item.title}
+            className="gap-3"
+          >
             <Link href={href}>
               <item.icon className="h-4 w-4" />
               <span>{item.title}</span>
             </Link>
           </SidebarMenuButton>
         ) : (
-          <SidebarMenuButton
-            tooltip={item.title}
-            className="gap-3 opacity-70"
-            disabled
-          >
+          <SidebarMenuButton tooltip={item.title} className="gap-3 opacity-70" disabled>
             <item.icon className="h-4 w-4" />
             <span>{item.title}</span>
             <Badge variant="outline" className="ml-auto text-[10px]">
@@ -146,7 +271,12 @@ export function AppSidebar({
   }
 
   return (
-    <Sidebar collapsible="offcanvas" side={dir === "rtl" ? "right" : "left"} dir={dir} {...props}>
+    <Sidebar
+      collapsible="offcanvas"
+      side={dir === "rtl" ? "right" : "left"}
+      dir={dir}
+      {...props}
+    >
       <SidebarHeader className="border-b border-sidebar-border/70">
         <SidebarMenu>
           <SidebarMenuItem>
@@ -188,7 +318,9 @@ export function AppSidebar({
       <SidebarFooter className="border-t border-sidebar-border/70 p-3">
         <div className="rounded-xl border border-sidebar-border/70 bg-sidebar-accent/40 p-3 text-sm">
           <p className="font-medium text-sidebar-foreground">{copy.footerTitle}</p>
-          <p className="mt-1 text-xs text-sidebar-foreground/70">{copy.footerDescription}</p>
+          <p className="mt-1 text-xs text-sidebar-foreground/70">
+            {copy.footerDescription}
+          </p>
         </div>
       </SidebarFooter>
     </Sidebar>

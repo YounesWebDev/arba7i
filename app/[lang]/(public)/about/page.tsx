@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { FadeInView } from "@/components/public/fade-in-view";
 import { ArrowRight, Lightbulb, ShieldCheck, Sparkles, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { getDictionary } from "@/lib/dictionary";
 import type { Locale } from "@/i18n-config";
 
@@ -120,12 +122,14 @@ export default async function AboutPage({
               },
             ].map((item, index) => (
               <FadeInView key={`mission-stat-${index}`} delay={index * 60}>
-                <div className="group rounded-2xl bg-card p-8 transition-all duration-300 hover:bg-background">
+                <Card className="group rounded-2xl border-0 bg-card transition-all duration-300 hover:bg-background">
+                  <CardContent className="p-8">
                   <div className="text-4xl font-black text-primary">{item.value}</div>
                   <div className="mt-3 text-sm uppercase tracking-[0.18em] text-muted-foreground">
                     {item.label}
                   </div>
-                </div>
+                  </CardContent>
+                </Card>
               </FadeInView>
             ))}
           </div>
@@ -145,13 +149,15 @@ export default async function AboutPage({
         <div className="grid gap-6 md:grid-cols-2">
           {values.map((value, index) => (
             <FadeInView key={`value-${index}`} delay={index * 60}>
-              <div className="group rounded-2xl bg-muted/40 p-8 transition-all duration-300 hover:bg-card">
+              <Card className="group rounded-2xl border-0 bg-muted/40 transition-all duration-300 hover:bg-card">
+                <CardContent className="p-8">
                 <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 transition-transform group-hover:scale-110">
                   <value.icon className="h-6 w-6 text-primary" />
                 </div>
                 <h3 className="text-2xl font-bold">{value.title}</h3>
                 <p className="mt-3 leading-relaxed text-muted-foreground">{value.body}</p>
-              </div>
+                </CardContent>
+              </Card>
             </FadeInView>
           ))}
         </div>
@@ -159,7 +165,8 @@ export default async function AboutPage({
 
       <FadeInView as="section" className="bg-muted/40 px-6 py-24">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2 lg:items-center">
-          <div className="rounded-[2.5rem] border border-border/20 bg-card p-10 shadow-sm">
+          <Card className="rounded-[2.5rem] border-border/20 bg-card shadow-sm">
+            <CardContent className="p-10">
             <span className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
               {dict?.aboutPage?.philosophy?.eyebrow || "Product Philosophy"}
             </span>
@@ -174,8 +181,10 @@ export default async function AboutPage({
               {dict?.aboutPage?.philosophy?.body2 ||
                 "As operations grow, the interface should help you stay calm instead of making the business harder to see."}
             </p>
-          </div>
-          <div className="rounded-[2.5rem] bg-gradient-to-br from-primary to-accent p-10 text-primary-foreground shadow-2xl shadow-primary/20">
+            </CardContent>
+          </Card>
+          <Card className="rounded-[2.5rem] border-0 bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-2xl shadow-primary/20">
+            <CardContent className="p-10">
             <h3 className="text-3xl font-extrabold tracking-tight">
               {dict?.aboutPage?.team?.title || "Built by people who care about operations"}
             </h3>
@@ -191,13 +200,16 @@ export default async function AboutPage({
                 dict?.aboutPage?.team?.role4 || "Platform quality",
               ].map((role, index) => (
                 <FadeInView key={`role-${index}`} delay={index * 60}>
-                  <div className="rounded-2xl border border-white/10 bg-white/10 p-4 font-medium">
+                  <Card className="rounded-2xl border-white/10 bg-white/10 text-primary-foreground shadow-none">
+                    <CardContent className="p-4 font-medium">
                     {role}
-                  </div>
+                    </CardContent>
+                  </Card>
                 </FadeInView>
               ))}
             </div>
-          </div>
+            </CardContent>
+          </Card>
         </div>
       </FadeInView>
 
@@ -214,19 +226,25 @@ export default async function AboutPage({
                   "If your business is scaling, your tools should give you more clarity, not more friction."}
               </p>
               <div className="flex flex-col items-center justify-center gap-6 pt-6 sm:flex-row">
-                <Link
-                  href={`/${lang}/register`}
-                  className="rounded-2xl border border-transparent bg-background px-10 py-5 text-lg font-black text-primary shadow-2xl transition-all hover:scale-105 active:scale-95"
+                <Button
+                  asChild
+                  size="lg"
+                  className="h-auto rounded-2xl border border-transparent bg-background px-10 py-5 text-lg font-black text-primary shadow-2xl transition-all hover:scale-105 active:scale-95"
                 >
-                  {dict?.aboutPage?.finalCta?.cta1 || "Get Started"}
-                </Link>
-                <Link
-                  href={`/${lang}/contact`}
-                  className="inline-flex items-center justify-center gap-2 font-bold text-primary-foreground underline decoration-white/30 underline-offset-8 decoration-2 transition-all hover:decoration-white"
+                  <Link href={`/${lang}/register`}>
+                    {dict?.aboutPage?.finalCta?.cta1 || "Get Started"}
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="link"
+                  className="inline-flex h-auto items-center justify-center gap-2 p-0 font-bold text-primary-foreground underline decoration-white/30 underline-offset-8 decoration-2 transition-all hover:decoration-white"
                 >
-                  {dict?.aboutPage?.finalCta?.cta2 || "Contact Sales"}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
+                  <Link href={`/${lang}/contact`}>
+                    {dict?.aboutPage?.finalCta?.cta2 || "Contact Sales"}
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
               </div>
             </div>
           </div>

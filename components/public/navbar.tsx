@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { ModeToggle } from "@/components/mode-toggle";
 import { LanguageSwitcher } from "@/components/public/language-switcher";
+import { Button } from "@/components/ui/button";
 
 type NavbarDict = {
   navbar?: Record<string, string | undefined>;
@@ -46,7 +47,7 @@ export function PublicNavbar({ lang, dict }: { lang: string; dict: NavbarDict })
             </span>
           </Link>
 
-          <div className="hidden items-center gap-6 md:flex">
+          <div className="hidden items-center gap-6 lg:flex">
             {navItems.map((item, index) => {
               const href = `/${lang}${item.href}`;
               const isActive = pathname === href;
@@ -81,36 +82,44 @@ export function PublicNavbar({ lang, dict }: { lang: string; dict: NavbarDict })
           <LanguageSwitcher lang={lang} />
           <ModeToggle />
 
-          <button
+          <Button
             type="button"
             onClick={() => setIsMenuOpen((current) => !current)}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/50 bg-card text-foreground transition-all hover:border-primary/30 hover:text-primary md:hidden"
+            variant="outline"
+            size="icon"
+            className="h-11 w-11 touch-manipulation rounded-full border-border/50 bg-card lg:hidden hover:border-primary/30 hover:text-primary"
             aria-expanded={isMenuOpen}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           >
             {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+          </Button>
 
-          <div className="hidden items-center gap-4 md:flex">
-            <Link
-              href={`/${lang}/login`}
-              className="px-4 py-2 text-sm font-semibold text-muted-foreground transition-all hover:text-foreground"
+          <div className="hidden items-center gap-4 lg:flex">
+            <Button
+              asChild
+              variant="ghost"
+              className="px-4 text-sm font-semibold text-muted-foreground hover:text-foreground"
             >
-              {dict?.navbar?.login || "Login"}
-            </Link>
-            <Link
-              href={`/${lang}/register`}
+              <Link href={`/${lang}/login`}>
+                {dict?.navbar?.login || "Login"}
+              </Link>
+            </Button>
+            <Button
+              asChild
               className="scale-95 rounded-full bg-gradient-to-br from-primary to-primary/80 px-6 py-2.5 text-sm font-bold text-primary-foreground transition-all hover:shadow-lg hover:shadow-primary/20 active:scale-90"
             >
-              {dict?.navbar?.getStarted || "Get Started"}
-            </Link>
+              <Link href={`/${lang}/register`}>
+                {dict?.navbar?.getStarted || "Get Started"}
+              </Link>
+            </Button>
           </div>
         </div>
       </div>
 
       <div
-        className={`overflow-hidden border-t border-border/30 bg-background/95 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden ${
-          isMenuOpen ? "max-h-[32rem] opacity-100" : "max-h-0 opacity-0"
+        key={pathname}
+        className={`overflow-hidden border-t border-border/30 bg-background/95 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
+          isMenuOpen ? "pointer-events-auto max-h-[32rem] opacity-100" : "pointer-events-none max-h-0 opacity-0"
         }`}
       >
         <div className="space-y-6 px-4 py-5 sm:px-6">
@@ -153,20 +162,19 @@ export function PublicNavbar({ lang, dict }: { lang: string; dict: NavbarDict })
           </div>
 
           <div className="grid gap-3">
-            <Link
-              href={`/${lang}/login`}
-              onClick={() => setIsMenuOpen(false)}
-              className="rounded-2xl border border-border px-4 py-3 text-center text-sm font-semibold text-foreground transition-all hover:bg-muted"
+            <Button asChild variant="outline" className="h-12 rounded-2xl border-border text-sm font-semibold">
+              <Link href={`/${lang}/login`} onClick={() => setIsMenuOpen(false)}>
+                {dict?.navbar?.login || "Login"}
+              </Link>
+            </Button>
+            <Button
+              asChild
+              className="h-12 rounded-2xl bg-gradient-to-br from-primary to-primary/80 text-sm font-bold text-primary-foreground transition-all hover:shadow-lg hover:shadow-primary/20"
             >
-              {dict?.navbar?.login || "Login"}
-            </Link>
-            <Link
-              href={`/${lang}/register`}
-              onClick={() => setIsMenuOpen(false)}
-              className="rounded-2xl bg-gradient-to-br from-primary to-primary/80 px-4 py-3 text-center text-sm font-bold text-primary-foreground transition-all hover:shadow-lg hover:shadow-primary/20"
-            >
-              {dict?.navbar?.getStarted || "Get Started"}
-            </Link>
+              <Link href={`/${lang}/register`} onClick={() => setIsMenuOpen(false)}>
+                {dict?.navbar?.getStarted || "Get Started"}
+              </Link>
+            </Button>
           </div>
         </div>
       </div>

@@ -141,7 +141,7 @@ export default function Stepper({
         <CardContent className={cn("px-3 pt-3 md:px-4 md:pt-4 lg:px-2 lg:pt-2", contentClassName)}>
           <div
             className={cn(
-              "flex w-full items-center",
+              "flex w-full items-center gap-1 min-[420px]:gap-0",
               isRtl && "flex-row-reverse",
               stepContainerClassName
             )}
@@ -194,7 +194,7 @@ export default function Stepper({
           >
             <div
               className={cn(
-                "flex w-full items-center",
+                "flex w-full items-center gap-2 max-[420px]:flex-col-reverse",
                 isRtl && "flex-row-reverse",
                 currentStep !== 1 ? "justify-between" : "justify-end"
               )}
@@ -205,7 +205,7 @@ export default function Stepper({
                   variant="ghost"
                   size="lg"
                   onClick={handleBack}
-                  className={cn("h-10 rounded-full px-3 text-sm lg:h-9 lg:text-xs", backButtonClassName)}
+                  className={cn("h-10 rounded-full px-3 text-sm max-[420px]:w-full lg:h-9 lg:text-xs", backButtonClassName)}
                   {...backButtonRest}
                 >
                   {backButtonText}
@@ -222,7 +222,7 @@ export default function Stepper({
                       : handleComplete
                   }
                   className={cn(
-                    "h-11 rounded-full bg-gradient-to-r from-primary to-accent px-5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/15 hover:shadow-xl hover:shadow-primary/25 lg:h-10 lg:px-4 lg:text-xs",
+                    "h-11 rounded-full bg-gradient-to-r from-primary to-accent px-5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/15 hover:shadow-xl hover:shadow-primary/25 max-[420px]:w-full lg:h-10 lg:px-4 lg:text-xs",
                     completeButtonClassName
                   )}
                   {...completeButtonRest}
@@ -235,7 +235,7 @@ export default function Stepper({
                   size="lg"
                   onClick={handleNext}
                   className={cn(
-                    "h-11 rounded-full bg-gradient-to-r from-primary to-accent px-5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/15 hover:shadow-xl hover:shadow-primary/25 lg:h-10 lg:px-4 lg:text-xs",
+                    "h-11 rounded-full bg-gradient-to-r from-primary to-accent px-5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/15 hover:shadow-xl hover:shadow-primary/25 max-[420px]:w-full lg:h-10 lg:px-4 lg:text-xs",
                     nextButtonClassName
                   )}
                   {...nextButtonRest}
@@ -402,7 +402,7 @@ function StepIndicator({
           },
         }}
         transition={{ duration: 0.3 }}
-        className="flex h-8 w-8 items-center justify-center rounded-full border border-border/60 font-semibold shadow-xs lg:h-7 lg:w-7"
+        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border/60 font-semibold shadow-xs min-[420px]:h-8 min-[420px]:w-8 lg:h-7 lg:w-7"
       >
         {status === "complete" ? (
           <CheckIcon className="h-4 w-4 text-primary-foreground" />
@@ -427,7 +427,7 @@ function StepConnector({ isComplete }: StepConnectorProps) {
   };
 
   return (
-    <div className="relative mx-2 flex-1 overflow-hidden">
+    <div className="relative mx-1 flex-1 overflow-hidden min-[420px]:mx-2">
       <Separator className="absolute inset-x-0 top-1/2 -translate-y-1/2 bg-border/80" />
       <motion.div
         className="absolute left-0 top-1/2 h-px -translate-y-1/2"

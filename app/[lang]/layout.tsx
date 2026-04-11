@@ -1,7 +1,7 @@
 // --- app/[lang]/layout.tsx ---
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Script from "next/script";
+import { cookies } from "next/headers";
 import "../globals.css";
 import { DirectionProvider } from "@/components/ui/direction";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -31,33 +31,21 @@ export default async function RootLayout({
 }>) {
   const { lang } = await params;
   const dir = lang === "ar" ? "rtl" : "ltr";
+  const cookieStore = await cookies();
+  const savedTheme = cookieStore.get("theme")?.value;
+  const resolvedTheme = savedTheme === "dark" || savedTheme === "light" ? savedTheme : null;
+  const htmlClassName = `${inter.variable} h-full antialiased${resolvedTheme === "dark" ? " dark" : ""}`;
 
   return (
     <html
       lang={lang}
       dir={dir}
       data-scroll-behavior="smooth"
-      className={`${inter.variable} h-full antialiased`}
+      className={htmlClassName}
+      style={resolvedTheme ? { colorScheme: resolvedTheme } : undefined}
       suppressHydrationWarning
     >
-      <head />
       <body suppressHydrationWarning className="min-h-full flex flex-col">
-        <Script id="theme-init" strategy="beforeInteractive">
-          {`
-            (() => {
-              try {
-                const storedTheme = localStorage.getItem("theme") || "system";
-                const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-                const resolvedTheme = storedTheme === "system"
-                  ? (systemDark ? "dark" : "light")
-                  : storedTheme;
-
-                document.documentElement.classList.toggle("dark", resolvedTheme === "dark");
-                document.documentElement.style.colorScheme = resolvedTheme;
-              } catch {}
-            })();
-          `}
-        </Script>
         <ThemeProvider>
           <DirectionProvider dir={dir}>
             <TooltipProvider>

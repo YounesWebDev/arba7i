@@ -1,8 +1,8 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import Link from "next/link"
+import { useSearchParams } from "next/navigation"
+import { useState } from "react"
 import {
   AlertCircle,
   CheckCircle2,
@@ -12,81 +12,81 @@ import {
   Phone,
   ShieldCheck,
   UserRound,
-} from "lucide-react";
-import { signInWithGoogle, signup } from "@/app/actions/auth";
-import Stepper, { Step } from "@/components/Stepper";
-import { useDirection } from "@/components/ui/direction";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
+} from "lucide-react"
+import { signInWithGoogle, signup } from "@/app/actions/auth"
+import Stepper, { Step } from "@/components/Stepper"
+import { useDirection } from "@/components/ui/direction"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils"
 
 type RegisterCopy = {
-  badge?: string;
-  title?: string;
-  description?: string;
-  alertErrorTitle?: string;
-  back?: string;
-  next?: string;
-  identityTitle?: string;
-  identityDescription?: string;
-  contactTitle?: string;
-  contactDescription?: string;
-  securityTitle?: string;
-  securityDescription?: string;
-  firstName?: string;
-  firstNamePlaceholder?: string;
-  lastName?: string;
-  lastNamePlaceholder?: string;
-  username?: string;
-  usernamePlaceholder?: string;
-  email?: string;
-  emailPlaceholder?: string;
-  phone?: string;
-  phonePlaceholder?: string;
-  password?: string;
-  passwordPlaceholder?: string;
-  confirmPassword?: string;
-  confirmPasswordPlaceholder?: string;
-  submit?: string;
-  divider?: string;
-  google?: string;
-  footerText?: string;
-  footerLink?: string;
-  usernameOk?: string;
-  usernameBad?: string;
-  passwordsOk?: string;
-  passwordsBad?: string;
-};
+  badge?: string
+  title?: string
+  description?: string
+  alertErrorTitle?: string
+  back?: string
+  next?: string
+  identityTitle?: string
+  identityDescription?: string
+  contactTitle?: string
+  contactDescription?: string
+  securityTitle?: string
+  securityDescription?: string
+  firstName?: string
+  firstNamePlaceholder?: string
+  lastName?: string
+  lastNamePlaceholder?: string
+  username?: string
+  usernamePlaceholder?: string
+  email?: string
+  emailPlaceholder?: string
+  phone?: string
+  phonePlaceholder?: string
+  password?: string
+  passwordPlaceholder?: string
+  confirmPassword?: string
+  confirmPasswordPlaceholder?: string
+  submit?: string
+  divider?: string
+  google?: string
+  footerText?: string
+  footerLink?: string
+  usernameOk?: string
+  usernameBad?: string
+  passwordsOk?: string
+  passwordsBad?: string
+}
 
 export function RegisterForm({
   lang,
   copy,
 }: {
-  lang: string;
-  copy?: RegisterCopy;
+  lang: string
+  copy?: RegisterCopy
 }) {
-  const searchParams = useSearchParams();
-  const error = searchParams.get("error");
-  const dir = useDirection();
-  const isRtl = dir === "rtl";
-  const isArabic = lang === "ar";
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const searchParams = useSearchParams()
+  const error = searchParams.get("error")
+  const dir = useDirection()
+  const isRtl = dir === "rtl"
+  const isArabic = lang === "ar"
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [username, setUsername] = useState("")
+  const [email, setEmail] = useState("")
+  const [phoneNumber, setPhoneNumber] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const usernameValid =
     username.length === 0
       ? null
-      : username.length >= 5 && /^[a-zA-Z0-9_]+$/.test(username);
+      : username.length >= 5 && /^[a-zA-Z0-9_]+$/.test(username)
   const passwordsMatch =
-    confirmPassword.length === 0 ? null : password === confirmPassword;
+    confirmPassword.length === 0 ? null : password === confirmPassword
 
   return (
     <div dir={dir}>
@@ -151,7 +151,9 @@ export function RegisterForm({
                         isRtl ? "pr-14 text-right" : "pl-14"
                       )}
                       placeholder={
-                        copy?.firstName || copy?.firstNamePlaceholder || (isArabic ? "الاسم الأول" : "First name")
+                        copy?.firstName ||
+                        copy?.firstNamePlaceholder ||
+                        (isArabic ? "الاسم الأول" : "First name")
                       }
                     />
                   </div>
@@ -168,7 +170,9 @@ export function RegisterForm({
                       isRtl && "text-right"
                     )}
                     placeholder={
-                      copy?.lastName || copy?.lastNamePlaceholder || (isArabic ? "اسم العائلة" : "Last name")
+                      copy?.lastName ||
+                      copy?.lastNamePlaceholder ||
+                      (isArabic ? "اسم العائلة" : "Last name")
                     }
                   />
                 </div>
@@ -217,7 +221,9 @@ export function RegisterForm({
                       isRtl ? "pr-10 text-right" : "pl-10"
                     )}
                     placeholder={
-                      copy?.username || copy?.usernamePlaceholder || (isArabic ? "اسم المستخدم" : "Username")
+                      copy?.username ||
+                      copy?.usernamePlaceholder ||
+                      (isArabic ? "اسم المستخدم" : "Username")
                     }
                   />
                 </div>
@@ -259,7 +265,9 @@ export function RegisterForm({
                         isRtl ? "pr-14 text-right" : "pl-14"
                       )}
                       placeholder={
-                        copy?.email || copy?.emailPlaceholder || (isArabic ? "البريد الإلكتروني" : "Email")
+                        copy?.email ||
+                        copy?.emailPlaceholder ||
+                        (isArabic ? "البريد الإلكتروني" : "Email")
                       }
                     />
                   </div>
@@ -284,7 +292,9 @@ export function RegisterForm({
                         isRtl ? "pr-14 text-right" : "pl-14"
                       )}
                       placeholder={
-                        copy?.phone || copy?.phonePlaceholder || (isArabic ? "رقم الهاتف" : "Phone number")
+                        copy?.phone ||
+                        copy?.phonePlaceholder ||
+                        (isArabic ? "رقم الهاتف" : "Phone number")
                       }
                     />
                   </div>
@@ -328,16 +338,20 @@ export function RegisterForm({
                         isRtl ? "pr-14 pl-14 text-right" : "pl-14 pr-14"
                       )}
                       placeholder={
-                        copy?.password || copy?.passwordPlaceholder || (isArabic ? "كلمة المرور" : "Password")
+                        copy?.password ||
+                        copy?.passwordPlaceholder ||
+                        (isArabic ? "كلمة المرور" : "Password")
                       }
                     />
-                    <button
+                    <Button
                       type="button"
                       onClick={() => setShowPassword((current) => !current)}
                       className={cn(
-                        "absolute top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground",
+                        "absolute top-1/2 h-auto -translate-y-1/2 p-0 text-muted-foreground hover:bg-transparent hover:text-foreground",
                         isRtl ? "left-5" : "right-5"
                       )}
+                      variant="ghost"
+                      size="icon-sm"
                       aria-label={
                         showPassword
                           ? isArabic
@@ -349,7 +363,7 @@ export function RegisterForm({
                       }
                     >
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                    </button>
+                    </Button>
                   </div>
                 </div>
 
@@ -397,13 +411,15 @@ export function RegisterForm({
                         (isArabic ? "تأكيد كلمة المرور" : "Confirm password")
                       }
                     />
-                    <button
+                    <Button
                       type="button"
                       onClick={() => setShowConfirmPassword((current) => !current)}
                       className={cn(
-                        "absolute top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground",
+                        "absolute top-1/2 h-auto -translate-y-1/2 p-0 text-muted-foreground hover:bg-transparent hover:text-foreground",
                         isRtl ? "left-5" : "right-5"
                       )}
+                      variant="ghost"
+                      size="icon-sm"
                       aria-label={
                         showConfirmPassword
                           ? isArabic
@@ -419,7 +435,7 @@ export function RegisterForm({
                       ) : (
                         <Eye className="h-4 w-4" />
                       )}
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -461,11 +477,11 @@ export function RegisterForm({
         {copy?.footerText || (isArabic ? "لديك حساب بالفعل؟" : "Already have an account?")}{" "}
         <Link
           href={`/${lang}/login`}
-          className="font-semibold text-primary hover:underline underline-offset-4"
+          className="font-semibold text-primary underline-offset-4 hover:underline"
         >
           {copy?.footerLink || (isArabic ? "تسجيل الدخول" : "Log in")}
         </Link>
       </p>
     </div>
-  );
+  )
 }

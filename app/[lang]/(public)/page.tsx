@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import { FadeInView } from "@/components/public/fade-in-view";
 import { PricingSection } from "@/components/public/pricing-section";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { getDictionary } from "@/lib/dictionary";
 import type { Locale } from "@/i18n-config";
 
@@ -172,19 +174,26 @@ export default async function HomePage({
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link
-              href={`/${lang}/register`}
-              className="w-full rounded-lg duration-400 bg-gradient-to-br from-primary to-accent px-8 py-4 font-bold text-primary-foreground shadow-xl shadow-primary/12 transition-all hover:scale-105 active:scale-95 sm:w-auto"
+            <Button
+              asChild
+              size="lg"
+              className="h-auto w-full rounded-lg bg-gradient-to-br from-primary to-accent px-8 py-4 font-bold text-primary-foreground shadow-xl shadow-primary/12 transition-all duration-300 hover:scale-105 active:scale-95 sm:w-auto"
             >
-              {dict?.home?.hero?.cta1 || "Get Started Free"}
-            </Link>
-            <Link
-              href="#features"
-              className="flex w-full items-center justify-center gap-2 rounded-lg border border-border/30 px-8 py-4 font-semibold text-foreground transition-all hover:bg-muted sm:w-auto"
+              <Link href={`/${lang}/register`}>
+                {dict?.home?.hero?.cta1 || "Get Started Free"}
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="flex h-auto w-full items-center justify-center gap-2 rounded-lg border-border/30 px-8 py-4 font-semibold sm:w-auto"
             >
-              {dict?.home?.hero?.cta2 || "Explore Features"}
-              <ArrowRight className="h-5 w-5" />
-            </Link>
+              <Link href="#features">
+                {dict?.home?.hero?.cta2 || "Explore Features"}
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </Button>
           </div>
         </div>
       </FadeInView>
@@ -220,15 +229,17 @@ export default async function HomePage({
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {precisionFeatures.map((feature, index) => (
             <FadeInView key={`precision-feature-${index}`} delay={index * 60}>
-              <div className="group rounded-2xl bg-muted/40 p-8 transition-all duration-300 hover:bg-card">
-                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 transition-transform group-hover:scale-110">
-                  <feature.icon className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="mb-3 text-xl font-bold">{feature.title}</h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {feature.body}
-                </p>
-              </div>
+              <Card className="group rounded-2xl border-0 bg-muted/40 transition-all duration-300 hover:bg-card">
+                <CardContent className="p-8">
+                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 transition-transform group-hover:scale-110">
+                    <feature.icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="mb-3 text-xl font-bold">{feature.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {feature.body}
+                  </p>
+                </CardContent>
+              </Card>
             </FadeInView>
           ))}
         </div>
@@ -348,76 +359,82 @@ export default async function HomePage({
 
       <FadeInView as="section" className="mx-auto max-w-7xl px-6 py-24">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
-          <div className="group overflow-hidden rounded-[2.5rem] border border-border/20 bg-card p-6 sm:p-8 md:p-10 lg:col-span-7">
-            <div className="flex h-full flex-col">
-              <div className="mb-10">
-                <h3 className="mb-2 text-2xl font-bold">{dict?.home?.bento?.carriersTitle || "Carrier Ecosystem"}</h3>
-                <p className="text-muted-foreground">
-                  {dict?.home?.bento?.carriersDescription || "Connect and compare rates from Yalidine, ZR Express, and others instantly."}
-                </p>
-              </div>
-              <div className="flex flex-wrap items-center gap-4 py-4 sm:gap-6">
-                {["Yalidine", "ZR Express", "Noest"].map((carrier, index) => (
-                  <div
-                    key={`carrier-${index}`}
-                    className="flex min-w-[120px] flex-1 justify-center rounded-2xl border border-transparent bg-muted/50 px-6 py-4 transition-all hover:border-primary/20 sm:flex-none sm:px-8"
-                  >
-                    <span className="text-xl font-black italic text-muted-foreground">
-                      {carrier}
-                    </span>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-auto pt-10">
-                <div className="flex flex-col gap-4 rounded-2xl bg-primary/5 p-6 sm:flex-row sm:items-center sm:justify-between">
-                  <div>
-                    <p className="mb-1 text-sm font-bold text-primary">
-                      {dict?.home?.bento?.savingsLabel || "Total Savings This Month"}
-                    </p>
-                    <p className="text-3xl font-extrabold">44,500 DZD</p>
-                  </div>
-                  <TrendingUp className="h-10 w-10 text-primary/40" />
+          <Card className="group overflow-hidden rounded-[2.5rem] border border-border/20 bg-card lg:col-span-7">
+            <CardContent className="p-6 sm:p-8 md:p-10">
+              <div className="flex h-full flex-col">
+                <div className="mb-10">
+                  <h3 className="mb-2 text-2xl font-bold">{dict?.home?.bento?.carriersTitle || "Carrier Ecosystem"}</h3>
+                  <p className="text-muted-foreground">
+                    {dict?.home?.bento?.carriersDescription || "Connect and compare rates from Yalidine, ZR Express, and others instantly."}
+                  </p>
+                </div>
+                <div className="flex flex-wrap items-center gap-4 py-4 sm:gap-6">
+                  {["Yalidine", "ZR Express", "Noest"].map((carrier, index) => (
+                    <div
+                      key={`carrier-${index}`}
+                      className="flex min-w-[120px] flex-1 justify-center rounded-2xl border border-transparent bg-muted/50 px-6 py-4 transition-all hover:border-primary/20 sm:flex-none sm:px-8"
+                    >
+                      <span className="text-xl font-black italic text-muted-foreground">
+                        {carrier}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-auto pt-10">
+                  <Card className="rounded-2xl border-0 bg-primary/5 shadow-none">
+                    <CardContent className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <p className="mb-1 text-sm font-bold text-primary">
+                          {dict?.home?.bento?.savingsLabel || "Total Savings This Month"}
+                        </p>
+                        <p className="text-3xl font-extrabold">44,500 DZD</p>
+                      </div>
+                      <TrendingUp className="h-10 w-10 text-primary/40" />
+                    </CardContent>
+                  </Card>
                 </div>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
-          <div className="group rounded-[2.5rem] bg-gradient-to-br from-primary to-accent p-6 text-primary-foreground shadow-2xl shadow-primary/20 sm:p-8 md:p-10 lg:col-span-5">
-            <div className="flex h-full flex-col">
-              <div className="mb-10">
-                <h3 className="mb-2 text-2xl font-bold">{dict?.home?.bento?.profitTitle || "Net Profit Reality"}</h3>
-                <p className="opacity-80">
-                  {dict?.home?.bento?.profitDescription || "Stop looking at revenue. Start looking at what you actually keep."}
-                </p>
-              </div>
+          <Card className="group rounded-[2.5rem] border-0 bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-2xl shadow-primary/20 lg:col-span-5">
+            <CardContent className="p-6 sm:p-8 md:p-10">
+              <div className="flex h-full flex-col">
+                <div className="mb-10">
+                  <h3 className="mb-2 text-2xl font-bold">{dict?.home?.bento?.profitTitle || "Net Profit Reality"}</h3>
+                  <p className="opacity-80">
+                    {dict?.home?.bento?.profitDescription || "Stop looking at revenue. Start looking at what you actually keep."}
+                  </p>
+                </div>
 
-              <div className="mb-8 flex h-40 flex-grow items-end gap-3 sm:h-44 md:h-48">
-                <div className="h-[40%] w-full rounded-t-lg bg-white/20" />
-                <div className="h-[60%] w-full rounded-t-lg bg-white/20" />
-                <div className="relative h-[85%] w-full rounded-t-lg bg-white/40">
-                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 rounded bg-white px-2 py-1 text-[10px] font-bold text-primary shadow-lg">
-                    +12%
+                <div className="mb-8 flex h-40 flex-grow items-end gap-3 sm:h-44 md:h-48">
+                  <div className="h-[40%] w-full rounded-t-lg bg-white/20" />
+                  <div className="h-[60%] w-full rounded-t-lg bg-white/20" />
+                  <div className="relative h-[85%] w-full rounded-t-lg bg-white/40">
+                    <div className="absolute -top-10 left-1/2 -translate-x-1/2 rounded bg-white px-2 py-1 text-[10px] font-bold text-primary shadow-lg">
+                      +12%
+                    </div>
+                  </div>
+                  <div className="h-[50%] w-full rounded-t-lg bg-white/20" />
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between border-b border-white/10 py-3">
+                    <span className="font-medium">{dict?.home?.bento?.grossRevenue || "Gross Revenue"}</span>
+                    <span className="font-bold">450,000 DZD</span>
+                  </div>
+                  <div className="flex items-center justify-between border-b border-white/10 py-3">
+                    <span className="font-medium">{dict?.home?.bento?.totalExpenses || "Total Expenses"}</span>
+                    <span className="font-bold">-124,000 DZD</span>
+                  </div>
+                  <div className="flex items-center justify-between pt-3">
+                    <span className="text-xl font-bold">{dict?.home?.bento?.netMargin || "Net Margin"}</span>
+                    <span className="text-xl font-black">28.4%</span>
                   </div>
                 </div>
-                <div className="h-[50%] w-full rounded-t-lg bg-white/20" />
               </div>
-
-              <div className="space-y-4">
-                <div className="flex items-center justify-between border-b border-white/10 py-3">
-                  <span className="font-medium">{dict?.home?.bento?.grossRevenue || "Gross Revenue"}</span>
-                  <span className="font-bold">450,000 DZD</span>
-                </div>
-                <div className="flex items-center justify-between border-b border-white/10 py-3">
-                  <span className="font-medium">{dict?.home?.bento?.totalExpenses || "Total Expenses"}</span>
-                  <span className="font-bold">-124,000 DZD</span>
-                </div>
-                <div className="flex items-center justify-between pt-3">
-                  <span className="text-xl font-bold">{dict?.home?.bento?.netMargin || "Net Margin"}</span>
-                  <span className="text-xl font-black">28.4%</span>
-                </div>
-              </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </div>
       </FadeInView>
 
@@ -439,15 +456,17 @@ export default async function HomePage({
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
             {audienceSegments.map((segment, index) => (
               <FadeInView key={`audience-segment-${index}`} delay={index * 60}>
-                <div className="group rounded-2xl bg-muted/40 p-8 transition-all duration-300 hover:bg-card">
-                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 transition-transform group-hover:scale-110">
-                    <segment.icon className="h-6 w-6 text-primary" />
-                  </div>
-                  <h3 className="mb-3 text-xl font-bold">{segment.title}</h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground">
-                    {segment.body}
-                  </p>
-                </div>
+                <Card className="group rounded-2xl border-0 bg-muted/40 transition-all duration-300 hover:bg-card">
+                  <CardContent className="p-8">
+                    <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 transition-transform group-hover:scale-110">
+                      <segment.icon className="h-6 w-6 text-primary" />
+                    </div>
+                    <h3 className="mb-3 text-xl font-bold">{segment.title}</h3>
+                    <p className="text-sm leading-relaxed text-muted-foreground">
+                      {segment.body}
+                    </p>
+                  </CardContent>
+                </Card>
               </FadeInView>
             ))}
           </div>
@@ -469,41 +488,49 @@ export default async function HomePage({
         </div>
 
         <div className="grid gap-8 lg:grid-cols-2">
-          <div className="rounded-[2.5rem] border border-border/20 bg-card p-8 shadow-sm md:p-10">
-            <div className="mb-8 inline-flex rounded-full border border-primary/15 bg-background/80 px-4 py-2 text-xs font-bold uppercase tracking-widest text-primary">
-              {dict?.home?.beforeAfter?.beforeLabel || "Before Arba7i"}
-            </div>
-            <div className="space-y-4">
-              {beforeItems.map((item, index) => (
-                <FadeInView key={`before-item-${index}`} delay={index * 60}>
-                  <div className="flex gap-4 rounded-2xl border border-border/20 bg-primary/7 p-6">
-                    <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-400" />
-                    <p className="text-sm leading-relaxed text-foreground/80">
-                      {item}
-                    </p>
-                  </div>
-                </FadeInView>
-              ))}
-            </div>
-          </div>
+          <Card className="rounded-[2.5rem] border border-border/20 bg-card shadow-sm">
+            <CardContent className="p-8 md:p-10">
+              <div className="mb-8 inline-flex rounded-full border border-primary/15 bg-background/80 px-4 py-2 text-xs font-bold uppercase tracking-widest text-primary">
+                {dict?.home?.beforeAfter?.beforeLabel || "Before Arba7i"}
+              </div>
+              <div className="space-y-4">
+                {beforeItems.map((item, index) => (
+                  <FadeInView key={`before-item-${index}`} delay={index * 60}>
+                    <Card className="rounded-2xl border border-border/20 bg-primary/7 shadow-none">
+                      <CardContent className="flex gap-4 p-6">
+                        <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-400" />
+                        <p className="text-sm leading-relaxed text-foreground/80">
+                          {item}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </FadeInView>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
 
-          <div className="rounded-[2.5rem] border border-primary/15 bg-gradient-to-br from-primary to-accent p-8 shadow-xl shadow-primary/10 md:p-10">
-            <div className="mb-8 inline-flex rounded-full border border-border/20 text- bg-primary px-4 py-2 text-xs font-bold uppercase tracking-widest text-primary-foreground">
-              {dict?.home?.beforeAfter?.afterLabel || "After Arba7i"}
-            </div>
-            <div className="space-y-4">
-              {afterItems.map((item, index) => (
-                <FadeInView key={`after-item-${index}`} delay={index * 60}>
-                  <div className="flex gap-4 rounded-2xl border border-primary/10 bg-card p-5">
-                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-                    <p className="text-sm leading-relaxed text-foreground/80">
-                      {item}
-                    </p>
-                  </div>
-                </FadeInView>
-              ))}
-            </div>
-          </div>
+          <Card className="rounded-[2.5rem] border border-primary/15 bg-gradient-to-br from-primary to-accent shadow-xl shadow-primary/10">
+            <CardContent className="p-8 md:p-10">
+              <div className="mb-8 inline-flex rounded-full border border-border/20 bg-primary px-4 py-2 text-xs font-bold uppercase tracking-widest text-primary-foreground">
+                {dict?.home?.beforeAfter?.afterLabel || "After Arba7i"}
+              </div>
+              <div className="space-y-4">
+                {afterItems.map((item, index) => (
+                  <FadeInView key={`after-item-${index}`} delay={index * 60}>
+                    <Card className="rounded-2xl border border-primary/10 bg-card shadow-none">
+                      <CardContent className="flex gap-4 p-5">
+                        <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                        <p className="text-sm leading-relaxed text-foreground/80">
+                          {item}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </FadeInView>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </FadeInView>
 
@@ -523,18 +550,24 @@ export default async function HomePage({
                 {dict?.home?.finalCta?.description || "Join thousands of merchants who stopped guessing and started knowing their true net profit."}
               </p>
               <div className="flex flex-col items-center justify-center gap-6 pt-6 sm:flex-row">
-                <Link
-                  href={`/${lang}/register`}
-                  className="rounded-2xl border border-transparent bg-background px-10 py-5 text-lg font-black text-primary shadow-2xl transition-all hover:scale-105 active:scale-95"
+                <Button
+                  asChild
+                  size="lg"
+                  className="h-auto rounded-2xl border border-transparent bg-background px-10 py-5 text-lg font-black text-primary shadow-2xl transition-all hover:scale-105 active:scale-95"
                 >
-                  {dict?.home?.finalCta?.cta1 || "Create My Account"}
-                </Link>
-                <Link
-                  href={`/${lang}/contact`}
-                  className="font-bold text-primary-foreground underline decoration-white/30 underline-offset-8 decoration-2 transition-all hover:decoration-white"
+                  <Link href={`/${lang}/register`}>
+                    {dict?.home?.finalCta?.cta1 || "Create My Account"}
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="link"
+                  className="h-auto p-0 font-bold text-primary-foreground underline decoration-white/30 underline-offset-8 decoration-2 transition-all hover:decoration-white"
                 >
-                  {dict?.home?.finalCta?.cta2 || "Talk to a specialist"}
-                </Link>
+                  <Link href={`/${lang}/contact`}>
+                    {dict?.home?.finalCta?.cta2 || "Talk to a specialist"}
+                  </Link>
+                </Button>
               </div>
             </div>
           </div>

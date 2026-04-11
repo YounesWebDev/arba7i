@@ -84,13 +84,15 @@ export function Topbar({ lang, copy }: { lang: string; copy: TopbarCopy }) {
             <DropdownMenuSeparator />
             <form action={logout} className="w-full">
               <input type="hidden" name="lang" value={lang} />
-              <button
+              <Button
                 type="submit"
-                className="flex w-full items-center gap-1.5 rounded-md px-1.5 py-1 text-sm text-destructive outline-hidden transition-colors hover:bg-destructive/10"
+                variant="ghost"
+                size="sm"
+                className="w-full justify-start text-destructive hover:bg-destructive/10 hover:text-destructive"
               >
                 <LogOut className="h-4 w-4" />
                 <span>{copy.logout}</span>
-              </button>
+              </Button>
             </form>
           </DropdownMenuContent>
         </DropdownMenu>

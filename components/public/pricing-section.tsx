@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 type PricingDict = {
   home?: {
@@ -103,9 +105,10 @@ export function PricingSection({ dict }: { dict: PricingDict }) {
         </p>
 
         <div className="inline-flex items-center justify-center rounded-full border border-border/50 bg-card p-1 shadow-sm">
-          <button
+          <Button
             type="button"
             onClick={() => setIsAnnual(false)}
+            variant="ghost"
             className={`rounded-full px-6 py-2.5 text-sm font-bold transition-all ${
               !isAnnual
                 ? "bg-primary text-primary-foreground shadow-md"
@@ -113,10 +116,11 @@ export function PricingSection({ dict }: { dict: PricingDict }) {
             }`}
           >
             {dict?.home?.pricing?.monthly || "Monthly"}
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             onClick={() => setIsAnnual(true)}
+            variant="ghost"
             className={`relative rounded-full px-6 py-2.5 text-sm font-bold transition-all ${
               isAnnual
                 ? "bg-primary text-primary-foreground shadow-md"
@@ -127,20 +131,21 @@ export function PricingSection({ dict }: { dict: PricingDict }) {
             <span className="absolute -right-2 -top-3 z-10 rounded-full border border-primary/20 bg-accent px-2 py-0.5 text-[10px] font-black uppercase tracking-widest text-primary-foreground shadow-lg">
               {dict?.home?.pricing?.saveBadge || "2 Months Free"}
             </span>
-          </button>
+          </Button>
         </div>
       </div>
 
       <div className="grid items-stretch gap-8 md:grid-cols-2 xl:grid-cols-4">
         {plans.map((plan, index) => (
-          <div
+          <Card
             key={`plan-${index}`}
             className={
               plan.featured
-                ? "relative z-10 flex flex-col rounded-[2.5rem] border-2 border-primary bg-card p-8 shadow-2xl shadow-primary/10 transition-all duration-500 md:scale-105"
-                : "flex flex-col rounded-3xl border border-border/20 bg-card p-8 transition-all duration-500"
+                ? "relative overflow-visible flex flex-col rounded-[2.5rem] border-2 border-primary bg-card p-8 shadow-2xl shadow-primary/10 transition-all duration-500 md:scale-105"
+                : "overflow-visible flex flex-col rounded-3xl border border-border/20 bg-card p-8 transition-all duration-500"
             }
           >
+            <CardContent className="flex h-full flex-col p-0">
             {plan.featured ? (
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-br from-primary to-primary/80 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-primary-foreground">
                 {dict?.home?.pricing?.featuredBadge || "Most Popular"}
@@ -183,17 +188,19 @@ export function PricingSection({ dict }: { dict: PricingDict }) {
               ))}
             </ul>
 
-            <button
+            <Button
               type="button"
+              variant={plan.featured ? "default" : "outline"}
               className={
                 plan.featured
-                  ? "w-full rounded-2xl bg-gradient-to-br from-primary to-primary/80 py-4 font-bold text-primary-foreground transition-all hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/20 active:scale-95"
-                  : "w-full rounded-2xl border border-border py-4 font-bold transition-all hover:bg-muted active:scale-95"
+                  ? "h-12 w-full rounded-2xl bg-gradient-to-br from-primary to-primary/80 font-bold transition-all hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/20 active:scale-95"
+                  : "h-12 w-full rounded-2xl border-border font-bold transition-all hover:bg-muted active:scale-95"
               }
             >
               {plan.cta}
-            </button>
-          </div>
+            </Button>
+            </CardContent>
+          </Card>
         ))}
       </div>
     </section>

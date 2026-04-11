@@ -24,6 +24,11 @@ type ThemeName = "light" | "dark" | "system"
 export function ModeToggle() {
   const { setTheme } = useTheme()
   const triggerRef = React.useRef<HTMLButtonElement>(null)
+  const [mounted, setMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const changeTheme = React.useCallback(
     (theme: ThemeName) => {
@@ -81,7 +86,7 @@ export function ModeToggle() {
           ref={triggerRef}
           variant="ghost"
           size="icon"
-          className="rounded-full border border-border/60 bg-background/80 shadow-sm backdrop-blur-sm"
+          className="touch-manipulation rounded-full border border-border/60 bg-background/80 shadow-sm backdrop-blur-sm"
         >
           <Sun className="h-[1.05rem] w-[1.05rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
           <Moon className="absolute h-[1.05rem] w-[1.05rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
@@ -89,13 +94,25 @@ export function ModeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" sideOffset={8} className="z-[140] w-36">
-        <DropdownMenuItem onClick={() => changeTheme("light")}>
+        <DropdownMenuItem
+          disabled={!mounted}
+          className="touch-manipulation"
+          onClick={() => changeTheme("light")}
+        >
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => changeTheme("dark")}>
+        <DropdownMenuItem
+          disabled={!mounted}
+          className="touch-manipulation"
+          onClick={() => changeTheme("dark")}
+        >
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => changeTheme("system")}>
+        <DropdownMenuItem
+          disabled={!mounted}
+          className="touch-manipulation"
+          onClick={() => changeTheme("system")}
+        >
           System
         </DropdownMenuItem>
       </DropdownMenuContent>

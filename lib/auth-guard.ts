@@ -74,11 +74,5 @@ export async function requirePermission(lang: string, permission: Permission) {
     redirect(getUnauthorizedPath(lang));
   }
 
-  await writeAuditLog({
-    userId: auth.user.id,
-    action: "role_check_allowed",
-    details: `Role "${auth.role}" was granted permission "${permission}".`,
-  });
-
   return auth;
 }

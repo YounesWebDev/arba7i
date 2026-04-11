@@ -10,6 +10,8 @@ import {
   Truck,
 } from "lucide-react";
 import { FadeInView } from "@/components/public/fade-in-view";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { getDictionary } from "@/lib/dictionary";
 import type { Locale } from "@/i18n-config";
 
@@ -103,20 +105,27 @@ export default async function HelpPage({
               "Find setup guidance, operational answers, and direct support paths for the Arba7i platform."}
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link
-              href={`/${lang}/contact`}
-              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-br from-primary to-accent px-8 py-4 font-bold text-primary-foreground shadow-xl shadow-primary/12 transition-all hover:scale-105 active:scale-95"
+            <Button
+              asChild
+              size="lg"
+              className="inline-flex h-auto items-center justify-center gap-2 rounded-2xl bg-gradient-to-br from-primary to-accent px-8 py-4 font-bold text-primary-foreground shadow-xl shadow-primary/12 transition-all hover:scale-105 active:scale-95"
             >
-              <Headset className="h-4 w-4" />
-              {dict?.helpPage?.support?.cta1 || "Contact support"}
-            </Link>
-            <a
-              href="mailto:webdevyns@gmail.com"
-              className="inline-flex items-center justify-center gap-2 rounded-2xl border border-border/20 px-8 py-4 font-bold text-primary transition-all hover:bg-muted"
+              <Link href={`/${lang}/contact`}>
+                <Headset className="h-4 w-4" />
+                {dict?.helpPage?.support?.cta1 || "Contact support"}
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="inline-flex h-auto items-center justify-center gap-2 rounded-2xl border-border/20 px-8 py-4 font-bold text-primary"
             >
-              <Mail className="h-4 w-4" />
-              {dict?.helpPage?.support?.cta2 || "Email support"}
-            </a>
+              <a href="mailto:webdevyns@gmail.com">
+                <Mail className="h-4 w-4" />
+                {dict?.helpPage?.support?.cta2 || "Email support"}
+              </a>
+            </Button>
           </div>
         </div>
       </FadeInView>
@@ -135,7 +144,8 @@ export default async function HelpPage({
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {categories.map((category, index) => (
             <FadeInView key={`category-${index}`} delay={index * 60}>
-              <div className="group rounded-[2rem] bg-muted/40 p-8 transition-all duration-300 hover:bg-card">
+              <Card className="group rounded-[2rem] border-0 bg-muted/40 transition-all duration-300 hover:bg-card">
+                <CardContent className="p-8">
                 <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 transition-transform group-hover:scale-110">
                   <category.icon className="h-6 w-6 text-primary" />
                 </div>
@@ -143,7 +153,8 @@ export default async function HelpPage({
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                   {category.body}
                 </p>
-              </div>
+                </CardContent>
+              </Card>
             </FadeInView>
           ))}
         </div>
@@ -163,7 +174,8 @@ export default async function HelpPage({
           <div className="space-y-4">
             {faqs.map((item, index) => (
               <FadeInView key={`help-faq-${index}`} delay={index * 60}>
-                <div className="rounded-2xl border border-border/20 bg-card p-6 shadow-sm">
+                <Card className="rounded-2xl border-border/20 bg-card shadow-sm">
+                  <CardContent className="p-6">
                   <div className="flex items-start gap-4">
                     <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-primary/10">
                       <CircleHelp className="h-5 w-5 text-primary" />
@@ -173,7 +185,8 @@ export default async function HelpPage({
                       <p className="mt-3 leading-relaxed text-muted-foreground">{item.a}</p>
                     </div>
                   </div>
-                </div>
+                  </CardContent>
+                </Card>
               </FadeInView>
             ))}
           </div>
@@ -193,19 +206,26 @@ export default async function HelpPage({
               </p>
             </div>
             <div className="flex flex-col gap-4 sm:flex-row">
-              <Link
-                href={`/${lang}/contact`}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-br from-primary to-primary/80 px-8 py-4 font-bold text-primary-foreground shadow-lg shadow-primary/20"
+              <Button
+                asChild
+                size="lg"
+                className="inline-flex h-auto items-center justify-center gap-2 rounded-2xl bg-gradient-to-br from-primary to-primary/80 px-8 py-4 font-bold text-primary-foreground shadow-lg shadow-primary/20"
               >
-                <Headset className="h-4 w-4" />
-                {dict?.helpPage?.support?.cta1 || "Contact support"}
-              </Link>
-              <a
-                  href="mailto:webdevyns@gmail.com"
-                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-border/20 px-8 py-4 font-bold text-primary transition-all hover:bg-muted"
+                <Link href={`/${lang}/contact`}>
+                  <Headset className="h-4 w-4" />
+                  {dict?.helpPage?.support?.cta1 || "Contact support"}
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="inline-flex h-auto items-center justify-center gap-2 rounded-2xl border-border/20 px-8 py-4 font-bold text-primary"
               >
-                {dict?.helpPage?.support?.cta2 || "Email support"}
-              </a>
+                <a href="mailto:webdevyns@gmail.com">
+                  {dict?.helpPage?.support?.cta2 || "Email support"}
+                </a>
+              </Button>
             </div>
           </div>
         </div>
@@ -224,18 +244,24 @@ export default async function HelpPage({
                   "Start with a clearer operating system and keep direct help close when your business needs it."}
               </p>
               <div className="flex flex-col items-center justify-center gap-6 pt-6 sm:flex-row">
-                <Link
-                  href={`/${lang}/register`}
-                  className="rounded-2xl border border-transparent bg-background px-10 py-5 text-lg font-black text-primary shadow-2xl transition-all hover:scale-105 active:scale-95"
+                <Button
+                  asChild
+                  size="lg"
+                  className="h-auto rounded-2xl border border-transparent bg-background px-10 py-5 text-lg font-black text-primary shadow-2xl transition-all hover:scale-105 active:scale-95"
                 >
-                  {dict?.helpPage?.finalCta?.cta1 || "Start free"}
-                </Link>
-                <Link
-                  href={`/${lang}/pricing`}
-                  className="font-bold text-primary-foreground underline decoration-white/30 underline-offset-8 decoration-2 transition-all hover:decoration-white"
+                  <Link href={`/${lang}/register`}>
+                    {dict?.helpPage?.finalCta?.cta1 || "Start free"}
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="link"
+                  className="h-auto p-0 font-bold text-primary-foreground underline decoration-white/30 underline-offset-8 decoration-2 transition-all hover:decoration-white"
                 >
-                  {dict?.helpPage?.finalCta?.cta2 || "View pricing"}
-                </Link>
+                  <Link href={`/${lang}/pricing`}>
+                    {dict?.helpPage?.finalCta?.cta2 || "View pricing"}
+                  </Link>
+                </Button>
               </div>
             </div>
           </div>

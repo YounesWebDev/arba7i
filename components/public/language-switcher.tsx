@@ -1,8 +1,10 @@
 // --- components/public/language-switcher.tsx ---
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { startTransition, useEffect, useMemo } from "react";
+import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useMemo } from "react";
+import { Button } from "@/components/ui/button";
 import type { Locale } from "@/i18n-config";
 import { cn } from "@/lib/utils";
 
@@ -25,12 +27,11 @@ export function LanguageSwitcher({
   mobileVisible = false,
 }: LanguageSwitcherProps) {
   const pathname = usePathname();
-  const router = useRouter();
   const searchParams = useSearchParams();
   const search = searchParams.toString();
 
-  const getLocalizedPath = useMemo(
-    () => (targetLang: string) => {
+  const getLocalizedPath = useMemo(() => {
+    return (targetLang: string) => {
       const segments = (pathname ?? "/").split("/").filter(Boolean);
       const hasLocalePrefix = locales.some(({ code }) => code === segments[0]);
       const nextSegments = hasLocalePrefix
@@ -38,32 +39,12 @@ export function LanguageSwitcher({
         : [targetLang, ...segments];
 
       return `/${nextSegments.join("/")}${search ? `?${search}` : ""}`;
-    },
-    [pathname, search]
-  );
+    };
+  }, [pathname, search]);
 
   // Find the active tab based on the URL, not useState
   const activeIndex = locales.findIndex(({ code }) => code === lang);
   const safeIndex = activeIndex === -1 ? 0 : activeIndex; // Fallback to AR
-
-  useEffect(() => {
-    locales
-      .filter(({ code }) => code !== lang)
-      .forEach(({ code }) => {
-        router.prefetch(getLocalizedPath(code));
-      });
-  }, [getLocalizedPath, lang, router]);
-
-  // The function that changes the website language
-  const handleLanguageSwitch = (newLang: string) => {
-    if (!pathname || newLang === lang) return;
-
-    const nextPath = getLocalizedPath(newLang);
-
-    startTransition(() => {
-      router.replace(nextPath);
-    });
-  };
 
   // The thumb should follow visual option order, which is already AR, EN, FR.
   const slideValue = safeIndex * 100;
@@ -85,12 +66,14 @@ export function LanguageSwitcher({
 
       {locales.map(({ code, label }) => {
         const isActive = lang === code;
+        const href = getLocalizedPath(code);
 
         return (
-          <button
-            type="button"
+          <Button
             key={code}
-            onClick={() => handleLanguageSwitch(code)}
+            asChild
+            variant="ghost"
+            size="sm"
             className={cn(
               "relative z-10 rounded-full px-3 py-1.5 text-center text-xs transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-95",
               isActive
@@ -100,14 +83,22 @@ export function LanguageSwitcher({
             aria-pressed={isActive}
             aria-label={`Switch language to ${label}`}
           >
-            <span
-              className={`inline-block transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                isActive ? "translate-y-0 opacity-100" : "translate-y-px opacity-80"
-              }`}
+            <Link
+              href={href}
+              prefetch={false}
+              onClick={() => {
+                document.cookie = `NEXT_LOCALE=${code}; path=/; max-age=31536000; samesite=lax`;
+              }}
             >
-              {label}
-            </span>
-          </button>
+              <span
+                className={`inline-block transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  isActive ? "translate-y-0 opacity-100" : "translate-y-px opacity-80"
+                }`}
+              >
+                {label}
+              </span>
+            </Link>
+          </Button>
         );
       })}
     </div>

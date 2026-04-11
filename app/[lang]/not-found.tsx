@@ -6,9 +6,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 export default async function NotFoundPage({
   params,
 }: {
-  params: Promise<{ lang: string }>
+  params?: Promise<{ lang?: string }>
 }) {
-  const { lang } = await params
+  const resolvedParams = await params
+  const lang = resolvedParams?.lang ?? "en"
   const isArabic = lang === "ar"
 
   return (

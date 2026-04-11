@@ -607,7 +607,7 @@
     "riskyTitle": "Attention requise",
     "fromDeliveredOrders": "Des commandes livrees",
     "waitingToProcess": "En attente de traitement",
-    "inCatalog": "Dans votre catalogue",
+    "inCatalog": "Dans votre boutique",
     "flagsTriggered": "Alertes declenchees",
     "salesTrend": "Tendance des ventes",
     "chartDesc": "Revenu sur les 7 derniers jours.",
@@ -646,6 +646,17 @@
     "stockBadge": "Stable",
     "riskBadgeActive": "Action requise",
     "riskBadgeClear": "Clair",
-    "chartRevenueLabel": "Revenu (DZD)"
+    "chartRevenueLabel": "Revenu (DZD)",
+    "totalOrdersTitle": "Commandes totales",
+    "deliveredTitle": "Livrees",
+    "returnedTitle": "Retournees",
+    "expensesTitle": "Depenses",
+    "netProfitTitle": "Benefice net",
+    "allOrdersDesc": "Toutes les commandes de votre boutique",
+    "deliveredRateSuffix": "taux de livraison",
+    "returnedRateSuffix": "taux de retour",
+    "deliveredRevenueDesc": "Depuis les commandes livrees",
+    "trackedExpensesDesc": "Total des depenses enregistrees",
+    "netProfitDesc": "Revenu moins depenses"
   }
 }
