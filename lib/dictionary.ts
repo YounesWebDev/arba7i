@@ -26,6 +26,14 @@ function mergeDashboardPage<T extends Record<string, unknown>>(
       ...(base.dashboardPage as Record<string, unknown> | undefined),
       ...(override.dashboardPage as Record<string, unknown> | undefined),
     },
+    categoriesPage: {
+      ...(base.categoriesPage as Record<string, unknown> | undefined),
+      ...(override.categoriesPage as Record<string, unknown> | undefined),
+    },
+    categoriesActions: {
+      ...(base.categoriesActions as Record<string, unknown> | undefined),
+      ...(override.categoriesActions as Record<string, unknown> | undefined),
+    },
   }
 }
 
@@ -42,5 +50,9 @@ export const getDictionary = cache(async (locale: Locale) => {
     (module) => module.default
   )
 
-  return mergeDashboardPage(dictionary, dashboardArabicOverride)
+  const categoriesArabicOverride = await import("../dictionaries/ar-categories-page.json").then(
+    (module) => module.default
+  )
+
+  return mergeDashboardPage(mergeDashboardPage(dictionary, dashboardArabicOverride), categoriesArabicOverride)
 })

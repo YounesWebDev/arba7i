@@ -34,7 +34,7 @@ export default async function RootLayout({
   const cookieStore = await cookies();
   const savedTheme = cookieStore.get("theme")?.value;
   const resolvedTheme = savedTheme === "dark" || savedTheme === "light" ? savedTheme : null;
-  const htmlClassName = `${inter.variable} h-full antialiased${resolvedTheme === "dark" ? " dark" : ""}`;
+  const htmlClassName = `${inter.variable} ${inter.className} h-full antialiased${resolvedTheme === "dark" ? " dark" : ""}`;
 
   return (
     <html
@@ -45,7 +45,7 @@ export default async function RootLayout({
       style={resolvedTheme ? { colorScheme: resolvedTheme } : undefined}
       suppressHydrationWarning
     >
-      <body suppressHydrationWarning className="min-h-full flex flex-col">
+      <body suppressHydrationWarning className="min-h-full font-sans flex flex-col">
         <ThemeProvider>
           <DirectionProvider dir={dir}>
             <TooltipProvider>

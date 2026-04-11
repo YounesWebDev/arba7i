@@ -426,13 +426,13 @@ async function OverviewSection({
     <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         <Card className="border-border/60 bg-card/95 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{copy.totalOrdersTitle}</CardTitle>
-            <div className="rounded-full bg-secondary p-2 text-secondary-foreground">
-              <ShoppingBag className="h-4 w-4" />
+            <CardTitle className="text-sm font-semibold tracking-tight">{copy.totalOrdersTitle}</CardTitle>
+            <div className="rounded-lg bg-secondary p-2 text-secondary-foreground">
+              <ShoppingBag className="h-8 w-8" />
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{totalOrdersCount.toLocaleString(locale)}</div>
+            <div className="text-2xl font-black tracking-tight">{totalOrdersCount.toLocaleString(locale)}</div>
             <p className="text-xs text-muted-foreground">
               {copy.allOrdersDesc} · {uiText.previewWindowLabel}
             </p>
@@ -441,13 +441,13 @@ async function OverviewSection({
 
         <Card className="border-border/60 bg-card/95 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{copy.deliveredTitle}</CardTitle>
-            <div className="rounded-full bg-primary/10 p-2 text-primary">
-              <CheckCircle2 className="h-4 w-4" />
+            <CardTitle className="text-sm font-semibold tracking-tight">{copy.deliveredTitle}</CardTitle>
+            <div className="rounded-lg bg-primary/10 p-2 text-primary">
+              <CheckCircle2 className="h-8 w-8" />
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{deliveredCount.toLocaleString(locale)}</div>
+            <div className="text-2xl font-black tracking-tight">{deliveredCount.toLocaleString(locale)}</div>
             <p className="text-xs text-muted-foreground">
               {deliveredRate}% {copy.deliveredRateSuffix} · {uiText.previewWindowLabel}
             </p>
@@ -456,13 +456,13 @@ async function OverviewSection({
 
         <Card className="border-border/60 bg-card/95 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{copy.returnedTitle}</CardTitle>
-            <div className="rounded-full bg-destructive/10 p-2 text-destructive">
-              <ArrowRight className="h-4 w-4" />
+            <CardTitle className="text-sm font-semibold tracking-tight">{copy.returnedTitle}</CardTitle>
+            <div className="rounded-lg bg-destructive/10 p-2 text-destructive">
+              <ArrowRight className="h-8 w-8" />
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{returnedCount.toLocaleString(locale)}</div>
+            <div className="text-2xl font-black tracking-tight">{returnedCount.toLocaleString(locale)}</div>
             <p className="text-xs text-muted-foreground">
               {returnedRate}% {copy.returnedRateSuffix} · {uiText.previewWindowLabel}
             </p>
@@ -471,13 +471,13 @@ async function OverviewSection({
 
         <Card className="border-border/60 bg-card/95 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{copy.revenue}</CardTitle>
-            <div className="rounded-full bg-primary/10 p-2 text-primary">
-              <DollarSign className="h-4 w-4" />
+            <CardTitle className="text-sm font-semibold tracking-tight">{copy.revenue}</CardTitle>
+            <div className="rounded-lg bg-primary/10 p-2 text-primary">
+              <DollarSign className="h-8 w-8" />
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{formatCurrency(totalRevenue)} DZD</div>
+            <div className="text-2xl font-black tracking-tight">{formatCurrency(totalRevenue)} DZD</div>
             <p className="text-xs text-muted-foreground">
               {copy.deliveredRevenueDesc} · {uiText.previewWindowLabel}
             </p>
@@ -486,28 +486,28 @@ async function OverviewSection({
 
         <Card className="border-border/60 bg-card/95 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{copy.expensesTitle}</CardTitle>
-            <div className="rounded-full bg-muted p-2 text-muted-foreground">
-              <Package className="h-4 w-4" />
+            <CardTitle className="text-sm font-semibold tracking-tight">{copy.expensesTitle}</CardTitle>
+            <div className="rounded-lg bg-muted p-2 text-muted-foreground">
+              <Package className="h-8 w-8" />
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{formatCurrency(totalExpenses)} DZD</div>
+            <div className="text-2xl font-black tracking-tight">{formatCurrency(totalExpenses)} DZD</div>
             <p className="text-xs text-muted-foreground">
               {copy.trackedExpensesDesc} · {uiText.previewWindowLabel}
             </p>
           </CardContent>
         </Card>
 
-        <Card className="border-primary/20 bg-primary/5 shadow-sm">
+        <Card className="border-primary/20 bg-linear-to-br from-primary via-accent to-accent/5 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{copy.netProfitTitle}</CardTitle>
-            <div className="rounded-full bg-accent/15 p-2 text-accent-foreground">
-              <TrendingUp className="h-4 w-4" />
+            <CardTitle className="text-sm font-semibold tracking-tight">{copy.netProfitTitle}</CardTitle>
+            <div className="rounded-lg bg-accent/15 p-2 text-accent-foreground">
+              <TrendingUp className="h-8 w-8" />
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{formatCurrency(netProfit)} DZD</div>
+            <div className="text-2xl font-black tracking-tight">{formatCurrency(netProfit)} DZD</div>
             <p className="text-xs text-muted-foreground">
               {copy.netProfitDesc} · {uiText.previewWindowLabel}
             </p>
@@ -612,7 +612,7 @@ async function RecentOrdersSection({
             ) : (
               recentOrdersData.map((order) => (
                 <TableRow key={order.id}>
-                  <TableCell className="text-start font-medium">{order.customerName ?? copy.guest}</TableCell>
+                  <TableCell className="text-start font-semibold">{order.customerName ?? copy.guest}</TableCell>
                   <TableCell className="text-start">
                     <Badge variant={order.status === "new" ? "default" : "secondary"} className="capitalize">
                       {order.status === "new"
@@ -627,7 +627,7 @@ async function RecentOrdersSection({
                     </Badge>
                   </TableCell>
                   <TableCell className="text-start">{order.date?.toLocaleDateString(locale)}</TableCell>
-                  <TableCell className="text-end font-bold">
+                  <TableCell className="text-end font-black tracking-tight">
                     {formatCurrency(order.amount as string)} DZD
                   </TableCell>
                 </TableRow>
@@ -658,7 +658,7 @@ function SetupCard({
       <CardContent className="space-y-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
-            <span className="font-medium text-primary">
+            <span className="font-semibold tracking-tight text-primary">
               {setupProgress}% {copy.complete}
             </span>
           </div>
@@ -667,7 +667,7 @@ function SetupCard({
         <div className="space-y-3">
           <div className="flex items-center gap-3">
             <CheckCircle2 className="h-5 w-5 text-primary" />
-            <span className="text-sm font-medium line-through text-muted-foreground">
+            <span className="text-sm font-semibold line-through text-muted-foreground">
               {copy.createAccount}
             </span>
           </div>
@@ -675,18 +675,18 @@ function SetupCard({
             <Circle className="h-5 w-5 text-muted-foreground" />
             <Link
               href={`/${lang}/dashboard/settings`}
-              className="text-sm font-medium transition-colors hover:text-primary"
+              className="text-sm font-semibold tracking-tight transition-colors hover:text-primary"
             >
               {copy.stepStore}
             </Link>
           </div>
           <div className="flex items-center gap-3">
             <Circle className="h-5 w-5 text-muted-foreground" />
-            <span className="text-sm font-medium text-muted-foreground">{copy.stepShipping}</span>
+            <span className="text-sm font-semibold text-muted-foreground">{copy.stepShipping}</span>
           </div>
           <div className="flex items-center gap-3">
             <Circle className="h-5 w-5 text-muted-foreground" />
-            <span className="text-sm font-medium text-muted-foreground">{copy.stepPayment}</span>
+            <span className="text-sm font-semibold text-muted-foreground">{copy.stepPayment}</span>
           </div>
         </div>
       </CardContent>
@@ -735,7 +735,7 @@ async function RiskPreviewSection({
             {riskRows.map((risk) => (
               <div key={risk.id} className="rounded-xl border border-border/60 bg-muted/20 p-3">
                 <div className="flex items-center justify-between gap-3">
-                  <p className="text-sm font-medium">{risk.customerName ?? copy.guest}</p>
+                  <p className="text-sm font-semibold">{risk.customerName ?? copy.guest}</p>
                   <Badge variant={risk.severity === "critical" || risk.severity === "high" ? "destructive" : "secondary"}>
                     {getSeverityLabel(risk.severity, uiText)}
                   </Badge>
@@ -791,7 +791,7 @@ async function LowStockPreviewSection({
           rows.map((product) => (
             <div key={product.id} className="flex items-center justify-between gap-4 rounded-xl border border-border/60 bg-muted/20 p-3">
               <div className="min-w-0">
-                <p className="truncate text-sm font-medium">{product.name}</p>
+                <p className="truncate text-sm font-semibold">{product.name}</p>
                 <p className="text-xs text-muted-foreground">
                   {product.lowStockThreshold} / threshold
                 </p>
@@ -835,19 +835,19 @@ export default async function DashboardHomePage({
       <Card className="overflow-hidden border-border/60 bg-gradient-to-br from-card via-card to-accent/50 shadow-sm">
         <CardContent className="flex flex-col gap-5 p-5 sm:p-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="space-y-3">
-            <Badge variant="secondary" className="w-fit gap-1 rounded-full px-3 py-1 text-xs font-medium">
+            <Badge variant="secondary" className="w-fit gap-1 rounded-full px-3 py-1 text-xs font-semibold tracking-tight">
               <Activity className="h-3.5 w-3.5" />
               {copy.overviewBadge}
             </Badge>
             <div>
-              <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+              <h1 className="text-2xl font-black tracking-tighter sm:text-3xl">
                 {copy.greeting} {auth.userData?.first_name || copy.user}
               </h1>
               <p className="mt-1 max-w-2xl text-muted-foreground">{copy.welcomeDesc}</p>
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <Button variant="outline" size="lg" asChild>
+            <Button size="lg" variant="outline" asChild>
               <Link href={`/${lang}/dashboard/products/new`}>
                 <Plus className="mr-2 h-4 w-4" />
                 {copy.quickAddProduct}

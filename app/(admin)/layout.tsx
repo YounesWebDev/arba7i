@@ -1,9 +1,13 @@
 // --- app/(admin)/layout.tsx ---
-
 import { redirect } from "next/navigation";
+import { Inter } from "next/font/google";
 import { writeAuditLog } from "@/lib/audit";
 import { hasPermission, type Role } from "@/lib/permissions";
 import { createClient } from "@/utils/supabase/server";
+
+const inter = Inter({
+  subsets: ["latin"],
+});
 
 function normalizeRole(role: string | null | undefined): Role {
   if (
@@ -60,7 +64,7 @@ export default async function AdminLayout({
   return (
     // We use a dark slate theme here so it is instantly visually distinct 
     // from the white/light-gray Seller Dashboard.
-    <div className="flex min-h-screen w-full bg-slate-950 text-slate-50">
+    <div className={`${inter.className} flex min-h-screen w-full font-sans bg-slate-950 text-slate-50`}>
       
       {/* Admin Sidebar (Simplified for now) */}
       <aside className="w-64 border-r border-slate-800 bg-slate-900 p-6 hidden md:block">

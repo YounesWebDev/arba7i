@@ -18,11 +18,11 @@ export default async function DashboardLayout({
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full max-w-full overflow-x-hidden bg-muted/20">
+      <div className="flex min-h-screen w-full max-w-full overflow-x-hidden bg-muted/20 font-sans">
         <AppSidebar lang={lang} role={auth.role} />
         <SidebarInset className="flex min-w-0 flex-col overflow-x-hidden">
           <Topbar lang={lang} copy={dict.dashboardShell.topbar} />
-          <main className="flex-1 overflow-x-hidden px-4 py-6 sm:px-6 lg:px-8">
+          <main className="flex-1 overflow-x-hidden px-4 py-6 font-sans sm:px-6 lg:px-8">
             {children}
           </main>
         </SidebarInset>

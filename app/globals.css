@@ -188,13 +188,61 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html,
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-inter), sans-serif;
     letter-spacing: var(--tracking-normal);
   }
   html {
     @apply font-sans;
     scroll-behavior: smooth;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-inter), sans-serif;
+    color: inherit;
+  }
+  h1 {
+    font-weight: 900;
+    letter-spacing: var(--tracking-tighter);
+    line-height: 1.05;
+  }
+  h2 {
+    font-weight: 800;
+    letter-spacing: var(--tracking-tight);
+    line-height: 1.1;
+  }
+  h3 {
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+    line-height: 1.15;
+  }
+  h4,
+  h5,
+  h6 {
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+    line-height: 1.2;
+  }
+  p {
+    line-height: 1.6;
+  }
+  button,
+  input,
+  textarea,
+  select,
+  option,
+  label {
+    font-family: var(--font-inter), sans-serif;
+  }
+  label {
+    font-weight: 600;
+    letter-spacing: var(--tracking-tight);
   }
 }
 
