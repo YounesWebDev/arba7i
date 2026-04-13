@@ -1,6 +1,14 @@
 'use client';
 
-import { useEffect, useRef, useState, createElement, useMemo, useCallback } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  createElement,
+  useMemo,
+  useCallback,
+  type ElementType
+} from 'react';
 import type { HTMLAttributes } from 'react';
 import { gsap } from 'gsap';
 import { useDirection } from '@/components/ui/direction';
@@ -13,7 +21,7 @@ interface TextTypeProps {
   cursorBlinkDuration?: number;
   cursorClassName?: string;
   text: string | string[];
-  as?: keyof JSX.IntrinsicElements;
+  as?: ElementType;
   typingSpeed?: number;
   initialDelay?: number;
   pauseDuration?: number;

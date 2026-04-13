@@ -46,11 +46,11 @@ export async function updateSession(request: NextRequest) {
     }
 
     // 2. THE FIX: Removed /reset-password from this list!
-    // We only block login, register, and forgot-password if they are logged in.
+    // We only block login, register, and forget-password if they are logged in.
     const isAuthRoute = 
       pathnameWithoutLocale.startsWith('/login') ||
       pathnameWithoutLocale.startsWith('/register') ||
-      pathnameWithoutLocale.startsWith('/forgot-password');
+      pathnameWithoutLocale.startsWith('/forget-password');
 
     if (user && isAuthRoute) {
       const url = request.nextUrl.clone();

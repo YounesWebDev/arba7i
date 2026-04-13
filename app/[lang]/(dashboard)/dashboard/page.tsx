@@ -18,7 +18,7 @@ import {
 import { db } from "@/db"
 import { customers, expenses, orders, products, riskEvents, sellerStoreLinks } from "@/db/schema"
 import { requireAuth } from "@/lib/auth-guard"
-import { getDictionary } from "@/lib/dictionary"
+import { getDashboardDictionary } from "@/lib/dictionary"
 import type { Locale } from "@/i18n-config"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -814,7 +814,7 @@ export default async function DashboardHomePage({
 }) {
   const { lang } = await params
   const auth = await requireAuth(lang)
-  const dict = await getDictionary(lang as Locale)
+  const dict = await getDashboardDictionary(lang as Locale)
   const copy = dict.dashboardPage as Record<string, string>
   const locale = lang === "ar" ? "ar-DZ" : lang === "fr" ? "fr-FR" : "en-US"
   const uiText = getDashboardUiText(lang)

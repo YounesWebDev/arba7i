@@ -1,4 +1,14 @@
-{
+const dictionary = {
+  "dashboardShell": {
+    "topbar": {
+      "dashboard": "لوحة التاجر",
+      "overview": "نظرة عامة",
+      "notifications": "التنبيهات",
+      "account": "الحساب",
+      "profile": "الملف الشخصي",
+      "logout": "تسجيل الخروج"
+    }
+  },
   "dashboardPage": {
     "overviewBadge": "ملخص اليوم",
     "greeting": "مرحبًا بك،",
@@ -65,4 +75,6 @@
     "trackedExpensesDesc": "إجمالي المصاريف المسجلة",
     "netProfitDesc": "الإيرادات ناقص المصاريف"
   }
-}
+} as const;
+
+export default dictionary;

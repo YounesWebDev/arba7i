@@ -1,58 +1,127 @@
-// --- lib/dictionary.ts ---
+import { cache } from "react";
+import "server-only";
 
-// This package ensures this code NEVER runs on the user's browser, keeping your app fast and secure.
-import { cache } from 'react'
-import 'server-only'
+import type { Locale } from "@/i18n-config";
 
-// We import the Locale type we created so TypeScript knows exactly which languages are allowed.
-import type { Locale } from '../i18n-config'
+// The page dictionaries have different shapes, so the loader needs a flexible return type.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type DictionaryValue = Record<string, any>;
 
-// This object holds instructions on how to load each file.
-// The 'import()' function here is special: it only loads the JSON file IF it is explicitly requested.
 const dictionaries = {
-    en: () => import('../dictionaries/en.json').then((module) => module.default),
-    fr: () => import('../dictionaries/fr.json').then((module) => module.default),
-    ar: () => import('../dictionaries/ar.json').then((module) => module.default),
-}
+  common: {
+    en: () => import("@/dictionaries/pages/common/en").then((module) => module.default),
+    fr: () => import("@/dictionaries/pages/common/fr").then((module) => module.default),
+    ar: () => import("@/dictionaries/pages/common/ar").then((module) => module.default),
+  },
+  home: {
+    en: () => import("@/dictionaries/pages/home/en").then((module) => module.default),
+    fr: () => import("@/dictionaries/pages/home/fr").then((module) => module.default),
+    ar: () => import("@/dictionaries/pages/home/ar").then((module) => module.default),
+  },
+  features: {
+    en: () => import("@/dictionaries/pages/features/en").then((module) => module.default),
+    fr: () => import("@/dictionaries/pages/features/fr").then((module) => module.default),
+    ar: () => import("@/dictionaries/pages/features/ar").then((module) => module.default),
+  },
+  pricing: {
+    en: () => import("@/dictionaries/pages/pricing/en").then((module) => module.default),
+    fr: () => import("@/dictionaries/pages/pricing/fr").then((module) => module.default),
+    ar: () => import("@/dictionaries/pages/pricing/ar").then((module) => module.default),
+  },
+  about: {
+    en: () => import("@/dictionaries/pages/about/en").then((module) => module.default),
+    fr: () => import("@/dictionaries/pages/about/fr").then((module) => module.default),
+    ar: () => import("@/dictionaries/pages/about/ar").then((module) => module.default),
+  },
+  contact: {
+    en: () => import("@/dictionaries/pages/contact/en").then((module) => module.default),
+    fr: () => import("@/dictionaries/pages/contact/fr").then((module) => module.default),
+    ar: () => import("@/dictionaries/pages/contact/ar").then((module) => module.default),
+  },
+  help: {
+    en: () => import("@/dictionaries/pages/help/en").then((module) => module.default),
+    fr: () => import("@/dictionaries/pages/help/fr").then((module) => module.default),
+    ar: () => import("@/dictionaries/pages/help/ar").then((module) => module.default),
+  },
+  privacy: {
+    en: () => import("@/dictionaries/pages/privacy/en").then((module) => module.default),
+    fr: () => import("@/dictionaries/pages/privacy/fr").then((module) => module.default),
+    ar: () => import("@/dictionaries/pages/privacy/ar").then((module) => module.default),
+  },
+  terms: {
+    en: () => import("@/dictionaries/pages/terms/en").then((module) => module.default),
+    fr: () => import("@/dictionaries/pages/terms/fr").then((module) => module.default),
+    ar: () => import("@/dictionaries/pages/terms/ar").then((module) => module.default),
+  },
+  auth: {
+    en: () => import("@/dictionaries/pages/auth/en").then((module) => module.default),
+    fr: () => import("@/dictionaries/pages/auth/fr").then((module) => module.default),
+    ar: () => import("@/dictionaries/pages/auth/ar").then((module) => module.default),
+  },
+  dashboard: {
+    en: () => import("@/dictionaries/pages/dashboard/en").then((module) => module.default),
+    fr: () => import("@/dictionaries/pages/dashboard/fr").then((module) => module.default),
+    ar: () => import("@/dictionaries/pages/dashboard/ar").then((module) => module.default),
+  },
+  categories: {
+    en: () => import("@/dictionaries/pages/categories/en").then((module) => module.default),
+    fr: () => import("@/dictionaries/pages/categories/fr").then((module) => module.default),
+    ar: () => import("@/dictionaries/pages/categories/ar").then((module) => module.default),
+  },
+} as const;
 
-function mergeDashboardPage<T extends Record<string, unknown>>(
-  base: T,
-  override: Partial<T>
-) {
-  return {
-    ...base,
-    ...override,
-    dashboardPage: {
-      ...(base.dashboardPage as Record<string, unknown> | undefined),
-      ...(override.dashboardPage as Record<string, unknown> | undefined),
-    },
-    categoriesPage: {
-      ...(base.categoriesPage as Record<string, unknown> | undefined),
-      ...(override.categoriesPage as Record<string, unknown> | undefined),
-    },
-    categoriesActions: {
-      ...(base.categoriesActions as Record<string, unknown> | undefined),
-      ...(override.categoriesActions as Record<string, unknown> | undefined),
-    },
+type DictionarySection = keyof typeof dictionaries;
+
+const getScopedDictionary = cache(
+  async (section: DictionarySection, locale: Locale): Promise<DictionaryValue> => {
+    return dictionaries[section][locale]();
   }
-}
+);
 
-// This is the main function we will use in our pages. 
-// Give it a locale (like 'ar'), and it returns the correct dictionary!
-export const getDictionary = cache(async (locale: Locale) => {
-  const dictionary = await dictionaries[locale]()
+export const getCommonDictionary = cache(async (locale: Locale) => {
+  return getScopedDictionary("common", locale);
+});
 
-  if (locale !== "ar") {
-    return dictionary
-  }
+export const getHomeDictionary = cache(async (locale: Locale) => {
+  return getScopedDictionary("home", locale);
+});
 
-  const dashboardArabicOverride = await import("../dictionaries/ar-dashboard-page.json").then(
-    (module) => module.default
-  )
+export const getFeaturesDictionary = cache(async (locale: Locale) => {
+  return getScopedDictionary("features", locale);
+});
 
-  const categoriesArabicOverride = await import("../dictionaries/ar-categories-page.json").then(
-    (module) => module.default
-  )
+export const getPricingDictionary = cache(async (locale: Locale) => {
+  return getScopedDictionary("pricing", locale);
+});
 
-  return mergeDashboardPage(mergeDashboardPage(dictionary, dashboardArabicOverride), categoriesArabicOverride)
-})
+export const getAboutDictionary = cache(async (locale: Locale) => {
+  return getScopedDictionary("about", locale);
+});
+
+export const getContactDictionary = cache(async (locale: Locale) => {
+  return getScopedDictionary("contact", locale);
+});
+
+export const getHelpDictionary = cache(async (locale: Locale) => {
+  return getScopedDictionary("help", locale);
+});
+
+export const getPrivacyDictionary = cache(async (locale: Locale) => {
+  return getScopedDictionary("privacy", locale);
+});
+
+export const getTermsDictionary = cache(async (locale: Locale) => {
+  return getScopedDictionary("terms", locale);
+});
+
+export const getAuthDictionary = cache(async (locale: Locale) => {
+  return getScopedDictionary("auth", locale);
+});
+
+export const getDashboardDictionary = cache(async (locale: Locale) => {
+  return getScopedDictionary("dashboard", locale);
+});
+
+export const getCategoriesDictionary = cache(async (locale: Locale) => {
+  return getScopedDictionary("categories", locale);
+});

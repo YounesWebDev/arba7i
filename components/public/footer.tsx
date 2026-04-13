@@ -1,5 +1,4 @@
 // --- components/public/footer.tsx ---
-import Link from "next/link";
 import { 
   Sparkles, CreditCard, Building, 
   Mail, ShieldCheck, FileText, HelpCircle 
@@ -49,9 +48,9 @@ export function PublicFooter({ lang, dict }: { lang: string; dict: FooterDict })
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 py-14 text-sm leading-relaxed sm:grid-cols-2 sm:px-6 md:grid-cols-4 md:px-10 lg:grid-cols-6 lg:px-20">
         
         <div className="space-y-6 sm:col-span-2">
-          <Link href={`/${lang}`} className="text-xl font-black tracking-tighter text-foreground">
+          <a href={`/${lang}`} className="text-xl font-black tracking-tighter text-foreground">
             Arba7i
-          </Link>
+          </a>
           <p className="max-w-xs text-muted-foreground">
             {dict?.footer?.description || "The fluid architect for e-commerce financial intelligence."}
           </p>
@@ -60,17 +59,17 @@ export function PublicFooter({ lang, dict }: { lang: string; dict: FooterDict })
 
         {footerSections.map((section, index) => (
           <div key={`footer-section-${index}`} className="space-y-4">
-            <h5 className="font-bold text-foreground">{section.title}</h5>
+            <h3 className="text-base font-bold text-foreground">{section.title}</h3>
             <ul className="space-y-3 text-muted-foreground">
               {section.links.map((link, linkIndex) => (
                 <li key={`footer-link-${index}-${linkIndex}`}>
-                  <Link 
+                  <a 
                     href={`/${lang}${link.href}`} 
                     className="flex items-center gap-2 transition-all hover:text-primary group"
                   >
                     <link.icon className="h-4 w-4 opacity-70 group-hover:opacity-100 transition-opacity" />
                     <span>{link.title}</span>
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>

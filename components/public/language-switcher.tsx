@@ -1,9 +1,7 @@
 // --- components/public/language-switcher.tsx ---
 "use client";
 
-import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
-import { useMemo } from "react";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import type { Locale } from "@/i18n-config";
 import { cn } from "@/lib/utils";
@@ -27,26 +25,12 @@ export function LanguageSwitcher({
   mobileVisible = false,
 }: LanguageSwitcherProps) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const search = searchParams.toString();
+  const segments = (pathname ?? "/").split("/").filter(Boolean);
+  const hasLocalePrefix = locales.some(({ code }) => code === segments[0]);
 
-  const getLocalizedPath = useMemo(() => {
-    return (targetLang: string) => {
-      const segments = (pathname ?? "/").split("/").filter(Boolean);
-      const hasLocalePrefix = locales.some(({ code }) => code === segments[0]);
-      const nextSegments = hasLocalePrefix
-        ? [targetLang, ...segments.slice(1)]
-        : [targetLang, ...segments];
-
-      return `/${nextSegments.join("/")}${search ? `?${search}` : ""}`;
-    };
-  }, [pathname, search]);
-
-  // Find the active tab based on the URL, not useState
   const activeIndex = locales.findIndex(({ code }) => code === lang);
   const safeIndex = activeIndex === -1 ? 0 : activeIndex; // Fallback to AR
 
-  // The thumb should follow visual option order, which is already AR, EN, FR.
   const slideValue = safeIndex * 100;
 
   return (
@@ -66,7 +50,10 @@ export function LanguageSwitcher({
 
       {locales.map(({ code, label }) => {
         const isActive = lang === code;
-        const href = getLocalizedPath(code);
+        const nextSegments = hasLocalePrefix
+          ? [code, ...segments.slice(1)]
+          : [code, ...segments];
+        const href = `/${nextSegments.join("/")}`;
 
         return (
           <Button
@@ -78,26 +65,25 @@ export function LanguageSwitcher({
               "relative z-10 rounded-full px-3 py-1.5 text-center text-xs transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-95",
               isActive
                 ? "scale-[1.02] font-bold text-primary-foreground"
-                : "font-semibold text-muted-foreground hover:text-foreground"
+                : "font-semibold text-foreground/80 hover:text-foreground"
             )}
-            aria-pressed={isActive}
-            aria-label={`Switch language to ${label}`}
           >
-            <Link
+            <a
               href={href}
-              prefetch={false}
+              aria-current={isActive ? "page" : undefined}
+              aria-label={isActive ? `Current language: ${label}` : `Switch language to ${label}`}
               onClick={() => {
                 document.cookie = `NEXT_LOCALE=${code}; path=/; max-age=31536000; samesite=lax`;
               }}
             >
               <span
                 className={`inline-block transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                  isActive ? "translate-y-0 opacity-100" : "translate-y-px opacity-80"
+                  isActive ? "translate-y-0 opacity-100" : "translate-y-px opacity-95"
                 }`}
               >
                 {label}
               </span>
-            </Link>
+            </a>
           </Button>
         );
       })}

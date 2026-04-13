@@ -32,7 +32,7 @@ export async function proxy(request: NextRequest) {
     pathnameWithoutLocale.startsWith("/admin") ||
     pathnameWithoutLocale.startsWith("/login") ||
     pathnameWithoutLocale.startsWith("/register") ||
-    pathnameWithoutLocale.startsWith("/forgot-password") ||
+    pathnameWithoutLocale.startsWith("/forget-password") ||
     pathnameWithoutLocale.startsWith("/complete-profile");
 
   if (!needsAuthSession) {

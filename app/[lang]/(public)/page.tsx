@@ -11,10 +11,11 @@ import {
   XCircle,
 } from "lucide-react";
 import { FadeInView } from "@/components/public/fade-in-view";
+import { PublicShell } from "@/components/public/public-shell";
 import { PricingSection } from "@/components/public/pricing-section";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { getDictionary } from "@/lib/dictionary";
+import { getHomeDictionary } from "@/lib/dictionary";
 import type { Locale } from "@/i18n-config";
 
 export async function generateMetadata({
@@ -23,7 +24,7 @@ export async function generateMetadata({
   params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   const { lang } = await params;
-  const dict = await getDictionary(lang as Locale);
+  const dict = await getHomeDictionary(lang as Locale);
   const title = `Arba7i | ${dict?.home?.hero?.title2 || "Better Profits"}`;
   const description =
     dict?.home?.hero?.description ||
@@ -53,7 +54,7 @@ export default async function HomePage({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const dict = await getDictionary(lang as Locale);
+  const dict = await getHomeDictionary(lang as Locale);
 
   const precisionFeatures = [
     {
@@ -153,7 +154,8 @@ export default async function HomePage({
   ];
 
   return (
-    <div className="overflow-x-hidden bg-background pb-20 font-sans text-foreground selection:bg-primary/20 selection:text-primary">
+    <PublicShell lang={lang} dict={dict} activeHref="/">
+      <div className="overflow-x-hidden bg-background pb-20 font-sans text-foreground selection:bg-primary/20 selection:text-primary">
       <FadeInView as="header" className="relative overflow-hidden px-6 pb-20 pt-32 md:pb-32 md:pt-48">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-background to-background" />
         <div className="relative mx-auto max-w-7xl space-y-8 text-center">
@@ -277,7 +279,7 @@ export default async function HomePage({
                       {index + 1}
                     </div>
                     <div>
-                      <h4 className="mb-2 text-lg font-bold sm:text-xl">{title}</h4>
+                      <h3 className="mb-2 text-lg font-bold sm:text-xl">{title}</h3>
                       <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
                         {body}
                       </p>
@@ -541,7 +543,7 @@ export default async function HomePage({
       <FadeInView as="section" className="relative overflow-hidden px-6 pt-24">
         <div className="relative mx-auto max-w-7xl">
           <div className="relative overflow-hidden rounded-[4rem] bg-gradient-to-r from-primary via-accent to-primary p-12 text-center text-primary-foreground md:p-24">
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
+            <div className="public-cubes-pattern absolute inset-0" />
             <div className="relative z-10 space-y-8">
               <h2 className="text-4xl font-black tracking-tighter md:text-7xl">
                 {dict?.home?.finalCta?.title || "Start Growing Today"}
@@ -573,6 +575,7 @@ export default async function HomePage({
           </div>
         </div>
       </FadeInView>
-    </div>
+      </div>
+    </PublicShell>
   );
 }

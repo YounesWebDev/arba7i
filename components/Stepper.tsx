@@ -139,37 +139,39 @@ export default function Stepper({
         )}
       >
         <CardContent className={cn("px-3 pt-3 md:px-4 md:pt-4 lg:px-2 lg:pt-2", contentClassName)}>
-          <div
-            className={cn(
-              "flex w-full items-center gap-1 min-[420px]:gap-0",
-              isRtl && "flex-row-reverse",
-              stepContainerClassName
-            )}
-          >
-            {stepsArray.map((_, index) => {
-              const stepNumber = index + 1;
-              const isNotLastStep = index < totalSteps - 1;
+          <div className="overflow-x-auto pb-1">
+            <div
+              className={cn(
+                "flex min-w-max items-center gap-1 min-[420px]:gap-0",
+                isRtl && "flex-row-reverse",
+                stepContainerClassName
+              )}
+            >
+              {stepsArray.map((_, index) => {
+                const stepNumber = index + 1;
+                const isNotLastStep = index < totalSteps - 1;
 
-              return (
-                <React.Fragment key={stepNumber}>
-                  {renderStepIndicator ? (
-                    renderStepIndicator({
-                      step: stepNumber,
-                      currentStep,
-                      onStepClick: goToStep,
-                    })
-                  ) : (
-                    <StepIndicator
-                      step={stepNumber}
-                      currentStep={currentStep}
-                      disableStepIndicators={disableStepIndicators}
-                      onClickStep={goToStep}
-                    />
-                  )}
-                  {isNotLastStep && <StepConnector isComplete={currentStep > stepNumber} />}
-                </React.Fragment>
-              );
-            })}
+                return (
+                  <React.Fragment key={stepNumber}>
+                    {renderStepIndicator ? (
+                      renderStepIndicator({
+                        step: stepNumber,
+                        currentStep,
+                        onStepClick: goToStep,
+                      })
+                    ) : (
+                      <StepIndicator
+                        step={stepNumber}
+                        currentStep={currentStep}
+                        disableStepIndicators={disableStepIndicators}
+                        onClickStep={goToStep}
+                      />
+                    )}
+                    {isNotLastStep && <StepConnector isComplete={currentStep > stepNumber} />}
+                  </React.Fragment>
+                );
+              })}
+            </div>
           </div>
 
           <StepContentWrapper
@@ -277,7 +279,7 @@ function StepContentWrapper({
       transition={{ type: "spring", duration: 0.4 }}
       className={className}
     >
-      <AnimatePresence initial={false} mode="sync" custom={direction}>
+      <AnimatePresence initial={false} mode="wait" custom={direction}>
         {!isCompleted && (
           <SlideTransition
             key={currentStep}
@@ -324,7 +326,7 @@ function SlideTransition({
       animate="center"
       exit="exit"
       transition={{ duration: 0.4 }}
-      style={{ position: "absolute", left: 0, right: 0, top: 0 }}
+      style={{ position: "relative" }}
     >
       {children}
     </motion.div>

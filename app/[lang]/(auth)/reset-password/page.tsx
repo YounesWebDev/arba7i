@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import type { Locale } from "@/i18n-config";
-import { getDictionary } from "@/lib/dictionary";
+import { getAuthDictionary } from "@/lib/dictionary";
 import { createClient } from "@/utils/supabase/server";
 import ResetPasswordClientForm from "./ResetPasswordClientForm";
 
@@ -13,7 +13,7 @@ export default async function ResetPasswordPage({
 }) {
   const { lang } = await params;
   const { error } = await searchParams;
-  const dict = await getDictionary(lang as Locale);
+  const dict = await getAuthDictionary(lang as Locale);
 
   const supabase = await createClient();
   const {

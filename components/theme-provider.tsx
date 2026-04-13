@@ -18,7 +18,11 @@ const COOKIE_NAME = "theme"
 
 function getSystemTheme(): ResolvedTheme {
   if (typeof window === "undefined") return "light"
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+  try {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+  } catch {
+    return "light"
+  }
 }
 
 function applyTheme(theme: ThemeName) {
@@ -32,8 +36,17 @@ function applyTheme(theme: ThemeName) {
 }
 
 function persistTheme(theme: ThemeName) {
-  window.localStorage.setItem(STORAGE_KEY, theme)
-  document.cookie = `${COOKIE_NAME}=${theme}; path=/; max-age=31536000; samesite=lax`
+  try {
+    window.localStorage.setItem(STORAGE_KEY, theme)
+  } catch {
+    // Ignore storage failures on restricted browsers.
+  }
+
+  try {
+    document.cookie = `${COOKIE_NAME}=${theme}; path=/; max-age=31536000; samesite=lax`
+  } catch {
+    // Ignore cookie failures and keep the in-memory theme state working.
+  }
 }
 
 function getInitialThemeState(): { theme: ThemeName; resolvedTheme: ResolvedTheme } {
@@ -41,8 +54,20 @@ function getInitialThemeState(): { theme: ThemeName; resolvedTheme: ResolvedThem
     return { theme: "system", resolvedTheme: "light" }
   }
 
-  const storedTheme = (window.localStorage.getItem(STORAGE_KEY) as ThemeName | null) ?? "system"
-  const domResolvedTheme = document.documentElement.classList.contains("dark") ? "dark" : "light"
+  let storedTheme: ThemeName = "system"
+  let domResolvedTheme: ResolvedTheme = "light"
+
+  try {
+    storedTheme = (window.localStorage.getItem(STORAGE_KEY) as ThemeName | null) ?? "system"
+  } catch {
+    storedTheme = "system"
+  }
+
+  try {
+    domResolvedTheme = document.documentElement.classList.contains("dark") ? "dark" : "light"
+  } catch {
+    domResolvedTheme = "light"
+  }
 
   return {
     theme: storedTheme,
@@ -62,7 +87,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   React.useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
+    let mediaQuery: MediaQueryList
+
+    try {
+      mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
+    } catch {
+      return
+    }
 
     const syncSystemTheme = () => {
       setResolvedTheme((currentResolvedTheme) => {

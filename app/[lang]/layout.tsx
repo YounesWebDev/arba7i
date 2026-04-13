@@ -4,8 +4,6 @@ import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
 import "../globals.css";
 import { DirectionProvider } from "@/components/ui/direction";
-import { ThemeProvider } from "@/components/theme-provider";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { i18n } from "@/i18n-config";
 
 const inter = Inter({
@@ -46,13 +44,9 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body suppressHydrationWarning className="min-h-full font-sans flex flex-col">
-        <ThemeProvider>
-          <DirectionProvider dir={dir}>
-            <TooltipProvider>
-              {children}
-            </TooltipProvider>
-          </DirectionProvider>
-        </ThemeProvider>
+        <DirectionProvider dir={dir}>
+          {children}
+        </DirectionProvider>
       </body>
     </html>
   );

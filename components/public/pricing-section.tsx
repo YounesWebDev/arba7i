@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,8 +9,6 @@ type PricingDict = {
 };
 
 export function PricingSection({ dict }: { dict: PricingDict }) {
-  const [isAnnual, setIsAnnual] = useState(false);
-
   const plans = [
     {
       name: dict?.home?.pricing?.welcomeName || "Welcome Offer",
@@ -94,7 +89,24 @@ export function PricingSection({ dict }: { dict: PricingDict }) {
   ];
 
   return (
-    <section className="mx-auto max-w-7xl px-6 py-24">
+    <section
+      id="pricing-section"
+      className="pricing-section mx-auto max-w-7xl px-6 py-24"
+    >
+      <input
+        id="pricing-billing-monthly"
+        type="radio"
+        name="pricing-billing"
+        className="sr-only"
+        defaultChecked
+      />
+      <input
+        id="pricing-billing-annual"
+        type="radio"
+        name="pricing-billing"
+        className="sr-only"
+      />
+
       <div className="mb-12 text-center">
         <h2 className="mb-4 text-4xl font-extrabold tracking-tighter md:text-5xl">
           {dict?.home?.pricing?.title || "Choose Your Plan"}
@@ -105,33 +117,23 @@ export function PricingSection({ dict }: { dict: PricingDict }) {
         </p>
 
         <div className="inline-flex items-center justify-center rounded-full border border-border/50 bg-card p-1 shadow-sm">
-          <Button
-            type="button"
-            onClick={() => setIsAnnual(false)}
-            variant="ghost"
-            className={`rounded-full px-6 py-2.5 text-sm font-bold transition-all ${
-              !isAnnual
-                ? "bg-primary text-primary-foreground shadow-md"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+          <label
+            htmlFor="pricing-billing-monthly"
+            className="pricing-billing-option relative cursor-pointer rounded-full px-6 py-2.5 text-sm font-bold text-muted-foreground transition-all"
+            data-billing-option="monthly"
           >
             {dict?.home?.pricing?.monthly || "Monthly"}
-          </Button>
-          <Button
-            type="button"
-            onClick={() => setIsAnnual(true)}
-            variant="ghost"
-            className={`relative rounded-full px-6 py-2.5 text-sm font-bold transition-all ${
-              isAnnual
-                ? "bg-primary text-primary-foreground shadow-md"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+          </label>
+          <label
+            htmlFor="pricing-billing-annual"
+            className="pricing-billing-option relative cursor-pointer rounded-full px-6 py-2.5 text-sm font-bold text-muted-foreground transition-all"
+            data-billing-option="annual"
           >
             {dict?.home?.pricing?.annually || "Annually"}
-            <span className="absolute -right-2 -top-3 z-10 rounded-full border border-primary/20 bg-accent px-2 py-0.5 text-[10px] font-black uppercase tracking-widest text-primary-foreground shadow-lg">
+            <span className="absolute -right-2 -top-3 z-10 rounded-full border border-primary/20 bg-accent px-2 py-0.5 text-[10px] font-black uppercase tracking-widest text-accent-foreground shadow-lg">
               {dict?.home?.pricing?.saveBadge || "2 Months Free"}
             </span>
-          </Button>
+          </label>
         </div>
       </div>
 
@@ -153,7 +155,7 @@ export function PricingSection({ dict }: { dict: PricingDict }) {
             ) : null}
 
             <div className="mb-4">
-              <h4 className="mb-2 text-xl font-black">{plan.name}</h4>
+              <h3 className="mb-2 text-xl font-black">{plan.name}</h3>
               <p className="h-10 text-sm text-muted-foreground">
                 {plan.description}
               </p>
@@ -161,15 +163,21 @@ export function PricingSection({ dict }: { dict: PricingDict }) {
 
             <div className="mb-8">
               <div className="flex items-baseline gap-1 transition-all duration-500">
-                <span className="text-4xl font-extrabold">
-                  {isAnnual ? plan.annualPrice : plan.monthlyPrice}
+                <span data-billing-value="monthly" className="text-4xl font-extrabold">
+                  {plan.monthlyPrice}
                 </span>
-                <span className="text-sm font-medium text-muted-foreground">
+                <span data-billing-value="annual" className="text-4xl font-extrabold">
+                  {plan.annualPrice}
+                </span>
+                <span data-billing-label="monthly" className="text-sm font-medium text-muted-foreground">
                   {plan.monthlyPrice === "0" && plan.annualPrice === "0"
                     ? "DZD"
-                    : isAnnual
-                      ? dict?.home?.pricing?.annualSuffix || "DZD / year"
-                      : dict?.home?.pricing?.monthlySuffix || "DZD / month"}
+                    : dict?.home?.pricing?.monthlySuffix || "DZD / month"}
+                </span>
+                <span data-billing-label="annual" className="text-sm font-medium text-muted-foreground">
+                  {plan.monthlyPrice === "0" && plan.annualPrice === "0"
+                    ? "DZD"
+                    : dict?.home?.pricing?.annualSuffix || "DZD / year"}
                 </span>
               </div>
             </div>

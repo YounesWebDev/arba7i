@@ -10,9 +10,10 @@ import {
   Truck,
 } from "lucide-react";
 import { FadeInView } from "@/components/public/fade-in-view";
+import { PublicShell } from "@/components/public/public-shell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { getDictionary } from "@/lib/dictionary";
+import { getHelpDictionary } from "@/lib/dictionary";
 import type { Locale } from "@/i18n-config";
 
 export default async function HelpPage({
@@ -21,7 +22,7 @@ export default async function HelpPage({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const dict = await getDictionary(lang as Locale);
+  const dict = await getHelpDictionary(lang as Locale);
 
   const categories = [
     {
@@ -89,7 +90,8 @@ export default async function HelpPage({
   ];
 
   return (
-    <div className="overflow-x-hidden bg-background pb-20 font-sans text-foreground selection:bg-primary/20 selection:text-primary">
+    <PublicShell lang={lang} dict={dict} activeHref="/help">
+      <div className="overflow-x-hidden bg-background pb-20 font-sans text-foreground selection:bg-primary/20 selection:text-primary">
       <FadeInView as="section" className="relative overflow-hidden px-6 pb-20 pt-32 md:pt-44">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-primary/10 via-background to-background" />
         <div className="mx-auto max-w-5xl text-center">
@@ -234,7 +236,7 @@ export default async function HelpPage({
       <FadeInView as="section" className="relative overflow-hidden px-6 pt-24">
         <div className="relative mx-auto max-w-7xl">
           <div className="relative overflow-hidden rounded-[4rem] bg-gradient-to-r from-primary via-accent to-primary p-12 text-center text-primary-foreground shadow-2xl shadow-primary/20 md:p-24">
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
+            <div className="public-cubes-pattern absolute inset-0" />
             <div className="relative z-10 space-y-8">
               <h2 className="text-4xl font-black tracking-tighter md:text-7xl">
                 {dict?.helpPage?.finalCta?.title || "Ready to move faster with better support?"}
@@ -267,6 +269,7 @@ export default async function HelpPage({
           </div>
         </div>
       </FadeInView>
-    </div>
+      </div>
+    </PublicShell>
   );
 }

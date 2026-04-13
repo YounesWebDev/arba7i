@@ -279,6 +279,43 @@
   will-change: opacity, transform;
 }
 
+.public-cubes-pattern {
+  opacity: 0.1;
+  background-image:
+    linear-gradient(30deg, rgb(255 255 255 / 0.22) 12%, transparent 12.5%, transparent 87%, rgb(255 255 255 / 0.22) 87.5%, rgb(255 255 255 / 0.22)),
+    linear-gradient(150deg, rgb(255 255 255 / 0.22) 12%, transparent 12.5%, transparent 87%, rgb(255 255 255 / 0.22) 87.5%, rgb(255 255 255 / 0.22)),
+    linear-gradient(90deg, rgb(255 255 255 / 0.12) 2%, transparent 2.5%, transparent 97%, rgb(255 255 255 / 0.12) 97.5%, rgb(255 255 255 / 0.12));
+  background-position: 0 0, 0 0, 24px 24px;
+  background-size: 48px 84px;
+}
+
+.pricing-section [data-billing-value="annual"],
+.pricing-section [data-billing-label="annual"] {
+  display: none;
+}
+
+.pricing-section:has(#pricing-billing-annual:checked) [data-billing-value="monthly"],
+.pricing-section:has(#pricing-billing-annual:checked) [data-billing-label="monthly"] {
+  display: none;
+}
+
+.pricing-section:has(#pricing-billing-annual:checked) [data-billing-value="annual"],
+.pricing-section:has(#pricing-billing-annual:checked) [data-billing-label="annual"] {
+  display: inline;
+}
+
+.pricing-section:has(#pricing-billing-monthly:checked) [data-billing-option="monthly"],
+.pricing-section:has(#pricing-billing-annual:checked) [data-billing-option="annual"] {
+  background: var(--color-primary);
+  color: var(--color-primary-foreground);
+  box-shadow: var(--shadow-sm);
+}
+
+.pricing-section:has(#pricing-billing-monthly:checked) [data-billing-option="annual"],
+.pricing-section:has(#pricing-billing-annual:checked) [data-billing-option="monthly"] {
+  color: color-mix(in oklab, var(--color-foreground) 68%, transparent);
+}
+
 @keyframes auth-gradient-pan {
   0% {
     background-position: 0% 50%;

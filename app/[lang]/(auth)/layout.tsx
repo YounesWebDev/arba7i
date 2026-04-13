@@ -1,7 +1,7 @@
 import { AuthLayoutShell } from "@/components/auth/auth-layout-shell";
 import { PublicNavbar } from "@/components/public/navbar";
 import type { Locale } from "@/i18n-config";
-import { getDictionary } from "@/lib/dictionary";
+import { getAuthDictionary, getCommonDictionary } from "@/lib/dictionary";
 
 export default async function AuthLayout({
   children,
@@ -11,13 +11,16 @@ export default async function AuthLayout({
   params: Promise<{ lang: string }>;
 }>) {
   const { lang } = await params;
-  const dict = await getDictionary(lang as Locale);
+  const [commonDict, authDict] = await Promise.all([
+    getCommonDictionary(lang as Locale),
+    getAuthDictionary(lang as Locale),
+  ]);
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
-      <PublicNavbar lang={lang} dict={dict} />
+      <PublicNavbar lang={lang} dict={commonDict} />
       <main className="flex-1 pt-18 sm:pt-20">
-        <AuthLayoutShell lang={lang} copy={dict.authPages}>
+        <AuthLayoutShell lang={lang} copy={authDict.authPages}>
           {children}
         </AuthLayoutShell>
       </main>

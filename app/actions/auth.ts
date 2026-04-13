@@ -52,6 +52,12 @@ async function getLocaleFromHeaders() {
 }
 
 async function getRequestOrigin() {
+  const configuredAppUrl = process.env.NEXT_PUBLIC_APP_URL?.trim();
+
+  if (configuredAppUrl) {
+    return configuredAppUrl.replace(/\/+$/, "");
+  }
+
   const headerStore = await headers();
   const origin = headerStore.get("origin");
 
@@ -66,7 +72,7 @@ async function getRequestOrigin() {
     return `${protocol}://${host}`;
   }
 
-  return process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+  return "http://localhost:3000";
 }
 
 async function getUserProfileState(userId: string, supabase: Awaited<ReturnType<typeof createClient>>) {
@@ -315,7 +321,7 @@ export async function sendPasswordResetEmail(formData: FormData) {
   const origin = await getRequestOrigin();
 
   if (!email) {
-    redirect(`/${lang}/forgot-password?error=${encodeURIComponent(getAuthMessage(lang, "emailRequired"))}`);
+    redirect(`/${lang}/forget-password?error=${encodeURIComponent(getAuthMessage(lang, "emailRequired"))}`);
   }
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -323,10 +329,10 @@ export async function sendPasswordResetEmail(formData: FormData) {
   });
 
   if (error) {
-    redirect(`/${lang}/forgot-password?error=${encodeURIComponent(error.message)}`);
+    redirect(`/${lang}/forget-password?error=${encodeURIComponent(error.message)}`);
   }
 
-  redirect(`/${lang}/forgot-password?message=${encodeURIComponent(getAuthMessage(lang, "checkResetEmail"))}`);
+  redirect(`/${lang}/forget-password?message=${encodeURIComponent(getAuthMessage(lang, "checkResetEmail"))}`);
 }
 
 // 7. Update Password (After clicking the email link)

@@ -1,6 +1,5 @@
-import Link from "next/link"
 import { requirePermission } from "@/lib/auth-guard"
-import { getDictionary } from "@/lib/dictionary"
+import { getCategoriesDictionary } from "@/lib/dictionary"
 import type { Locale } from "@/i18n-config"
 import { db } from "@/db"
 import { categories, products, sellerStoreLinks } from "@/db/schema"
@@ -11,15 +10,93 @@ import { CategoryTableActions } from "@/components/dashboard/category-table-acti
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import {
-  ArrowRight,
-  CheckCircle2,
-  FolderKanban,
-  Layers3,
-  Store,
-  TrendingUp,
-} from "lucide-react"
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { ArrowRight, CheckCircle2, FolderKanban, Layers3, Store, TrendingUp } from "lucide-react"
+
+type CategoriesPageCopy = {
+  title: string
+  desc: string
+  noStore: string
+  overview: {
+    title: string
+    countPrefix: string
+    countSuffix: string
+  }
+  stats: {
+    totalCategories: { title: string; meta: string }
+    activeCategories: { title: string; meta: string }
+    mostPopular: { title: string; meta: string; empty: string }
+    totalProductsLinked: { title: string; meta: string }
+  }
+  filters: {
+    label: string
+    export: string
+    all: string
+    withProducts: string
+    empty: string
+  }
+  table: {
+    name: string
+    products: string
+    status: string
+    date: string
+    actions: string
+    active: string
+    emptyStatus: string
+    empty: string
+  }
+  pagination: {
+    showing: string
+    of: string
+    page: string
+    prev: string
+    next: string
+  }
+  tip: {
+    title: string
+    body: string
+    cta: string
+  }
+  dialog: {
+    trigger: string
+    title: string
+    description: string
+    nameLabel: string
+    namePlaceholder: string
+    slugHint: string
+    submit: string
+  }
+  actions: {
+    srOnly: string
+    menuLabel: string
+    edit: string
+    delete: string
+    editTitle: string
+    editDescription: string
+    nameLabel: string
+    save: string
+    cancel: string
+    deleteTitle: string
+    deleteDescription: string
+    deleteConfirm: string
+  }
+  messages: {
+    nameRequired: string
+    duplicateName: string
+    createFailed: string
+    updateFailed: string
+    deleteFailed: string
+  }
+}
 
 function getLocale(lang: string) {
   if (lang === "ar") return "ar-DZ"
@@ -44,6 +121,22 @@ function buildCategoriesPageHref(lang: string, filter: string, page: number) {
     : `/${lang}/dashboard/products/categories`
 }
 
+function buildVisiblePages(currentPage: number, totalPages: number) {
+  if (totalPages <= 5) {
+    return Array.from({ length: totalPages }, (_, index) => index + 1)
+  }
+
+  if (currentPage <= 3) {
+    return [1, 2, 3, 4, totalPages]
+  }
+
+  if (currentPage >= totalPages - 2) {
+    return [1, totalPages - 3, totalPages - 2, totalPages - 1, totalPages]
+  }
+
+  return [1, currentPage - 1, currentPage, currentPage + 1, totalPages]
+}
+
 export default async function CategoriesPage({
   params,
   searchParams,
@@ -54,8 +147,8 @@ export default async function CategoriesPage({
   const { lang } = await params
   const { filter = "all", page = "1" } = await searchParams
   const auth = await requirePermission(lang, "manage_products")
-  const dict = await getDictionary(lang as Locale)
-  const copy = (dict as Record<string, unknown>).categoriesPage as Record<string, string>
+  const dict = await getCategoriesDictionary(lang as Locale)
+  const copy = (dict as Record<string, unknown>).categoriesPage as CategoriesPageCopy
   const isArabic = lang === "ar"
   const locale = getLocale(lang)
   const pageSize = 10
@@ -113,33 +206,34 @@ export default async function CategoriesPage({
   const safePage = Math.min(currentPage, totalPages)
   const pageStart = (safePage - 1) * pageSize
   const paginatedCategories = filteredCategories.slice(pageStart, pageStart + pageSize)
+  const visiblePages = buildVisiblePages(safePage, totalPages)
 
   const kpis = [
     {
-      title: copy.totalCategories,
+      title: copy.stats.totalCategories.title,
       value: totalCategories.toLocaleString(locale),
-      meta: copy.totalCategoriesMeta,
+      meta: copy.stats.totalCategories.meta,
       icon: FolderKanban,
       iconClassName: "bg-primary/10 text-primary",
     },
     {
-      title: copy.activeCategories,
+      title: copy.stats.activeCategories.title,
       value: activeCategories.toLocaleString(locale),
-      meta: copy.activeCategoriesMeta,
+      meta: copy.stats.activeCategories.meta,
       icon: CheckCircle2,
       iconClassName: "bg-emerald-500/10 text-emerald-600",
     },
     {
-      title: copy.mostPopular,
-      value: mostPopularCategory?.productCount ? mostPopularCategory.name : copy.noPopular,
-      meta: copy.mostPopularMeta,
+      title: copy.stats.mostPopular.title,
+      value: mostPopularCategory?.productCount ? mostPopularCategory.name : copy.stats.mostPopular.empty,
+      meta: copy.stats.mostPopular.meta,
       icon: TrendingUp,
       iconClassName: "bg-orange-500/10 text-orange-600",
     },
     {
-      title: copy.totalProductsLinked,
+      title: copy.stats.totalProductsLinked.title,
       value: totalProductsLinked.toLocaleString(locale),
-      meta: copy.totalProductsLinkedMeta,
+      meta: copy.stats.totalProductsLinked.meta,
       icon: Layers3,
       iconClassName: "bg-accent/20 text-accent-foreground",
     },
@@ -147,7 +241,7 @@ export default async function CategoriesPage({
 
   return (
     <div className="flex min-w-0 flex-col gap-8" dir={isArabic ? "rtl" : "ltr"}>
-      <section className="flex flex-col gap-4 rounded-[2rem] border border-border/60 bg-gradient-to-br from-card via-card to-primary/5 p-6 shadow-sm lg:flex-row lg:items-end lg:justify-between">
+      <section className="flex flex-col gap-4 rounded-[2rem] border border-border/60 bg-gradient-to-br from-card via-card to-accent/50 p-6 shadow-sm lg:flex-row lg:items-end lg:justify-between">
         <div className="space-y-2">
           <Badge variant="secondary" className="rounded-full px-3 py-1 text-xs font-semibold tracking-tight">
             <FolderKanban className="me-1 h-3.5 w-3.5" />
@@ -159,7 +253,7 @@ export default async function CategoriesPage({
           </div>
         </div>
 
-        <AddCategoryDialog storeId={storeLink.storeId} lang={lang} />
+        <AddCategoryDialog storeId={storeLink.storeId} lang={lang} copy={copy.dialog} />
       </section>
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -186,13 +280,13 @@ export default async function CategoriesPage({
       <Card className="overflow-hidden border-border/60 bg-card/95 shadow-sm">
         <CardHeader className="gap-4 border-b border-border/60 bg-muted/20 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-1">
-            <CardTitle>{copy.allCategories}</CardTitle>
+            <CardTitle>{copy.overview.title}</CardTitle>
             <CardDescription>
-              {copy.categoriesCount} {totalCategories} {copy.categoriesSuffix}
+              {copy.overview.countPrefix} {totalCategories} {copy.overview.countSuffix}
             </CardDescription>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <CategoryTableActions lang={lang} filter={filter} copy={copy} />
+            <CategoryTableActions lang={lang} filter={filter} copy={copy.filters} />
           </div>
         </CardHeader>
 
@@ -201,18 +295,18 @@ export default async function CategoriesPage({
             <Table dir={isArabic ? "rtl" : "ltr"} className="min-w-[820px]">
               <TableHeader>
                 <TableRow className="bg-muted/20 hover:bg-muted/20">
-                  <TableHead className="px-6 text-start">{copy.name}</TableHead>
-                  <TableHead className="text-start">{copy.products}</TableHead>
-                  <TableHead className="text-start">{copy.status}</TableHead>
-                  <TableHead className="text-start">{copy.date}</TableHead>
-                  <TableHead className="px-6 text-end">{copy.actions}</TableHead>
+                  <TableHead className="px-6 text-start">{copy.table.name}</TableHead>
+                  <TableHead className="text-start">{copy.table.products}</TableHead>
+                  <TableHead className="text-start">{copy.table.status}</TableHead>
+                  <TableHead className="text-start">{copy.table.date}</TableHead>
+                  <TableHead className="px-6 text-end">{copy.table.actions}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {paginatedCategories.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={5} className="h-32 text-center text-muted-foreground">
-                      {copy.empty}
+                      {copy.table.empty}
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -235,7 +329,7 @@ export default async function CategoriesPage({
                         </TableCell>
                         <TableCell>
                           <Badge variant={isActive ? "default" : "secondary"} className="rounded-full">
-                            {isActive ? copy.active : copy.emptyStatus}
+                            {isActive ? copy.table.active : copy.table.emptyStatus}
                           </Badge>
                         </TableCell>
                         <TableCell className="text-muted-foreground">
@@ -248,6 +342,7 @@ export default async function CategoriesPage({
                               categoryName={category.name}
                               storeId={storeLink.storeId}
                               lang={lang}
+                              copy={copy.actions}
                             />
                           </div>
                         </TableCell>
@@ -261,36 +356,57 @@ export default async function CategoriesPage({
 
           <div className="flex flex-col gap-4 border-t border-border/60 px-6 py-5 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
             <p>
-              {copy.showing} {pageStart + 1}-{Math.min(pageStart + paginatedCategories.length, filteredCategories.length)} {copy.of} {filteredCategories.length}
+              {copy.pagination.showing} {pageStart + 1}-{Math.min(pageStart + paginatedCategories.length, filteredCategories.length)} {copy.pagination.of} {filteredCategories.length}
             </p>
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" className="rounded-2xl" asChild disabled={safePage <= 1}>
-                <Link
-                  href={buildCategoriesPageHref(lang, filter, Math.max(1, safePage - 1))}
-                  aria-disabled={safePage <= 1}
-                  tabIndex={safePage <= 1 ? -1 : undefined}
-                >
-                  {copy.prev}
-                </Link>
-              </Button>
+            <div className="flex flex-col items-start gap-3 sm:items-end">
               <Badge variant="secondary" className="rounded-full px-3 py-1">
-                {copy.page} {safePage}/{totalPages}
+                {copy.pagination.page} {safePage}/{totalPages}
               </Badge>
-              <Button
-                variant="outline"
-                size="sm"
-                className="rounded-2xl"
-                asChild
-                disabled={safePage >= totalPages}
-              >
-                <Link
-                  href={buildCategoriesPageHref(lang, filter, Math.min(totalPages, safePage + 1))}
-                  aria-disabled={safePage >= totalPages}
-                  tabIndex={safePage >= totalPages ? -1 : undefined}
-                >
-                  {copy.next}
-                </Link>
-              </Button>
+              <Pagination className="mx-0 w-auto justify-start sm:justify-end">
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      href={buildCategoriesPageHref(lang, filter, Math.max(1, safePage - 1))}
+                      aria-disabled={safePage <= 1}
+                      tabIndex={safePage <= 1 ? -1 : undefined}
+                      className={safePage <= 1 ? "pointer-events-none opacity-50" : undefined}
+                      text={copy.pagination.prev}
+                    />
+                  </PaginationItem>
+
+                  {visiblePages.map((pageNumber, index) => {
+                    const previousPage = visiblePages[index - 1]
+                    const shouldShowEllipsis = previousPage != null && pageNumber - previousPage > 1
+
+                    return [
+                      shouldShowEllipsis ? (
+                        <PaginationItem key={`ellipsis-${pageNumber}`}>
+                          <PaginationEllipsis />
+                        </PaginationItem>
+                      ) : null,
+                      <PaginationItem key={pageNumber}>
+                        <PaginationLink
+                          href={buildCategoriesPageHref(lang, filter, pageNumber)}
+                          isActive={pageNumber === safePage}
+                          aria-label={`${copy.pagination.page} ${pageNumber}`}
+                        >
+                          {pageNumber}
+                        </PaginationLink>
+                      </PaginationItem>,
+                    ]
+                  })}
+
+                  <PaginationItem>
+                    <PaginationNext
+                      href={buildCategoriesPageHref(lang, filter, Math.min(totalPages, safePage + 1))}
+                      aria-disabled={safePage >= totalPages}
+                      tabIndex={safePage >= totalPages ? -1 : undefined}
+                      className={safePage >= totalPages ? "pointer-events-none opacity-50" : undefined}
+                      text={copy.pagination.next}
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
             </div>
           </div>
         </CardContent>
@@ -299,13 +415,13 @@ export default async function CategoriesPage({
       <section className="rounded-[2rem] border border-primary/10 bg-gradient-to-r from-primary/10 via-accent/10 to-card p-6 shadow-sm">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-3xl space-y-2">
-            <h2 className="text-xl font-black tracking-tight">{copy.categoryTipTitle}</h2>
+            <h2 className="text-xl font-black tracking-tight">{copy.tip.title}</h2>
             <p className="text-sm leading-6 text-muted-foreground sm:text-base">
-              {copy.categoryTipBody}
+              {copy.tip.body}
             </p>
           </div>
           <Button variant="secondary" className="rounded-2xl">
-            {copy.viewAnalytics}
+            {copy.tip.cta}
             <ArrowRight className="ms-2 h-4 w-4" />
           </Button>
         </div>

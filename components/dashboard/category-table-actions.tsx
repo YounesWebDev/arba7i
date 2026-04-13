@@ -17,7 +17,13 @@ export function CategoryTableActions({
 }: {
   lang: string
   filter: string
-  copy: Record<string, string>
+  copy: {
+    label: string
+    export: string
+    all: string
+    withProducts: string
+    empty: string
+  }
 }) {
   const filterHref = (value: string) =>
     value === "all"
@@ -35,18 +41,18 @@ export function CategoryTableActions({
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="sm" className="rounded-2xl">
             <Package2 className="me-2 h-4 w-4" />
-            {copy.filters}
+            {copy.label}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-44 rounded-2xl">
           <DropdownMenuItem asChild>
-            <Link href={filterHref("all")}>{copy.filterAll}</Link>
+            <Link href={filterHref("all")}>{copy.all}</Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={filterHref("active")}>{copy.filterWithProducts}</Link>
+            <Link href={filterHref("active")}>{copy.withProducts}</Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={filterHref("empty")}>{copy.filterEmpty}</Link>
+            <Link href={filterHref("empty")}>{copy.empty}</Link>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

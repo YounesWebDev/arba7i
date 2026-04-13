@@ -16,47 +16,26 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-function getDialogCopy(lang: string) {
-  if (lang === "ar") {
-    return {
-      trigger: "إضافة قسم",
-      title: "إنشاء قسم جديد",
-      description: "أضف قسم جديد باش تنظم منتجات متجرك بطريقة أوضح.",
-      name: "اسم القسم",
-      namePlaceholder: "مثال: إلكترونيات",
-      slugHint: "الرابط يتولد تلقائيا من اسم القسم.",
-      submit: "حفظ القسم",
-    }
+export function AddCategoryDialog({
+  storeId,
+  lang,
+  copy,
+}: {
+  storeId: string
+  lang: string
+  copy: {
+    trigger: string
+    title: string
+    description: string
+    nameLabel: string
+    namePlaceholder: string
+    slugHint: string
+    submit: string
   }
-
-  if (lang === "fr") {
-    return {
-      trigger: "Ajouter une categorie",
-      title: "Creer une nouvelle categorie",
-      description: "Ajoutez une categorie pour organiser les produits de votre boutique.",
-      name: "Nom de la categorie",
-      namePlaceholder: "Exemple : Electronique",
-      slugHint: "Le slug sera genere automatiquement a partir du nom.",
-      submit: "Enregistrer la categorie",
-    }
-  }
-
-  return {
-    trigger: "Add Category",
-    title: "Create New Category",
-    description: "Add a category to organize products inside your store.",
-    name: "Category Name",
-    namePlaceholder: "e.g. Electronics",
-    slugHint: "The slug will be generated automatically from the category name.",
-    submit: "Save Category",
-  }
-}
-
-export function AddCategoryDialog({ storeId, lang }: { storeId: string; lang: string }) {
+}) {
   const [open, setOpen] = useState(false)
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  const copy = getDialogCopy(lang)
   const isArabic = lang === "ar"
 
   async function handleSubmit(formData: FormData) {
@@ -78,7 +57,7 @@ export function AddCategoryDialog({ storeId, lang }: { storeId: string; lang: st
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="rounded-2xl px-5 shadow-sm">
+        <Button size="lg" className="bg-gradient-to-br from-primary to-accent p-4 shadow-sm">
           <Plus className="me-2 h-4 w-4" />
           {copy.trigger}
         </Button>
@@ -92,7 +71,7 @@ export function AddCategoryDialog({ storeId, lang }: { storeId: string; lang: st
 
         <form action={handleSubmit} className="space-y-4">
           <div className="space-y-2 text-start">
-            <Label htmlFor="name">{copy.name}</Label>
+            <Label htmlFor="name">{copy.nameLabel}</Label>
             <Input id="name" name="name" placeholder={copy.namePlaceholder} required />
             <p className="text-xs text-muted-foreground">{copy.slugHint}</p>
           </div>

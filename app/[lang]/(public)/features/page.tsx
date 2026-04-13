@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { FadeInView } from "@/components/public/fade-in-view";
+import { PublicShell } from "@/components/public/public-shell";
 import {
   ArrowRight,
   Boxes,
@@ -14,7 +15,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { getDictionary } from "@/lib/dictionary";
+import { getFeaturesDictionary } from "@/lib/dictionary";
 import type { Locale } from "@/i18n-config";
 
 export async function generateMetadata({
@@ -23,7 +24,7 @@ export async function generateMetadata({
   params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   const { lang } = await params;
-  const dict = await getDictionary(lang as Locale);
+  const dict = await getFeaturesDictionary(lang as Locale);
   const title = `Arba7i | ${dict?.featuresPage?.hero?.title2 || "Features"}`;
   const description =
     dict?.featuresPage?.hero?.description ||
@@ -53,7 +54,7 @@ export default async function FeaturesPage({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const dict = await getDictionary(lang as Locale);
+  const dict = await getFeaturesDictionary(lang as Locale);
 
   const features = [
     {
@@ -134,7 +135,8 @@ export default async function FeaturesPage({
   ];
 
   return (
-    <div className="overflow-x-hidden bg-background pb-20 text-foreground selection:bg-primary/20 selection:text-primary">
+    <PublicShell lang={lang} dict={dict} activeHref="/features">
+      <div className="overflow-x-hidden bg-background pb-20 text-foreground selection:bg-primary/20 selection:text-primary">
       <FadeInView as="section" className="relative overflow-hidden px-6 pb-20 pt-32 md:pb-32 md:pt-48">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-background to-background" />
         <div className="mx-auto max-w-7xl space-y-8 text-center">
@@ -376,6 +378,7 @@ export default async function FeaturesPage({
           </div>
         </div>
       </FadeInView>
-    </div>
+      </div>
+    </PublicShell>
   );
 }

@@ -3,13 +3,17 @@
 import { and, eq, like } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 import type { Locale } from "@/i18n-config"
-import { getDictionary } from "@/lib/dictionary"
+import { getCategoriesDictionary } from "@/lib/dictionary"
 import { db } from "@/db"
 import { categories } from "@/db/schema"
 
 async function getCategoryActionCopy(lang: string) {
-  const dict = await getDictionary(lang as Locale)
-  return (dict as Record<string, unknown>).categoriesActions as Record<string, string>
+  const dict = await getCategoriesDictionary(lang as Locale)
+  const categoriesPage = (dict as Record<string, unknown>).categoriesPage as {
+    messages: Record<string, string>
+  }
+
+  return categoriesPage.messages
 }
 
 function slugifyCategoryName(name: string) {

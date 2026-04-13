@@ -5,7 +5,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import type { Locale } from "@/i18n-config"
-import { getDictionary } from "@/lib/dictionary"
+import { getAuthDictionary } from "@/lib/dictionary"
 
 export default async function ForgotPasswordPage({
   params,
@@ -16,7 +16,7 @@ export default async function ForgotPasswordPage({
 }) {
   const { lang } = await params
   const { message, error } = await searchParams
-  const dict = await getDictionary(lang as Locale)
+  const dict = await getAuthDictionary(lang as Locale)
   const copy = dict.authPages?.forgetPassword
   const isArabic = lang === "ar"
 
