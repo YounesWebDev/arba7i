@@ -35,19 +35,16 @@ export function PublicNavbar({ lang, dict, activeHref }: PublicNavbarProps) {
   ] as const;
 
   return (
-    <nav className="fixed top-0 z-[100] w-full border-b border-border/40 bg-background/80 shadow-sm backdrop-blur-xl">
+    <nav className="fixed top-0 z-[100] w-full border-b border-border/40 bg-linear-to-b from-primary/30 to-transparent shadow-sm backdrop-blur-xl">
       <div className="mx-auto flex h-18 max-w-[1440px] items-center justify-between px-4 sm:h-20 sm:px-6 md:px-12">
         <div className="flex items-center gap-4 md:gap-8">
           <a
             href={`/${lang}`}
             aria-current={activeHref === "/" ? "page" : undefined}
-            className={cn(
-              "flex flex-col items-center justify-center rounded-2xl px-2 py-1 text-xl font-bold tracking-tighter transition-colors sm:text-2xl",
-              activeHref === "/" ? "bg-primary/8" : "hover:bg-card"
-            )}
+            className="flex flex-col items-center justify-center rounded-2xl px-2 py-1 text-xl tracking-tighter sm:text-2xl"
           >
             <Wallet className="h-4 w-4 text-primary" />
-            <span className="bg-gradient-to-br from-primary to-accent bg-clip-text text-sm font-bold text-transparent">
+            <span className="bg-linear-to-br from-primary to-accent bg-clip-text px-2 text-sm font-bold text-transparent">
               Arba7i
             </span>
           </a>

@@ -57,7 +57,7 @@ export function AddCategoryDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="lg" className="bg-gradient-to-br from-primary to-accent p-4 shadow-sm">
+        <Button size="lg" className="bg-linear-to-br from-primary to-accent py-6">
           <Plus className="me-2 h-4 w-4" />
           {copy.trigger}
         </Button>

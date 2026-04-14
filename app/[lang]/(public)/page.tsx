@@ -537,7 +537,7 @@ export default async function HomePage({
       </FadeInView>
 
       <FadeInView>
-        <PricingSection dict={dict} />
+        <PricingSection dict={dict} lang={lang} />
       </FadeInView>
 
       <FadeInView as="section" className="relative overflow-hidden px-6 pt-24">

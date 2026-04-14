@@ -38,6 +38,7 @@ function applyTheme(theme: ThemeName) {
 function persistTheme(theme: ThemeName) {
   try {
     window.localStorage.setItem(STORAGE_KEY, theme)
+    console.log(`Theme persisted: ${theme}`) // Debug log
   } catch {
     // Ignore storage failures on restricted browsers.
   }
@@ -59,6 +60,7 @@ function getInitialThemeState(): { theme: ThemeName; resolvedTheme: ResolvedThem
 
   try {
     storedTheme = (window.localStorage.getItem(STORAGE_KEY) as ThemeName | null) ?? "system"
+    console.log(`Stored theme retrieved: ${storedTheme}`) // Debug log
   } catch {
     storedTheme = "system"
   }

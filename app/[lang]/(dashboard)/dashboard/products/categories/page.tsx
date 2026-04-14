@@ -1,14 +1,14 @@
 import { requirePermission } from "@/lib/auth-guard"
 import { getCategoriesDictionary } from "@/lib/dictionary"
 import type { Locale } from "@/i18n-config"
+import Link from "next/link"
 import { db } from "@/db"
 import { categories, products, sellerStoreLinks } from "@/db/schema"
-import { and, count, desc, eq } from "drizzle-orm"
+import { and, count, desc, eq, ilike } from "drizzle-orm"
 import { AddCategoryDialog } from "@/components/dashboard/add-category-dialog"
-import { CategoryActions } from "@/components/dashboard/category-actions"
-import { CategoryTableActions } from "@/components/dashboard/category-table-actions"
+import { CategoryActions } from "@/components/products/category-actions"
+import { CategoryFilters } from "@/components/products/category-filters"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Pagination,
@@ -20,7 +20,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { ArrowRight, CheckCircle2, FolderKanban, Layers3, Store, TrendingUp } from "lucide-react"
+import { CheckCircle2, FolderKanban, Layers3, Store, TrendingUp } from "lucide-react"
 
 type CategoriesPageCopy = {
   title: string
@@ -40,6 +40,8 @@ type CategoriesPageCopy = {
   filters: {
     label: string
     export: string
+    searchPlaceholder: string // Added for the new filter
+    statusPlaceholder: string // Added for the new filter
     all: string
     withProducts: string
     empty: string
@@ -104,8 +106,25 @@ function getLocale(lang: string) {
   return "en-US"
 }
 
-function buildCategoriesPageHref(lang: string, filter: string, page: number) {
+function getProductTabs(lang: string) {
+  if (lang === "ar") {
+    return { products: "المنتجات", categories: "الأقسام" }
+  }
+
+  if (lang === "fr") {
+    return { products: "Produits", categories: "Catégories" }
+  }
+
+  return { products: "Products", categories: "Categories" }
+}
+
+// Updated to preserve the search query "q" in the URL
+function buildCategoriesPageHref(lang: string, filter: string, page: number, q: string) {
   const query = new URLSearchParams()
+
+  if (q) {
+    query.set("q", q)
+  }
 
   if (filter !== "all") {
     query.set("filter", filter)
@@ -142,15 +161,17 @@ export default async function CategoriesPage({
   searchParams,
 }: {
   params: Promise<{ lang: string }>
-  searchParams: Promise<{ filter?: string; page?: string }>
+  searchParams: Promise<{ q?: string; filter?: string; page?: string }>
 }) {
   const { lang } = await params
-  const { filter = "all", page = "1" } = await searchParams
+  // Extract "q" from searchParams for the search filter
+  const { q = "", filter = "all", page = "1" } = await searchParams
   const auth = await requirePermission(lang, "manage_products")
   const dict = await getCategoriesDictionary(lang as Locale)
   const copy = (dict as Record<string, unknown>).categoriesPage as CategoriesPageCopy
   const isArabic = lang === "ar"
   const locale = getLocale(lang)
+  const tabs = getProductTabs(lang)
   const pageSize = 10
   const currentPage = Math.max(1, Number.parseInt(page, 10) || 1)
 
@@ -169,6 +190,12 @@ export default async function CategoriesPage({
     )
   }
 
+  // Base query with optional search filter
+  const dbFilters = [eq(categories.storeId, storeLink.storeId)]
+  if (q) {
+    dbFilters.push(ilike(categories.name, `%${q}%`))
+  }
+
   const storeCategories = await db
     .select({
       id: categories.id,
@@ -181,7 +208,7 @@ export default async function CategoriesPage({
       products,
       and(eq(products.categoryId, categories.id), eq(products.storeId, storeLink.storeId))
     )
-    .where(eq(categories.storeId, storeLink.storeId))
+    .where(and(...dbFilters)) // Apply search filter to the database query
     .groupBy(categories.id, categories.name, categories.createdAt)
     .orderBy(desc(categories.createdAt))
 
@@ -195,6 +222,7 @@ export default async function CategoriesPage({
     (left, right) => Number(right.productCount ?? 0) - Number(left.productCount ?? 0)
   )[0]
 
+  // Apply the dropdown filter (active/empty)
   const filteredCategories = storeCategories.filter((category) => {
     const productCount = Number(category.productCount ?? 0)
     if (filter === "active") return productCount > 0
@@ -247,6 +275,20 @@ export default async function CategoriesPage({
             <FolderKanban className="me-1 h-3.5 w-3.5" />
             {copy.title}
           </Badge>
+          <div className="flex flex-wrap items-center gap-2">
+            <Link
+              href={`/${lang}/dashboard/products`}
+              className="inline-flex items-center rounded-full border border-border/70 bg-background px-4 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:border-primary/30 hover:text-foreground"
+            >
+              {tabs.products}
+            </Link>
+            <Link
+              href={`/${lang}/dashboard/products/categories`}
+              className="inline-flex items-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm"
+            >
+              {tabs.categories}
+            </Link>
+          </div>
           <div className="space-y-1">
             <h1 className="text-3xl font-black tracking-tighter sm:text-4xl">{copy.title}</h1>
             <p className="max-w-2xl text-sm text-muted-foreground sm:text-base">{copy.desc}</p>
@@ -286,11 +328,23 @@ export default async function CategoriesPage({
             </CardDescription>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <CategoryTableActions lang={lang} filter={filter} copy={copy.filters} />
+            {/* Added a placeholder fallback if the dictionary isn't updated yet */}
           </div>
         </CardHeader>
 
         <CardContent className="p-0">
+          <div className="border-b border-border/60 px-6 py-5">
+            <CategoryFilters
+              lang={lang}
+              copy={{
+                searchPlaceholder: copy.filters.searchPlaceholder || (isArabic ? "ابحث عن قسم..." : "Search categories..."),
+                statusPlaceholder: copy.filters.statusPlaceholder || (isArabic ? "الحالة" : "Status"),
+                all: copy.filters.all || (isArabic ? "الكل" : "All"),
+                active: copy.filters.withProducts || (isArabic ? "نشط" : "Active"),
+                empty: copy.filters.empty || (isArabic ? "فارغ" : "Empty"),
+              }}
+            />
+          </div>
           <div className="overflow-x-auto">
             <Table dir={isArabic ? "rtl" : "ltr"} className="min-w-[820px]">
               <TableHeader>
@@ -366,7 +420,7 @@ export default async function CategoriesPage({
                 <PaginationContent>
                   <PaginationItem>
                     <PaginationPrevious
-                      href={buildCategoriesPageHref(lang, filter, Math.max(1, safePage - 1))}
+                      href={buildCategoriesPageHref(lang, filter, Math.max(1, safePage - 1), q)}
                       aria-disabled={safePage <= 1}
                       tabIndex={safePage <= 1 ? -1 : undefined}
                       className={safePage <= 1 ? "pointer-events-none opacity-50" : undefined}
@@ -386,7 +440,7 @@ export default async function CategoriesPage({
                       ) : null,
                       <PaginationItem key={pageNumber}>
                         <PaginationLink
-                          href={buildCategoriesPageHref(lang, filter, pageNumber)}
+                          href={buildCategoriesPageHref(lang, filter, pageNumber, q)}
                           isActive={pageNumber === safePage}
                           aria-label={`${copy.pagination.page} ${pageNumber}`}
                         >
@@ -398,7 +452,7 @@ export default async function CategoriesPage({
 
                   <PaginationItem>
                     <PaginationNext
-                      href={buildCategoriesPageHref(lang, filter, Math.min(totalPages, safePage + 1))}
+                      href={buildCategoriesPageHref(lang, filter, Math.min(totalPages, safePage + 1), q)}
                       aria-disabled={safePage >= totalPages}
                       tabIndex={safePage >= totalPages ? -1 : undefined}
                       className={safePage >= totalPages ? "pointer-events-none opacity-50" : undefined}
@@ -411,21 +465,6 @@ export default async function CategoriesPage({
           </div>
         </CardContent>
       </Card>
-
-      <section className="rounded-[2rem] border border-primary/10 bg-gradient-to-r from-primary/10 via-accent/10 to-card p-6 shadow-sm">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-          <div className="max-w-3xl space-y-2">
-            <h2 className="text-xl font-black tracking-tight">{copy.tip.title}</h2>
-            <p className="text-sm leading-6 text-muted-foreground sm:text-base">
-              {copy.tip.body}
-            </p>
-          </div>
-          <Button variant="secondary" className="rounded-2xl">
-            {copy.tip.cta}
-            <ArrowRight className="ms-2 h-4 w-4" />
-          </Button>
-        </div>
-      </section>
     </div>
   )
 }

@@ -815,10 +815,12 @@ export default async function DashboardHomePage({
   const { lang } = await params
   const auth = await requireAuth(lang)
   const dict = await getDashboardDictionary(lang as Locale)
-  const copy = dict.dashboardPage as Record<string, string>
+  const copy = dict as Record<string, string>
   const locale = lang === "ar" ? "ar-DZ" : lang === "fr" ? "fr-FR" : "en-US"
   const uiText = getDashboardUiText(lang)
   const storeLink = await getStoreLinkForUser(auth.user.id)
+  const viewCategoriesLabel =
+    lang === "ar" ? "عرض الأقسام" : lang === "fr" ? "Voir les categories" : "View Categories"
 
   if (!storeLink) {
     return (
@@ -847,16 +849,16 @@ export default async function DashboardHomePage({
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <Button size="lg" variant="outline" asChild>
+            <Button size="lg" variant="outline" asChild className="py-6">
               <Link href={`/${lang}/dashboard/products/new`}>
                 <Plus className="mr-2 h-4 w-4" />
                 {copy.quickAddProduct}
               </Link>
             </Button>
-            <Button size="lg" asChild className="bg-linear-to-br from-primary to-accent dark:text-foreground">
-              <Link href={`/${lang}/dashboard/orders/new`}>
-                <Plus className="mr-2 h-4 w-4" />
-                {copy.quickAddOrder}
+            <Button size="lg" asChild className="bg-linear-to-br py-6 from-primary to-accent dark:text-foreground">
+              <Link href={`/${lang}/dashboard/products/categories`}>
+                <ArrowRight className="mr-2 h-4 w-4" />
+                {viewCategoriesLabel}
               </Link>
             </Button>
           </div>

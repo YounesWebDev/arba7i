@@ -2,6 +2,8 @@ import Link from "next/link"
 import { Home, LayoutDashboard, SearchX } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { getNotFoundDictionary } from "@/lib/dictionary"
+import type { Locale } from "@/i18n-config"
 
 export default async function NotFoundPage({
   params,
@@ -9,8 +11,8 @@ export default async function NotFoundPage({
   params?: Promise<{ lang?: string }>
 }) {
   const resolvedParams = await params
-  const lang = resolvedParams?.lang ?? "en"
-  const isArabic = lang === "ar"
+  const lang = (resolvedParams?.lang ?? "en") as Locale
+  const dict = await getNotFoundDictionary(lang)
 
   return (
     <div className="mx-auto flex min-h-[60vh] max-w-3xl items-center justify-center px-4 py-10">
@@ -20,25 +22,23 @@ export default async function NotFoundPage({
             <SearchX className="h-7 w-7" />
           </div>
           <CardTitle>
-            {isArabic ? "الصفحة غير موجودة" : "Page not found"}
+            {dict.title}
           </CardTitle>
           <CardDescription>
-            {isArabic
-              ? "الصفحة اللي طلبتها غير موجودة أو ما زالت ما تبناتش."
-              : "The page you requested does not exist yet or has not been built."}
+            {dict.description}
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col justify-center gap-3 sm:flex-row">
           <Button asChild variant="outline">
             <Link href={`/${lang}`}>
               <Home className="h-4 w-4" />
-              <span>{isArabic ? "الرجوع للرئيسية" : "Back to home"}</span>
+              <span>{dict.backToHome}</span>
             </Link>
           </Button>
           <Button asChild>
             <Link href={`/${lang}/dashboard`}>
               <LayoutDashboard className="h-4 w-4" />
-              <span>{isArabic ? "الرجوع للداشبورد" : "Back to dashboard"}</span>
+              <span>{dict.backToDashboard}</span>
             </Link>
           </Button>
         </CardContent>

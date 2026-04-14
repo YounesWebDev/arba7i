@@ -1,6 +1,11 @@
+"use client";
+
+import React, { useState } from "react";
+import NumberFlow from "@number-flow/react";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 type PricingDict = {
   home?: {
@@ -8,12 +13,19 @@ type PricingDict = {
   };
 };
 
-export function PricingSection({ dict }: { dict: PricingDict }) {
+type PricingSectionProps = {
+  dict: PricingDict;
+  lang?: string;
+};
+
+export function PricingSection({ dict, lang = "en" }: PricingSectionProps) {
+  const isRTL = lang === "ar";
+  const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
   const plans = [
     {
       name: dict?.home?.pricing?.welcomeName || "Welcome Offer",
-      monthlyPrice: "0",
-      annualPrice: "0",
+      monthlyPrice: 0,
+      annualPrice: 0,
       description:
         dict?.home?.pricing?.welcomeDescription ||
         "A zero-cost starting point to explore the platform and begin organizing your workflow.",
@@ -29,8 +41,8 @@ export function PricingSection({ dict }: { dict: PricingDict }) {
     },
     {
       name: dict?.home?.pricing?.basicName || "Basic",
-      monthlyPrice: "1,500",
-      annualPrice: "15,000",
+      monthlyPrice: 1500,
+      annualPrice: 15000,
       description:
         dict?.home?.pricing?.basicDescription ||
         "The ideal plan to launch your business without unnecessary complexity.",
@@ -49,8 +61,8 @@ export function PricingSection({ dict }: { dict: PricingDict }) {
     },
     {
       name: dict?.home?.pricing?.proName || "Professional",
-      monthlyPrice: "2,000",
-      annualPrice: "20,000",
+      monthlyPrice: 2000,
+      annualPrice: 20000,
       description:
         dict?.home?.pricing?.proDescription ||
         "The preferred choice for merchants who want to scale cleanly and avoid preventable losses.",
@@ -69,8 +81,8 @@ export function PricingSection({ dict }: { dict: PricingDict }) {
     },
     {
       name: dict?.home?.pricing?.ultraName || "Ultra",
-      monthlyPrice: "3,000",
-      annualPrice: "30,000",
+      monthlyPrice: 3000,
+      annualPrice: 30000,
       description:
         dict?.home?.pricing?.ultraDescription ||
         "Built for large teams and high-volume operations with no practical limits.",
@@ -92,19 +104,23 @@ export function PricingSection({ dict }: { dict: PricingDict }) {
     <section
       id="pricing-section"
       className="pricing-section mx-auto max-w-7xl px-6 py-24"
+      dir={isRTL ? "rtl" : "ltr"}
     >
       <input
         id="pricing-billing-monthly"
         type="radio"
         name="pricing-billing"
         className="sr-only"
-        defaultChecked
+        checked={billing === "monthly"}
+        onChange={() => setBilling("monthly")}
       />
       <input
         id="pricing-billing-annual"
         type="radio"
         name="pricing-billing"
         className="sr-only"
+        checked={billing === "annual"}
+        onChange={() => setBilling("annual")}
       />
 
       <div className="mb-12 text-center">
@@ -116,7 +132,7 @@ export function PricingSection({ dict }: { dict: PricingDict }) {
             "Simple, transparent pricing that grows with your business."}
         </p>
 
-        <div className="inline-flex items-center justify-center rounded-full border border-border/50 bg-card p-1 shadow-sm">
+        <div className={cn("inline-flex items-center justify-center rounded-full border border-border/50 bg-card p-1 shadow-sm", isRTL && "flex-row-reverse")}>
           <label
             htmlFor="pricing-billing-monthly"
             className="pricing-billing-option relative cursor-pointer rounded-full px-6 py-2.5 text-sm font-bold text-muted-foreground transition-all"
@@ -130,7 +146,7 @@ export function PricingSection({ dict }: { dict: PricingDict }) {
             data-billing-option="annual"
           >
             {dict?.home?.pricing?.annually || "Annually"}
-            <span className="absolute -right-2 -top-3 z-10 rounded-full border border-primary/20 bg-accent px-2 py-0.5 text-[10px] font-black uppercase tracking-widest text-accent-foreground shadow-lg">
+            <span className={cn("absolute z-10 rounded-full border border-primary/20 bg-accent px-2 py-0.5 text-[10px] font-black uppercase tracking-widest text-accent-foreground shadow-lg", isRTL ? "-left-2 -top-3" : "-right-2 -top-3")}>
               {dict?.home?.pricing?.saveBadge || "2 Months Free"}
             </span>
           </label>
@@ -162,22 +178,16 @@ export function PricingSection({ dict }: { dict: PricingDict }) {
             </div>
 
             <div className="mb-8">
-              <div className="flex items-baseline gap-1 transition-all duration-500">
-                <span data-billing-value="monthly" className="text-4xl font-extrabold">
-                  {plan.monthlyPrice}
+              <div className={cn("flex items-baseline gap-1 transition-all duration-500", isRTL && "flex-row-reverse")}>
+                <span className="text-4xl font-extrabold">
+                  <NumberFlow value={billing === "monthly" ? plan.monthlyPrice : plan.annualPrice} />
                 </span>
-                <span data-billing-value="annual" className="text-4xl font-extrabold">
-                  {plan.annualPrice}
-                </span>
-                <span data-billing-label="monthly" className="text-sm font-medium text-muted-foreground">
-                  {plan.monthlyPrice === "0" && plan.annualPrice === "0"
+                <span className="text-sm font-medium text-muted-foreground">
+                  {plan.monthlyPrice === 0 && plan.annualPrice === 0
                     ? "DZD"
-                    : dict?.home?.pricing?.monthlySuffix || "DZD / month"}
-                </span>
-                <span data-billing-label="annual" className="text-sm font-medium text-muted-foreground">
-                  {plan.monthlyPrice === "0" && plan.annualPrice === "0"
-                    ? "DZD"
-                    : dict?.home?.pricing?.annualSuffix || "DZD / year"}
+                    : billing === "monthly"
+                      ? (dict?.home?.pricing?.monthlySuffix || "DZD / month")
+                      : (dict?.home?.pricing?.annualSuffix || "DZD / year")}
                 </span>
               </div>
             </div>
@@ -186,7 +196,7 @@ export function PricingSection({ dict }: { dict: PricingDict }) {
               {plan.features.map((feature, featureIndex) => (
                 <li
                   key={`plan-${index}-feature-${featureIndex}`}
-                  className="flex items-center gap-3 text-sm font-medium"
+                  className={cn("flex items-center gap-3 text-sm font-medium", isRTL && "flex-row-reverse")}
                 >
                   <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10">
                     <Check className="h-4 w-4 text-primary" />
