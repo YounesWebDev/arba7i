@@ -8,6 +8,13 @@
       "when": 1775295787167,
       "tag": "0000_fearless_leopardon",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1776418500504,
+      "tag": "0001_mean_justice",
+      "breakpoints": true
     }
   ]
 }

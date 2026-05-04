@@ -138,7 +138,7 @@ export default function Stepper({
           stepCircleContainerClassName
         )}
       >
-        <CardContent className={cn("px-3 pt-3 md:px-4 md:pt-4 lg:px-2 lg:pt-2", contentClassName)}>
+        <CardContent className={cn("px-3 pt-4 md:px-4 md:pt-4 lg:px-2 lg:pt-2", contentClassName)}>
           <div className="overflow-x-auto pb-1">
             <div
               className={cn(

@@ -4,6 +4,12 @@ import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
+import {
+  getLocaleFromPath,
+  isPhoneLike,
+  isUsernameAllowed,
+  trimTrailingSlashes,
+} from "@/lib/simple-text";
 
 const AUTH_MESSAGES = {
   en: {
@@ -47,15 +53,14 @@ async function getLocaleFromHeaders() {
   const referer = (await headers()).get("referer");
   if (!referer) return "en";
   const url = new URL(referer);
-  const match = url.pathname.match(/^\/(ar|en|fr)(\/|$)/);
-  return match?.[1] ?? "en";
+  return getLocaleFromPath(url.pathname) ?? "en";
 }
 
 async function getRequestOrigin() {
   const configuredAppUrl = process.env.NEXT_PUBLIC_APP_URL?.trim();
 
   if (configuredAppUrl) {
-    return configuredAppUrl.replace(/\/+$/, "");
+    return trimTrailingSlashes(configuredAppUrl);
   }
 
   const headerStore = await headers();
@@ -101,7 +106,7 @@ export async function login(formData: FormData) {
 
   let emailToLogin = identifier;
   const isEmail = identifier.includes("@");
-  const isPhone = /^\+?[0-9\s]+$/.test(identifier);
+  const isPhone = isPhoneLike(identifier);
 
   // If they didn't type an email, look up their email via username or phone
   if (!isEmail) {
@@ -180,12 +185,11 @@ export async function signup(formData: FormData) {
     redirect(`/${lang}/register?error=${encodeURIComponent(getAuthMessage(lang, "passwordsDoNotMatch"))}`);
   }
 
-  const usernameRegex = /^[a-zA-Z0-9_]+$/;
   if (username.length < 5) {
     redirect(`/${lang}/register?error=${encodeURIComponent(getAuthMessage(lang, "usernameMinLength"))}`);
   }
 
-  if (!usernameRegex.test(username)) {
+  if (!isUsernameAllowed(username)) {
     redirect(`/${lang}/register?error=${encodeURIComponent(getAuthMessage(lang, "usernameInvalid"))}`);
   }
 
@@ -229,18 +233,19 @@ export async function signup(formData: FormData) {
 export async function signInWithGoogle(formData: FormData) {
   const lang = (formData.get("lang") as string) || (await getLocaleFromHeaders());
   const supabase = await createClient();
-  const origin = await getRequestOrigin();
   
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${origin}/auth/callback?next=/${lang}/dashboard`,
+      // THE FIX: We hardcode this to guarantee it perfectly matches your Supabase dashboard whitelist!
+      redirectTo: `http://localhost:3000/auth/callback?next=/${lang}/dashboard`,
     },
   });
 
   if (error) {
     redirect(`/${lang}/login?error=${encodeURIComponent(getAuthMessage(lang, "googleAuthFailed"))}`);
   }
+  
   if (data.url) redirect(data.url);
 }
 
@@ -259,12 +264,11 @@ export async function completeProfile(formData: FormData) {
     redirect(`/${lang}/complete-profile?error=${encodeURIComponent(getAuthMessage(lang, "fillAllFields"))}`);
   }
 
-  const usernameRegex = /^[a-zA-Z0-9_]+$/;
   if (username.trim().length < 5) {
     redirect(`/${lang}/complete-profile?error=${encodeURIComponent(getAuthMessage(lang, "usernameMinLength"))}`);
   }
 
-  if (!usernameRegex.test(username)) {
+  if (!isUsernameAllowed(username)) {
     redirect(`/${lang}/complete-profile?error=${encodeURIComponent(getAuthMessage(lang, "usernameInvalid"))}`);
   }
 

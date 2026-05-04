@@ -4,7 +4,7 @@ import type { Locale } from "@/i18n-config"
 import Link from "next/link"
 import { db } from "@/db"
 import { categories, products, sellerStoreLinks } from "@/db/schema"
-import { and, count, desc, eq, ilike } from "drizzle-orm"
+import { and, count, desc, eq, ilike, sql } from "drizzle-orm"
 import { AddCategoryDialog } from "@/components/dashboard/add-category-dialog"
 import { CategoryActions } from "@/components/products/category-actions"
 import { CategoryFilters } from "@/components/products/category-filters"
@@ -190,13 +190,76 @@ export default async function CategoriesPage({
     )
   }
 
-  // Base query with optional search filter
   const dbFilters = [eq(categories.storeId, storeLink.storeId)]
   if (q) {
     dbFilters.push(ilike(categories.name, `%${q}%`))
   }
 
-  const storeCategories = await db
+  const tableHavingClause =
+    filter === "active"
+      ? sql`count(${products.id}) > 0`
+      : filter === "empty"
+        ? sql`count(${products.id}) = 0`
+        : undefined
+
+  const [statsResult, totalCountResult, mostPopularResult] = await Promise.all([
+    db
+      .select({
+        totalCategories: sql<number>`count(distinct ${categories.id})`,
+        activeCategories: sql<number>`count(distinct case when ${products.id} is not null then ${categories.id} end)`,
+        totalProductsLinked: sql<number>`count(${products.id})`,
+      })
+      .from(categories)
+      .leftJoin(
+        products,
+        and(eq(products.categoryId, categories.id), eq(products.storeId, storeLink.storeId))
+      )
+      .where(and(...dbFilters)),
+    db
+      .select({ count: count() })
+      .from(
+        db
+          .select({
+            id: categories.id,
+            productCount: count(products.id),
+          })
+          .from(categories)
+          .leftJoin(
+            products,
+            and(eq(products.categoryId, categories.id), eq(products.storeId, storeLink.storeId))
+          )
+          .where(and(...dbFilters))
+          .groupBy(categories.id, categories.name, categories.createdAt)
+          .having(tableHavingClause)
+          .as("category_counts")
+      ),
+    db
+      .select({
+        name: categories.name,
+        productCount: count(products.id),
+      })
+      .from(categories)
+      .leftJoin(
+        products,
+        and(eq(products.categoryId, categories.id), eq(products.storeId, storeLink.storeId))
+      )
+      .where(and(...dbFilters))
+      .groupBy(categories.id, categories.name)
+      .orderBy(sql`count(${products.id}) desc`, desc(categories.createdAt))
+      .limit(1),
+  ])
+
+  const stats = statsResult[0]
+  const totalCategories = Number(stats?.totalCategories || 0)
+  const activeCategories = Number(stats?.activeCategories || 0)
+  const totalProductsLinked = Number(stats?.totalProductsLinked || 0)
+  const mostPopularCategory = mostPopularResult[0]
+  const filteredCategoriesCount = Number(totalCountResult[0]?.count || 0)
+  const totalPages = Math.max(1, Math.ceil(filteredCategoriesCount / pageSize))
+  const safePage = Math.min(currentPage, totalPages)
+  const pageStart = (safePage - 1) * pageSize
+  const visiblePages = buildVisiblePages(safePage, totalPages)
+  const paginatedCategories = await db
     .select({
       id: categories.id,
       name: categories.name,
@@ -208,33 +271,12 @@ export default async function CategoriesPage({
       products,
       and(eq(products.categoryId, categories.id), eq(products.storeId, storeLink.storeId))
     )
-    .where(and(...dbFilters)) // Apply search filter to the database query
+    .where(and(...dbFilters))
     .groupBy(categories.id, categories.name, categories.createdAt)
+    .having(tableHavingClause)
     .orderBy(desc(categories.createdAt))
-
-  const totalCategories = storeCategories.length
-  const activeCategories = storeCategories.filter((category) => Number(category.productCount ?? 0) > 0).length
-  const totalProductsLinked = storeCategories.reduce(
-    (sum, category) => sum + Number(category.productCount ?? 0),
-    0
-  )
-  const mostPopularCategory = [...storeCategories].sort(
-    (left, right) => Number(right.productCount ?? 0) - Number(left.productCount ?? 0)
-  )[0]
-
-  // Apply the dropdown filter (active/empty)
-  const filteredCategories = storeCategories.filter((category) => {
-    const productCount = Number(category.productCount ?? 0)
-    if (filter === "active") return productCount > 0
-    if (filter === "empty") return productCount === 0
-    return true
-  })
-
-  const totalPages = Math.max(1, Math.ceil(filteredCategories.length / pageSize))
-  const safePage = Math.min(currentPage, totalPages)
-  const pageStart = (safePage - 1) * pageSize
-  const paginatedCategories = filteredCategories.slice(pageStart, pageStart + pageSize)
-  const visiblePages = buildVisiblePages(safePage, totalPages)
+    .limit(pageSize)
+    .offset(pageStart)
 
   const kpis = [
     {
@@ -249,14 +291,14 @@ export default async function CategoriesPage({
       value: activeCategories.toLocaleString(locale),
       meta: copy.stats.activeCategories.meta,
       icon: CheckCircle2,
-      iconClassName: "bg-emerald-500/10 text-emerald-600",
+      iconClassName: "bg-primary/10 text-primary",
     },
     {
       title: copy.stats.mostPopular.title,
       value: mostPopularCategory?.productCount ? mostPopularCategory.name : copy.stats.mostPopular.empty,
       meta: copy.stats.mostPopular.meta,
       icon: TrendingUp,
-      iconClassName: "bg-orange-500/10 text-orange-600",
+      iconClassName: "bg-accent/20 text-accent-foreground",
     },
     {
       title: copy.stats.totalProductsLinked.title,
@@ -324,7 +366,7 @@ export default async function CategoriesPage({
           <div className="space-y-1">
             <CardTitle>{copy.overview.title}</CardTitle>
             <CardDescription>
-              {copy.overview.countPrefix} {totalCategories} {copy.overview.countSuffix}
+              {copy.overview.countPrefix} {filteredCategoriesCount} {copy.overview.countSuffix}
             </CardDescription>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -410,7 +452,7 @@ export default async function CategoriesPage({
 
           <div className="flex flex-col gap-4 border-t border-border/60 px-6 py-5 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
             <p>
-              {copy.pagination.showing} {pageStart + 1}-{Math.min(pageStart + paginatedCategories.length, filteredCategories.length)} {copy.pagination.of} {filteredCategories.length}
+                {copy.pagination.showing} {filteredCategoriesCount === 0 ? 0 : pageStart + 1}-{Math.min(pageStart + paginatedCategories.length, filteredCategoriesCount)} {copy.pagination.of} {filteredCategoriesCount}
             </p>
             <div className="flex flex-col items-start gap-3 sm:items-end">
               <Badge variant="secondary" className="rounded-full px-3 py-1">

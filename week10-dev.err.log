@@ -1,0 +1,9 @@
+⚠ Port 3000 is in use by process 24704, using available port 3001 instead.
+⨯ Another next dev server is already running.
+
+- Local:        http://localhost:3000
+- PID:          24704
+- Dir:          D:\My Projects\arba7i-platform
+- Log:          .next\dev\logs\next-development.log
+
+Run taskkill /PID 24704 /F to stop it.

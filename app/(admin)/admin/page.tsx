@@ -1,5 +1,5 @@
 // --- app/(admin)/admin/page.tsx ---
-
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAdminDictionary } from "@/lib/dictionary";
 import type { Locale } from "@/i18n-config";
 import { i18n } from "@/i18n-config";
@@ -12,24 +12,42 @@ export default async function AdminHomePage() {
     <div>
       <header className="mb-8 flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-white">{dict.adminPage.title}</h1>
-          <p className="text-slate-400 mt-2">{dict.adminPage.description}</p>
+          <h1 className="text-3xl font-bold text-foreground">{dict.adminPage.title}</h1>
+          <p className="mt-2 text-muted-foreground">{dict.adminPage.description}</p>
         </div>
       </header>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl">
-          <h3 className="text-slate-400 font-medium mb-2">{dict.adminPage.totalActiveSellers}</h3>
-          <p className="text-3xl font-bold text-white">0</p>
-        </div>
-        <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl">
-          <h3 className="text-slate-400 font-medium mb-2">{dict.adminPage.platformRevenue}</h3>
-          <p className="text-3xl font-bold text-white">0 DZD</p>
-        </div>
-        <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl">
-          <h3 className="text-slate-400 font-medium mb-2">{dict.adminPage.systemStatus}</h3>
-          <p className="text-3xl font-bold text-emerald-400">{dict.adminPage.statusOnline}</p>
-        </div>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base font-medium text-muted-foreground">
+              {dict.adminPage.totalActiveSellers}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-3xl font-bold text-card-foreground">0</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base font-medium text-muted-foreground">
+              {dict.adminPage.platformRevenue}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-3xl font-bold text-card-foreground">0 DZD</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base font-medium text-muted-foreground">
+              {dict.adminPage.systemStatus}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-3xl font-bold text-primary">{dict.adminPage.statusOnline}</p>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )

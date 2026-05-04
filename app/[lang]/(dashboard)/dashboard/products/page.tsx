@@ -3,7 +3,7 @@ import { getProductsDictionary } from "@/lib/dictionary"
 import type { Locale } from "@/i18n-config"
 import { db } from "@/db"
 import { products, categories, sellerStoreLinks } from "@/db/schema"
-import { eq, and, desc, ilike, or, count } from "drizzle-orm"
+import { eq, and, desc, ilike, or, count, sql } from "drizzle-orm"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Pagination,
@@ -132,7 +132,7 @@ export default async function ProductsListPage({
   const [storeLink] = await db
     .select()
     .from(sellerStoreLinks)
-    .where(eq(sellerStoreLinks.userId, auth.user.id))
+    .where(and(eq(sellerStoreLinks.userId, auth.user.id), eq(sellerStoreLinks.isActive, true)))
     .limit(1)
 
   if (!storeLink) {
@@ -153,15 +153,14 @@ export default async function ProductsListPage({
 
   const whereClause = and(...filters)
 
-  const [totalCountResult, storeCategories, allStoreProducts] = await Promise.all([
+  const [totalCountResult, storeCategories, productStatsResult] = await Promise.all([
     db.select({ count: count() }).from(products).where(whereClause),
     db.select({ id: categories.id, name: categories.name }).from(categories).where(eq(categories.storeId, storeId)),
     db
       .select({
-        price: products.price,
-        stock: products.stock,
-        status: products.status,
-        lowStockThreshold: products.lowStockThreshold,
+        lowStockCount: sql<number>`count(*) filter (where ${products.stock} > 0 and ${products.stock} <= ${products.lowStockThreshold})`,
+        draftCount: sql<number>`count(*) filter (where ${products.status} = 'draft')`,
+        inventoryValue: sql<string>`coalesce(sum(${products.price} * ${products.stock}), 0)`,
       })
       .from(products)
       .where(eq(products.storeId, storeId)),
@@ -191,15 +190,10 @@ export default async function ProductsListPage({
     .offset(pageStart)
     .orderBy(desc(products.createdAt))
 
-  const lowStockCount = allStoreProducts.filter((product) => {
-    const stock = Number(product.stock || 0)
-    const threshold = Number(product.lowStockThreshold || 0)
-    return stock > 0 && stock <= threshold
-  }).length
-  const draftCount = allStoreProducts.filter((product) => product.status === "draft").length
-  const inventoryValue = allStoreProducts.reduce((sum, product) => {
-    return sum + Number(product.price || 0) * Number(product.stock || 0)
-  }, 0)
+  const productStats = productStatsResult[0]
+  const lowStockCount = Number(productStats?.lowStockCount || 0)
+  const draftCount = Number(productStats?.draftCount || 0)
+  const inventoryValue = Number(productStats?.inventoryValue || 0)
   const filtersApplied = Boolean(q || (status && status !== "all") || (category && category !== "all"))
 
   const kpis = [
@@ -215,7 +209,7 @@ export default async function ProductsListPage({
       value: lowStockCount.toLocaleString(locale),
       meta: copy.lowStockMeta,
       icon: AlertTriangle,
-      iconClassName: "bg-orange-500/10 text-orange-600",
+      iconClassName: "bg-destructive/10 text-destructive",
     },
     {
       title: copy.draftProducts,
@@ -414,7 +408,13 @@ export default async function ProductsListPage({
                         </TableCell>
                         <TableCell className="px-6 text-end">
                           <div className="inline-flex justify-end opacity-100 transition-opacity md:opacity-0 md:group-hover:opacity-100">
-                            <ProductActions productId={prod.id} lang={lang} copy={copy.actionMenu} />
+                          <ProductActions
+                            productId={prod.id}
+                            storeId={storeId}
+                            lang={lang}
+                            status={prod.status}
+                            copy={copy.actionMenu}
+                          />
                           </div>
                         </TableCell>
                       </TableRow>

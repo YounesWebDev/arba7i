@@ -19,6 +19,7 @@ import { useDirection } from "@/components/ui/direction"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { isUsernameAllowed } from "@/lib/simple-text"
 import { cn } from "@/lib/utils"
 
 type RegisterCopy = {
@@ -84,7 +85,7 @@ export function RegisterForm({
   const usernameValid =
     username.length === 0
       ? null
-      : username.length >= 5 && /^[a-zA-Z0-9_]+$/.test(username)
+      : username.length >= 5 && isUsernameAllowed(username)
   const passwordsMatch =
     confirmPassword.length === 0 ? null : password === confirmPassword
 
@@ -119,7 +120,7 @@ export function RegisterForm({
           completeButtonText={copy?.submit || (isArabic ? "إنشاء الحساب" : "Create account")}
         >
           <Step>
-            <div className={cn("space-y-5 lg:space-y-2", isRtl && "text-right")}>
+            <div className={cn("space-y-2", isRtl && "text-right")}>
               <div>
                 <h2 className="text-xl font-bold tracking-tight lg:text-base">
                   {copy?.identityTitle || (isArabic ? "بياناتك الأساسية" : "Your identity")}
@@ -132,7 +133,7 @@ export function RegisterForm({
                 </p>
               </div>
 
-              <div className="grid gap-5 md:grid-cols-2 lg:gap-2">
+              <div className=" grid gap-5 md:grid-cols-2 lg:gap-2">
                 <div className="space-y-2">
                   <div className="relative">
                     <UserRound

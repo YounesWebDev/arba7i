@@ -18,6 +18,7 @@ const COOKIE_NAME = "theme"
 
 function getSystemTheme(): ResolvedTheme {
   if (typeof window === "undefined") return "light"
+
   try {
     return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
   } catch {
@@ -25,7 +26,7 @@ function getSystemTheme(): ResolvedTheme {
   }
 }
 
-function applyTheme(theme: ThemeName) {
+function applyTheme(theme: ThemeName): ResolvedTheme {
   const root = document.documentElement
   const resolvedTheme = theme === "system" ? getSystemTheme() : theme
 
@@ -38,16 +39,39 @@ function applyTheme(theme: ThemeName) {
 function persistTheme(theme: ThemeName) {
   try {
     window.localStorage.setItem(STORAGE_KEY, theme)
-    console.log(`Theme persisted: ${theme}`) // Debug log
   } catch {
-    // Ignore storage failures on restricted browsers.
+    // Ignore storage failures.
   }
 
   try {
     document.cookie = `${COOKIE_NAME}=${theme}; path=/; max-age=31536000; samesite=lax`
   } catch {
-    // Ignore cookie failures and keep the in-memory theme state working.
+    // Ignore cookie failures.
   }
+}
+
+function getStoredTheme(): ThemeName {
+  if (typeof window === "undefined") return "system"
+
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY)
+    if (stored === "light" || stored === "dark" || stored === "system") {
+      return stored
+    }
+  } catch {}
+
+  try {
+    const cookieValue = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith(`${COOKIE_NAME}=`))
+      ?.split("=")[1]
+
+    if (cookieValue === "light" || cookieValue === "dark" || cookieValue === "system") {
+      return cookieValue
+    }
+  } catch {}
+
+  return "system"
 }
 
 function getInitialThemeState(): { theme: ThemeName; resolvedTheme: ResolvedTheme } {
@@ -55,37 +79,69 @@ function getInitialThemeState(): { theme: ThemeName; resolvedTheme: ResolvedThem
     return { theme: "system", resolvedTheme: "light" }
   }
 
-  let storedTheme: ThemeName = "system"
-  let domResolvedTheme: ResolvedTheme = "light"
+  const theme = getStoredTheme()
 
+  let resolvedTheme: ResolvedTheme = "light"
   try {
-    storedTheme = (window.localStorage.getItem(STORAGE_KEY) as ThemeName | null) ?? "system"
-    console.log(`Stored theme retrieved: ${storedTheme}`) // Debug log
+    resolvedTheme =
+      theme === "system"
+        ? getSystemTheme()
+        : theme
   } catch {
-    storedTheme = "system"
+    resolvedTheme = "light"
   }
 
-  try {
-    domResolvedTheme = document.documentElement.classList.contains("dark") ? "dark" : "light"
-  } catch {
-    domResolvedTheme = "light"
-  }
-
-  return {
-    theme: storedTheme,
-    resolvedTheme: storedTheme === "system" ? domResolvedTheme : storedTheme,
-  }
+  return { theme, resolvedTheme }
 }
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = React.useState<ThemeName>(() => getInitialThemeState().theme)
-  const [resolvedTheme, setResolvedTheme] = React.useState<ResolvedTheme>(() => getInitialThemeState().resolvedTheme)
+export const themeInitScript = `
+(function () {
+  try {
+    var STORAGE_KEY = "theme";
+    var COOKIE_NAME = "theme";
 
-  React.useLayoutEffect(() => {
-    const initialState = getInitialThemeState()
-    persistTheme(initialState.theme)
-    setThemeState(initialState.theme)
-    setResolvedTheme(applyTheme(initialState.theme))
+    var theme = "system";
+
+    try {
+      var stored = localStorage.getItem(STORAGE_KEY);
+      if (stored === "light" || stored === "dark" || stored === "system") {
+        theme = stored;
+      }
+    } catch {}
+
+    if (theme === "system") {
+      try {
+        var cookieValue = document.cookie
+          .split("; ")
+          .find(function (row) { return row.startsWith(COOKIE_NAME + "="); })
+          ?.split("=")[1];
+
+        if (cookieValue === "light" || cookieValue === "dark" || cookieValue === "system") {
+          theme = cookieValue;
+        }
+      } catch {}
+    }
+
+    var resolvedTheme =
+      theme === "system"
+        ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+        : theme;
+
+    document.documentElement.classList.toggle("dark", resolvedTheme === "dark");
+    document.documentElement.style.colorScheme = resolvedTheme;
+  } catch {}
+})();
+`
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const initialState = React.useMemo(() => getInitialThemeState(), [])
+  const [theme, setThemeState] = React.useState<ThemeName>(initialState.theme)
+  const [resolvedTheme, setResolvedTheme] = React.useState<ResolvedTheme>(initialState.resolvedTheme)
+
+  React.useEffect(() => {
+    const currentTheme = getStoredTheme()
+    setThemeState(currentTheme)
+    setResolvedTheme(applyTheme(currentTheme))
   }, [])
 
   React.useEffect(() => {
@@ -98,10 +154,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
 
     const syncSystemTheme = () => {
-      setResolvedTheme((currentResolvedTheme) => {
-        if (theme !== "system") return currentResolvedTheme
-        return applyTheme("system")
-      })
+      if (theme === "system") {
+        setResolvedTheme(applyTheme("system"))
+      }
     }
 
     mediaQuery.addEventListener("change", syncSystemTheme)

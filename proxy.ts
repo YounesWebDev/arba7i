@@ -13,7 +13,7 @@ export async function proxy(request: NextRequest) {
     return await updateSession(request);
   }
 
-  // 2. Check if the URL already has a valid language (e.g., /en/pricing)
+  // 2. Check if the URL already has a valid language
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );

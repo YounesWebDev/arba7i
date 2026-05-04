@@ -1,12 +1,13 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
+import { getLocaleFromPath, isLocalizedPath, removeLeadingLocale } from '@/lib/simple-text';
 
 export async function updateSession(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-  const pathSegments = pathname.split('/');
-  const currentLocale = pathSegments[1] || 'ar';
-  const pathnameWithoutLocale = pathname.replace(`/${currentLocale}`, '') || '/';
-  const isLocalizedRoute = /^\/(ar|en|fr)(\/|$)/.test(pathname);
+  const matchedLocale = getLocaleFromPath(pathname);
+  const currentLocale = matchedLocale ?? 'ar';
+  const pathnameWithoutLocale = matchedLocale ? removeLeadingLocale(pathname, matchedLocale) : pathname || '/';
+  const isLocalizedRoute = isLocalizedPath(pathname);
 
   let supabaseResponse = NextResponse.next({
     request,

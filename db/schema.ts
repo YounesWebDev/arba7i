@@ -1,5 +1,5 @@
 // --- db/schema.ts ---
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import { pgTable, uuid, varchar, timestamp, boolean, unique, text, primaryKey, integer, decimal, jsonb } from "drizzle-orm/pg-core";
 
 // ==========================================
@@ -108,6 +108,7 @@ export const products = pgTable("products", {
   storeId: uuid("store_id").references(() => stores.id, { onDelete: "cascade" }).notNull(),
   categoryId: uuid("category_id").references(() => categories.id, { onDelete: "set null" }),
   name: varchar("name").notNull(), // e.g., 'iPhone 15 Pro'
+  slug: varchar("slug").notNull(), // NEW: URL-friendly string, e.g., 'iphone-15-pro'
   description: text("description"), // HTML or Markdown product description
   price: decimal("price", { precision: 12, scale: 2 }).notNull(), // e.g., 150000.00
   comparePrice: decimal("compare_price", { precision: 12, scale: 2 }), // The "strikethrough" old price, e.g., 170000.00
@@ -119,6 +120,7 @@ export const products = pgTable("products", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow(),
 }, (table) => ({
   unq_sku: unique().on(table.storeId, table.sku),
+  unq_slug: unique().on(table.storeId, table.slug), // NEW: Ensure slugs are unique per store
 }));
 
 // Product images store gallery assets so storefronts can render product visuals independently of product text.
@@ -126,6 +128,7 @@ export const productImages = pgTable("product_images", {
   id: uuid("id").defaultRandom().primaryKey(),
   productId: uuid("product_id").references(() => products.id, { onDelete: "cascade" }).notNull(),
   url: varchar("url").notNull(), // Full URL to Supabase Storage, e.g., 'https://.../image.png'
+  storagePath: text("storage_path"), // Relative path inside the storage bucket for cleanup
   isPrimary: boolean("is_primary").default(false), // true = main cover photo, false = gallery photo
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 });
@@ -136,6 +139,7 @@ export const productOptions = pgTable("product_options", {
   productId: uuid("product_id").references(() => products.id, { onDelete: "cascade" }).notNull(),
   name: varchar("name").notNull(), // e.g., 'Size', 'Color', 'Custom Engraving'
   type: varchar("type").notNull(), // Values: 'dropdown', 'radio', 'text', 'textarea'
+  values: jsonb("values").$type<string[]>().notNull().default(sql`'[]'::jsonb`), // Selectable values for non-text options
   isRequired: boolean("is_required").default(true), // true = customer MUST fill it out to checkout
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow(),
 });
@@ -321,7 +325,7 @@ export const supportMessages = pgTable("support_messages", {
 // Audit logs provide an immutable trail of sensitive actions for debugging, accountability, and compliance.
 export const auditLogs = pgTable("audit_logs", {
   id: uuid("id").defaultRandom().primaryKey(),
-  storeId: uuid("store_id").references(() => stores.id, { onDelete: "cascade" }).notNull(),
+  storeId: uuid("store_id").references(() => stores.id, { onDelete: "cascade" }),
   userId: uuid("user_id").references(() => users.id, { onDelete: "set null" }),
   action: varchar("action").notNull(), // Specific identifier: 'order_deleted', 'product_updated', 'staff_invited'
   details: text("details"), // JSON or string showing what changed (e.g., 'Changed price from 50 to 45')

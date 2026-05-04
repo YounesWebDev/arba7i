@@ -6,6 +6,7 @@ import type { Locale } from "@/i18n-config"
 import { getCategoriesDictionary } from "@/lib/dictionary"
 import { db } from "@/db"
 import { categories } from "@/db/schema"
+import { buildSimpleSlug } from "@/lib/simple-text"
 
 async function getCategoryActionCopy(lang: string) {
   const dict = await getCategoriesDictionary(lang as Locale)
@@ -17,17 +18,8 @@ async function getCategoryActionCopy(lang: string) {
 }
 
 function slugifyCategoryName(name: string) {
-  const normalized = name
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .trim()
-    .replace(/[\s_]+/g, "-")
-    .replace(/[^a-z0-9-]+/g, "")
-    .replace(/-{2,}/g, "-")
-    .replace(/^-+|-+$/g, "")
-
-  return normalized || "category"
+  // Reuse the same readable slug builder so products and categories behave the same way.
+  return buildSimpleSlug(name, "category")
 }
 
 async function buildUniqueCategorySlug(

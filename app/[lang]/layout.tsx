@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import "../globals.css";
 import { DirectionProvider } from "@/components/ui/direction";
 import { i18n } from "@/i18n-config";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider, themeInitScript } from "@/components/theme-provider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -44,6 +44,11 @@ export default async function RootLayout({
       style={resolvedTheme ? { colorScheme: resolvedTheme } : undefined}
       suppressHydrationWarning
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{ __html: themeInitScript }}
+        />
+      </head>
       <body suppressHydrationWarning className="min-h-full font-sans flex flex-col">
         <ThemeProvider>
           <DirectionProvider dir={dir}>{children}</DirectionProvider>

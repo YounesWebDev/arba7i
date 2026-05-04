@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Loader2, Plus } from "lucide-react"
 import { createCategory } from "@/app/actions/categories"
 import { Button } from "@/components/ui/button"
@@ -33,6 +34,7 @@ export function AddCategoryDialog({
     submit: string
   }
 }) {
+  const router = useRouter()
   const [open, setOpen] = useState(false)
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
@@ -47,6 +49,7 @@ export function AddCategoryDialog({
 
     if (result.success) {
       setOpen(false)
+      router.refresh()
     } else {
       setError(result.error as string)
     }

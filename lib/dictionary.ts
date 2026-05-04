@@ -133,6 +133,11 @@ const dictionaries = {
     fr: () => import("@/dictionaries/pages/admin/fr").then((module) => module.default),
     ar: () => import("@/dictionaries/pages/admin/ar").then((module) => module.default),
   },
+  storefront: {
+    en: () => import("@/dictionaries/pages/storefront/en").then((module) => module.default),
+    fr: () => import("@/dictionaries/pages/storefront/fr").then((module) => module.default),
+    ar: () => import("@/dictionaries/pages/storefront/ar").then((module) => module.default),
+  },
 } as const;
 
 type DictionarySection = keyof typeof dictionaries;
@@ -205,6 +210,10 @@ export const getUnauthorizedDictionary = cache(async (locale: Locale) => {
 
 export const getAdminDictionary = cache(async (locale: Locale) => {
   return getScopedDictionary("admin", locale);
+});
+
+export const getStorefrontDictionary = cache(async (locale: Locale) => {
+  return getScopedDictionary("storefront", locale);
 });
 
 export const getDashboardLayoutDictionary = cache(async (locale: Locale) => {

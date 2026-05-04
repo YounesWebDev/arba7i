@@ -316,8 +316,8 @@ export default async function HomePage({
       </FadeInView>
 
       <FadeInView as="section" className="overflow-hidden px-6 py-24">
-        <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[3rem] bg-foreground p-8 text-background md:p-20">
-          <div className="absolute right-0 top-0 h-full w-1/2 bg-[radial-gradient(circle_at_center,_rgba(107,56,212,0.15)_0%,_transparent_70%)]" />
+          <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[3rem] bg-foreground p-8 text-background md:p-20">
+          <div className="absolute right-0 top-0 h-full w-1/2 bg-[radial-gradient(circle_at_center,_color-mix(in_oklab,var(--color-accent)_28%,transparent)_0%,_transparent_70%)]" />
           <div className="relative z-10 grid items-center gap-12 md:grid-cols-2">
             <div className="space-y-6">
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/20 px-4 py-1 text-xs font-bold uppercase tracking-widest text-accent">
@@ -500,7 +500,7 @@ export default async function HomePage({
                   <FadeInView key={`before-item-${index}`} delay={index * 60}>
                     <Card className="rounded-2xl border border-border/20 bg-primary/7 shadow-none">
                       <CardContent className="flex gap-4 p-6">
-                        <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-400" />
+                        <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-destructive" />
                         <p className="text-sm leading-relaxed text-foreground/80">
                           {item}
                         </p>

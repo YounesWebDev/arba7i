@@ -1,5 +1,5 @@
 import { AuthLayoutShell } from "@/components/auth/auth-layout-shell";
-import { Header } from "@/components/header";
+import { PublicNavbar } from "@/components/public/navbar";
 import type { Locale } from "@/i18n-config";
 import { getAuthDictionary, getCommonDictionary } from "@/lib/dictionary";
 
@@ -18,7 +18,7 @@ export default async function AuthLayout({
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
-      <Header lang={lang} dict={commonDict} />
+      <PublicNavbar lang={lang} dict={commonDict} />
       <main className="flex-1 pt-18 sm:pt-20">
         <AuthLayoutShell lang={lang} copy={authDict.authPages}>
           {children}

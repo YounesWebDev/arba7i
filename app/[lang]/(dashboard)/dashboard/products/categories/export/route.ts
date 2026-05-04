@@ -3,17 +3,14 @@ import { and, count, desc, eq } from "drizzle-orm"
 import { requirePermission } from "@/lib/auth-guard"
 import { db } from "@/db"
 import { categories, products, sellerStoreLinks } from "@/db/schema"
+import { escapeCsvValue } from "@/lib/simple-text"
 
 type Params = {
   params: Promise<{ lang: string }>
 }
 
 function escapeCsv(value: string | number) {
-  const stringValue = String(value)
-  if (stringValue.includes(",") || stringValue.includes('"') || stringValue.includes("\n")) {
-    return `"${stringValue.replace(/"/g, '""')}"`
-  }
-  return stringValue
+  return escapeCsvValue(value)
 }
 
 export async function GET(request: Request, { params }: Params) {
